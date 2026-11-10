@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Hepi</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <span class="dot" id="dot"></span>
+  <strong>Hepi</strong>
+  <span class="ver">0.20.8 · unsigned</span>
+  <span class="sp"></span>
+  <button id="admin">Admin</button>
+  <button id="check">Self-check</button>
+</header>
+
+<main>
+  <section>
+    <h2>Engine</h2>
+    <div class="row"><label>contentProtection</label><input type="checkbox" id="contentProtection"></div>
+    <div class="row"><label>wdaBypass</label><input type="checkbox" id="wdaBypass"></div>
+    <div class="row"><label>sebKioskBypass</label><input type="checkbox" id="sebKioskBypass"></div>
+    <div class="row"><label>sebDesktopSwitch</label><input type="checkbox" id="sebDesktopSwitch"></div>
+    <div class="row"><label>sebLogFilter</label><input type="checkbox" id="sebLogFilter"></div>
+    <div class="row"><label>sebClipboardBypass</label><input type="checkbox" id="sebClipboardBypass"></div>
+    <div class="row"><label>sebLockscreenBypass</label><input type="checkbox" id="sebLockscreenBypass"></div>
+    <div class="row"><label>sebLogCleaner</label><input type="checkbox" id="sebLogCleaner"></div>
+    <div class="row"><label>launchAtStartup</label><input type="checkbox" id="launchAtStartup"></div>
+  </section>
+
+  <section>
+    <h2>Hành động</h2>
+    <div class="grid">
+      <button data-cmd="start_kiosk_monitor">kiosk start</button>
+      <button data-cmd="stop_kiosk_monitor">kiosk stop</button>
+      <button data-cmd="switch_to_seb_desktop">switch SEB</button>
+      <button data-cmd="switch_to_default_desktop">switch default</button>
+      <button data-cmd="bypass_wda_now">wda now</button>
+      <button data-cmd="start_log_filter_monitor">logfilter start</button>
+      <button data-cmd="start_clipboard_bypass_monitor">clipboard start</button>
+      <button data-cmd="start_lockscreen_bypass_monitor">lock start</button>
+      <button data-cmd="scan_and_clean_seb_logs">clean logs</button>
+      <button data-cmd="enable_network_guard">route on</button>
+      <button data-cmd="disable_network_guard">route off</button>
+      <button data-cmd="launcher_rebuild">scan apps</button>
+      <button data-cmd="trigger_emergency_exit">emergency exit</button>
+      <button data-cmd="restore_lockdowns">restore</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Trạng thái</h2>
+    <pre id="status">-</pre>
+  </section>
+
+  <section>
+    <h2>Log</h2>
+    <pre id="log"></pre>
+  </section>
+</main>
+<script src="app.js" defer></script>
+</body>
+</html>
