@@ -1,0 +1,11 @@
+[package]
+name = "uninstall"
+version.workspace = true
+edition.workspace = true
+
+[[bin]]
+name = "uninstall"
+path = "src/main.rs"
+
+[dependencies]
+hepi-core = { path = "../hepi-core" }

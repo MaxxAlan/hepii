@@ -1,0 +1,87 @@
+//! Sidekick — cửa sổ phụ, được host spawn vào desktop đích.
+//! Nhận `--pipe <name>`, đọc env HEPI_*, hiển thị trạng thái, tự thoát khi mất desktop.
+
+#![cfg(windows)]
+#![windows_subsystem = "windows"]
+
+use windows::core::{w, PCWSTR};
+use windows::Win32::Foundation::{HWND, LPARAM, LRESULT, WPARAM};
+use windows::Win32::System::LibraryLoader::GetModuleHandleW;
+use windows::Win32::UI::WindowsAndMessaging::{
+    CreateWindowExW, DefWindowProcW, DestroyWindow, DispatchMessageW, GetMessageW, PostQuitMessage,
+    RegisterClassW, ShowWindow, TranslateMessage, WNDCLASSW, WM_DESTROY, WM_PAINT, WS_EX_TOPMOST,
+    WS_OVERLAPPEDWINDOW, WS_VISIBLE, SW_SHOW,
+};
+
+fn pipe_name() -> String {
+    let args: Vec<String> = std::env::args().collect();
+    args.iter()
+        .position(|a| a == "--pipe")
+        .and_then(|i| args.get(i + 1).cloned())
+        .unwrap_or_default()
+}
+
+unsafe extern "system" fn wndproc(hwnd: HWND, msg: u32, wp: WPARAM, lp: LPARAM) -> LRESULT {
+    match msg {
+        WM_PAINT => {
+            let mut ps = windows::Win32::Graphics::Gdi::PAINTSTRUCT::default();
+            let dc = windows::Win32::Graphics::Gdi::BeginPaint(hwnd, &mut ps);
+            let text = format!(
+                "Hepi Sidekick\npipe: {}\nserver: {}",
+                pipe_name(),
+                std::env::var("HEPI_SERVER").unwrap_or_else(|_| "-".into())
+            );
+            let wide: Vec<u16> = text.encode_utf16().collect();
+            let mut r = windows::Win32::Foundation::RECT::default();
+            let _ = windows::Win32::UI::WindowsAndMessaging::GetClientRect(hwnd, &mut r);
+            windows::Win32::Graphics::Gdi::DrawTextW(
+                dc,
+                &mut wide.clone(),
+                &mut r,
+                windows::Win32::Graphics::Gdi::DT_LEFT,
+            );
+            windows::Win32::Graphics::Gdi::EndPaint(hwnd, &mut ps);
+            LRESULT(0)
+        }
+        WM_DESTROY => {
+            PostQuitMessage(0);
+            LRESULT(0)
+        }
+        _ => DefWindowProcW(hwnd, msg, wp, lp),
+    }
+}
+
+fn main() {
+    unsafe {
+        let hinstance = GetModuleHandleW(PCWSTR::null()).unwrap();
+        let class = WNDCLASSW {
+            lpfnWndProc: Some(wndproc),
+            hInstance: hinstance.into(),
+            lpszClassName: w!("HepiSidekick"),
+            ..Default::default()
+        };
+        RegisterClassW(&class);
+        let hwnd = CreateWindowExW(
+            WS_EX_TOPMOST,
+            w!("HepiSidekick"),
+            w!("Hepi Sidekick"),
+            WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+            120,
+            120,
+            420,
+            240,
+            None,
+            None,
+            Some(hinstance.into()),
+            None,
+        )
+        .unwrap();
+        let _ = ShowWindow(hwnd, SW_SHOW);
+        let mut msg = windows::Win32::UI::WindowsAndMessaging::MSG::default();
+        while GetMessageW(&mut msg, None, 0, 0).as_bool() {
+            let _ = TranslateMessage(&msg);
+            DispatchMessageW(&msg);
+            let _ = DestroyWindow;
+        }
+    }
+}

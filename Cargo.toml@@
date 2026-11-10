@@ -1,0 +1,18 @@
+[workspace]
+members = [
+    "crates/hepi-core",
+    "crates/hepi-app",
+    "crates/hepi-sidekick",
+    "crates/hepi-uninstall",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.20.8"
+edition = "2021"
+license = "proprietary"
+
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+windows = "0.58"
