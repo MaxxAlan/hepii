@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hepi</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="titlebar" data-tauri-drag-region>
+    <span class="brand">Hepi</span>
+    <span class="version" id="version">v0.20.8</span>
+    <span class="spacer"></span>
+    <button class="ghost" id="btn-min" title="Thu nhỏ">&#8211;</button>
+    <button class="ghost" id="btn-close" title="Đóng">&#10005;</button>
+  </div>
+
+  <main>
+    <header class="hero">
+      <div>
+        <h1>Bảng điều khiển</h1>
+        <p class="muted">Engine layer chạy theo khuôn start / verify / patch / rollback / stop.</p>
+      </div>
+      <div class="pill" id="admin-pill">đang kiểm tra…</div>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Trạng thái</h2>
+        <dl class="kv">
+          <dt>Admin</dt><dd id="st-admin">?</dd>
+          <dt>PID đang patch</dt><dd id="st-pids">—</dd>
+          <dt>Handle mở</dt><dd id="st-open">—</dd>
+          <dt>Route đã thêm</dt><dd id="st-routes">—</dd>
+        </dl>
+        <button class="primary" id="btn-refresh">Làm mới</button>
+        <button class="ghost" id="btn-selfcheck">Self check</button>
+        <pre class="out" id="selfcheck"></pre>
+      </article>
+
+      <article class="card">
+        <h2>Cấu hình</h2>
+        <div class="toggles" id="toggles"></div>
+        <div class="row">
+          <button class="primary" id="btn-save">Lưu</button>
+          <button class="ghost" id="btn-scan">Quét tiến trình</button>
+        </div>
+        <div class="chips" id="programs"></div>
+      </article>
+
+      <article class="card">
+        <h2>Desktop &amp; hook</h2>
+        <div class="row wrap">
+          <button class="ghost" data-cmd="switch_to_seb_desktop">Vào desktop đích</button>
+          <button class="ghost" data-cmd="switch_to_default_desktop">Về Default</button>
+          <button class="ghost" data-cmd="start_kiosk_monitor">Bật kiosk</button>
+          <button class="ghost" data-cmd="stop_kiosk_monitor">Tắt kiosk</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>Năng lực</h2>
+        <div class="row wrap">
+          <button class="ghost" data-cmd="bypass_wda_now">WDA một lượt</button>
+          <button class="ghost" data-cmd="enable_network_guard">Bật route guard</button>
+          <button class="ghost" data-cmd="disable_network_guard">Tắt route guard</button>
+          <button class="ghost" data-cmd="scan_and_clean_seb_logs">Dọn log</button>
+          <button class="ghost" data-cmd="trigger_emergency_exit">Thoát khẩn</button>
+        </div>
+        <pre class="out" id="action-out"></pre>
+      </article>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

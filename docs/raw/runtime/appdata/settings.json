@@ -1,0 +1,368 @@
+{
+  "rustShortcut.launcher": "CommandOrControl+Space",
+  "selectableModels": [
+    {
+      "accessTier": "free",
+      "id": "gemini-3.8-flash",
+      "label": "Gemini 3.8 Flash",
+      "modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "points": 2,
+      "supportedFileTypes": [
+        "image",
+        "pdf",
+        "docx",
+        "xlsx",
+        "pptx",
+        "text"
+      ]
+    },
+    {
+      "accessTier": "free",
+      "id": "gpt-6.1-sol",
+      "label": "GPT 6.1 Sol",
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "points": 4,
+      "supportedFileTypes": [
+        "image"
+      ]
+    },
+    {
+      "accessTier": "free",
+      "id": "grok-4.7",
+      "label": "Grok 4.7",
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "points": 3,
+      "supportedFileTypes": [
+        "image"
+      ]
+    },
+    {
+      "accessTier": "free",
+      "id": "kimi-k3",
+      "label": "Kimi K3",
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "points": 3,
+      "supportedFileTypes": [
+        "image"
+      ]
+    },
+    {
+      "accessTier": "free",
+      "id": "deepseek-v4.1-flash",
+      "label": "Deepseek V4.1 Flash",
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "points": 2,
+      "supportedFileTypes": [
+        "image"
+      ]
+    },
+    {
+      "accessTier": "free",
+      "id": "deepseek-v4-pro",
+      "label": "DeepSeek V4 Pro",
+      "modalities": [
+        "text"
+      ],
+      "points": 3,
+      "supportedFileTypes": []
+    },
+    {
+      "accessTier": "free",
+      "id": "minimax-m3",
+      "label": "Minimax M3",
+      "modalities": [
+        "text"
+      ],
+      "points": 3,
+      "supportedFileTypes": []
+    },
+    {
+      "accessTier": "free",
+      "id": "qwen3.8-max",
+      "label": "Qwen 3.8 Max",
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "points": 3,
+      "supportedFileTypes": [
+        "image"
+      ]
+    },
+    {
+      "accessTier": "free",
+      "id": "glm-5.3",
+      "label": "GLM 5.3",
+      "modalities": [
+        "text"
+      ],
+      "points": 3,
+      "supportedFileTypes": []
+    },
+    {
+      "accessTier": "premium",
+      "id": "gemini-3.1-pro-low",
+      "label": "Gemini 3.1 Pro",
+      "modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "points": 3,
+      "supportedFileTypes": [
+        "image",
+        "pdf",
+        "docx",
+        "xlsx",
+        "pptx",
+        "text"
+      ]
+    },
+    {
+      "accessTier": "premium",
+      "id": "claude-sonnet-5.5",
+      "label": "Claude Sonnet 5.5",
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "points": 4,
+      "supportedFileTypes": [
+        "image"
+      ]
+    },
+    {
+      "accessTier": "premium",
+      "id": "claude-opus-5.5",
+      "label": "Claude Opus 5.5",
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "points": 10,
+      "supportedFileTypes": [
+        "image"
+      ]
+    },
+    {
+      "accessTier": "premium",
+      "id": "gpt-6-astra",
+      "label": "GPT 6 Astra",
+      "modalities": [
+        "text",
+        "image"
+      ],
+      "points": 10,
+      "supportedFileTypes": [
+        "image"
+      ]
+    },
+    {
+      "accessTier": "premium",
+      "id": "gemini-4-argon",
+      "label": "Gemini 4 Argon",
+      "modalities": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "points": 10,
+      "supportedFileTypes": [
+        "image",
+        "pdf",
+        "docx",
+        "xlsx",
+        "pptx",
+        "text"
+      ]
+    }
+  ],
+  "hepiSettings": {
+    "general": {
+      "chatReasoningEnabled": true,
+      "keepRunningInTray": false,
+      "language": "vi",
+      "lastSeenVersion": "0.20.8",
+      "launchAtStartup": false,
+      "onboardingVersion": "1.0",
+      "postLoginOnboardingCompleted": true,
+      "saveHistory": true,
+      "theme": "light"
+    },
+    "hotkeys": {
+      "askAI": "CommandOrControl+Shift+A",
+      "captureRegion": "CommandOrControl+E",
+      "closeRegionSelector": "CommandOrControl+Shift+E",
+      "decreaseOpacity": "CommandOrControl+[",
+      "desktopToggle": "CommandOrControl+Shift+D",
+      "emergencyExit": "CommandOrControl+Alt+Q",
+      "focusInput": "CommandOrControl+Alt+L",
+      "goHome": "CommandOrControl+H",
+      "hoverCapture": "F4",
+      "increaseOpacity": "CommandOrControl+]",
+      "keyHoldCapture": "F3",
+      "launcher": "CommandOrControl+Space",
+      "moveDown": "CommandOrControl+Down",
+      "moveLeft": "CommandOrControl+Left",
+      "moveRight": "CommandOrControl+Right",
+      "moveUp": "CommandOrControl+Up",
+      "newChat": "CommandOrControl+Shift+O",
+      "submit": "CommandOrControl+Enter",
+      "switchTab": "CommandOrControl+Tab",
+      "textCapture": "CommandOrControl+Shift+C",
+      "toggleClickThrough": "CommandOrControl+M",
+      "toggleHelp": "F1",
+      "toggleQuizAnswerOverlay": "CommandOrControl+Shift+F",
+      "toggleStealthMode": "CommandOrControl+Shift+S",
+      "toggleVisibility": "CommandOrControl+\\",
+      "triggerTyping": "CommandOrControl+Shift+V"
+    },
+    "launcher": {
+      "enabled": true,
+      "exclusions": [
+        "appdata",
+        "node_modules",
+        "target",
+        "vendor",
+        "library",
+        "dist",
+        "build",
+        "coverage",
+        "windows",
+        "program files",
+        "program files (x86)",
+        "programdata"
+      ],
+      "fileSearchEnabled": true,
+      "opacity": 1,
+      "scopes": [
+        {
+          "enabled": true,
+          "isDefault": true,
+          "label": "HoangManh",
+          "path": "C:\\Users\\HoangManh"
+        }
+      ]
+    },
+    "meeting": {
+      "activeProfile": "interview",
+      "preferredTone": "none",
+      "profiles": {
+        "homework": {
+          "context": "",
+          "name": "Homework"
+        },
+        "interview": {
+          "context": "",
+          "name": "Interview"
+        },
+        "meeting": {
+          "context": "",
+          "name": "Meeting"
+        },
+        "presentation": {
+          "context": "",
+          "name": "Presentation"
+        }
+      },
+      "responseLanguage": "vi",
+      "responseLength": "complete"
+    },
+    "privacy": {
+      "contentProtected": false,
+      "hideFromTaskSwitcher": false,
+      "hideRegionCaptureVisuals": true,
+      "privilegedOptOuts": {
+        "sebClipboardBypass": false,
+        "sebDesktopLauncher": false,
+        "sebDesktopSwitch": false,
+        "sebKioskBypass": false,
+        "sebLockscreenBypass": false,
+        "sebLogFilter": false,
+        "sebPatchEnforcement": false,
+        "wdaBypass": false
+      },
+      "sebClipboardBypass": {
+        "enabled": false
+      },
+      "sebDesktopLauncher": {
+        "enabled": false
+      },
+      "sebKioskBypass": {
+        "allowSwitchDesktop": false,
+        "enabled": false
+      },
+      "sebLockscreenBypass": {
+        "enabled": true
+      },
+      "sebLogCleaner": {
+        "enabled": false
+      },
+      "sebLogFilter": {
+        "enabled": false
+      },
+      "sebPatchEnforcement": {
+        "enabled": false
+      },
+      "stealthModeEnabled": true,
+      "wdaBypass": {
+        "enabled": false,
+        "processNames": [
+          "SafeExamBrowser",
+          "runningexam",
+          "UTHSEB"
+        ]
+      }
+    },
+    "quiz": {
+      "answerOverlay": {
+        "customPosition": null,
+        "durationSeconds": 0,
+        "enabled": false,
+        "fontSize": 18,
+        "opacity": 0.9,
+        "showSearching": true
+      },
+      "mode": "fast",
+      "savedRegion": {
+        "height": 695,
+        "width": 1186,
+        "x": 117,
+        "y": 157
+      },
+      "useLastRegion": false
+    },
+    "textGrabber": {
+      "autoSubmit": false,
+      "enabled": true,
+      "showCaptureToast": true
+    },
+    "window": {
+      "alwaysOnTop": true,
+      "opacity": 1,
+      "topmostKeeperEnabled": true
+    }
+  }
+}

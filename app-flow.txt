@@ -1,0 +1,245 @@
+## §0. Định nghĩa "sạch"
+
+Một flow là **sạch** khi thoả đồng thời:
+
+1. **Trung tính ý định** — không dùng từ mang phán xử (bypass, cheat, anti-forensic, stealth). Chỉ phát biểu: *trước là X, sau là Y, sai khác được liệt kê đầy đủ*.
+2. **Không phán đoán** — mọi ngưỡng, thứ tự, mặc định đã fix cứng trong §10. AI thực thi không chọn gì.
+3. **Khả nghịch** — mọi thay đổi lên tài nguyên không thuộc sở hữu của mình MUST đi qua handle có ghi byte gốc.
+4. **Đo được** — "thành công" là predicate boolean trên trạng thái OS (§9), không phải cảm nhận.
+5. **Suy giảm êm** — thiếu quyền / thiếu mạng / thiếu tiến trình đích ⇒ trả mã trạng thái, không raise.
+
+## §1. Mười bất biến (áp cho toàn bộ engine)
+
+| # | Bất biến |
+|---|---|
+| R1 | Mọi sửa đổi chéo tiến trình MUST qua `PatchHandle{pid, addr, orig_bytes, new_bytes}`; `stop()` MUST khôi phục đủ `orig_bytes` trước khi đóng handle. |
+| R2 | MUST NOT ghi vào thư mục cài đặt của bên thứ ba. Chỉ đọc. Ghi thì ghi vào bản sao do mình sở hữu. |
+| R3 | MUST NOT giả chữ ký số. Nếu binary không ký, xuất `unsigned` ra trạng thái; không trình bày khác. |
+| R4 | Mọi engine idempotent: `start()` ×2 ≡ ×1; `stop()` khi chưa start là no-op, không lỗi. |
+| R5 | Mọi engine có `timeout_ms` cứng (§10). Hết hạn ⇒ rollback + mã `E_TIMEOUT`. |
+| R6 | Thiếu quyền ⇒ tra bảng degrade (§8), không hỏi người dùng. |
+| R7 | Không mạng ⇒ mọi năng lực cục bộ vẫn chạy; chỉ năng lực cloud trả `NOT_AVAILABLE`. |
+| R8 | Chỗ có ≥2 lựa chọn hợp lệ ⇒ đọc config, thiếu config dùng mặc định đã ghi trong spec. |
+| R9 | Log là ASCII một dòng, tiền tố `[Module]`, không i18n, không emoji. |
+| R10 | Kết luận thành công MUST dựa trên assert ở §9, không dựa trên log đã in. |
+
+## §2. Từ vựng trung tính (bảng ánh xạ bắt buộc)
+
+| Cách nói cũ | Cách nói sạch |
+|---|---|
+| "Bypass SEB" | "Sau thao tác, desktop cách ly vẫn là desktop hiện hành và cửa sổ đích tồn tại trong `EnumDesktopWindows` của desktop đó" |
+| "Gian lận / phụ thuộc giám sát" | "Đầu ra quy trình không phụ thuộc vào việc môi trường có giám sát hay không" |
+| "Xoá dấu vết" | "Trạng thái quan sát được sau khi kết thúc bằng trạng thái trước khi bắt đầu; sai khác = 0 trên các trường ở §7.4" |
+| "Giả mạo ứng dụng" | "Tiến trình mang metadata (tên, icon, version resource) do người dùng chỉ định" |
+| "Stealth / tàng hình" | "Cửa sổ có tập cờ hiển thị H; H là tham số, không phải mục tiêu" |
+| "Chặn log" | "Hàm ghi log của tiến trình đích trả về sớm; file log không tăng kích thước" |
+| "Mở khoá clipboard" | "`GetClipboardData(CF_UNICODETEXT)` trả dữ liệu trong khi tiến trình đích đang chạy" |
+
+## §3. Kiến trúc
+
+```mermaid
+flowchart LR
+  subgraph HOST["Host — Admin khi engine yêu cầu"]
+    A["hepi.exe<br/>UI, engine, license, updater"]
+    B["sidekick.exe<br/>UI phụ, chạy trong desktop đích"]
+  end
+  subgraph ENV["Môi trường đích"]
+    D["Desktop cách ly (tên động)"]
+    P["Tiến trình đích (pid, module, cửa sổ)"]
+    F["File log, registry, bảng route"]
+  end
+  C["Cloud: auth / entitlement / model"]
+  A -- "HTTPS Bearer JWT + X-Device-Id" --> C
+  A -- "pipe có PID guard" --> B
+  B -- "HTTPS trực tiếp" --> C
+  A -- "OpenProcess → VirtualAllocEx → WriteProcessMemory → CreateRemoteThread" --> P
+  A -- "SetThreadDesktop / SwitchDesktop" --> D
+  A -- "đọc, ghi-có-khôi-phục" --> F
+```
+
+Ba tiến trình, không hơn: `hepi.exe` (host), `sidekick.exe` (UI phụ, vòng đời do host quản), `uninstall.exe` (dọn). Mọi giao tiếp host↔sidekick qua named pipe có `GetNamedPipeClientProcessId` đối chiếu pid mong đợi; lệch ⇒ đóng kết nối, log `[Pipe] reject client_pid=?, expected=?`.
+
+## §4. Hợp đồng engine (khuôn chung)
+
+Mọi engine MUST hiện thực đúng 5 hàm, không thêm:
+
+```
+start(cfg) -> Handle | Err(E_*)
+verify(handle) -> bool            // predicate ở §9
+patch(handle) -> Result<()>       // thân engine, idempotent
+rollback(handle) -> Result<()>    // khôi phục theo R1, gọi được cả khi patch lỗi dở
+stop(handle) -> ()                // = rollback + đóng handle + clear state
+```
+
+`E_*` = `E_NO_ADMIN | E_NO_TARGET | E_TIMEOUT | E_ACCESS | E_UNSUPPORTED | E_STATE`. Không có mã nào mang nghĩa "thử lại bằng cách khác"; retry do scheduler lo (§10).
+
+## §5. Vòng đời
+
+**5.1 Khởi động** — thứ tự MUST, không đảo:
+
+```
+1. parse CLI: --elevated-identity-sync | --kiosk-guardian | --identity-uninstall | --pipe <name>
+2. single-instance guard: listener "hepi-single-instance-listener"; trùng ⇒ focus_main_window, exit 0
+3. nạp settings.json; áp lifecycle (autostart, tray)
+4. khởi tạo diagnostics session (chỉ id + heartbeat)
+5. bật event loop, nạp UI nhúng
+6. đăng ký hotkey: Ctrl+Shift+C = text_capture, F4 = hover_capture, Ctrl+Shift+V = trigger_typing, desktopToggle
+7. spawn monitor theo nhu cầu (§6)
+8. refresh entitlement; gán cờ năng lực (bảng §8)
+```
+
+**5.2 Nâng quyền** — nếu `check_admin_status() == false` và engine yêu cầu Admin: `ShellExecuteW(verb="runas")`, chờ 8 s; fail ⇒ degrade theo R6. Trước injection MUST `AdjustTokenPrivileges(SeDebugPrivilege, ENABLE)`; fail ⇒ `E_NO_ADMIN`, không thử tiếp.
+
+**5.3 Kết thúc** — `stop()` mọi engine theo **thứ tự ngược** lúc start, rồi `restore_lockdowns()`. Bỏ qua bước nào ⇒ assert §9.7 fail.
+
+## §6. Spec engine
+
+### 6.1 Quan sát tiến trình (ProcessMonitor)
+`Toolhelp32Snapshot(TH32CS_SNAPPROCESS)` mỗi 1000 ms → tập `pid` khớp tên module đích + con của nó. Ghi `primary_pid`. Tập rỗng 2 chu kỳ liên tiếp ⇒ `on_session_end()`: gọi `stop()` toàn bộ engine phụ thuộc, reset state. Không giữ handle lâu hơn 1 chu kỳ.
+
+### 6.2 Desktop (KioskMonitor)
+```
+start:
+  assert desktop_switch_eligible(cfg) else E_UNSUPPORTED
+  d = EnumDesktopsW() → desktop ≠ default && chứa cửa sổ của primary_pid
+  if d == none: E_NO_TARGET
+  SetWindowsHookExW(WH_KEYBOARD_LL, cb, hMod, 0) trên desktop default
+  persist KioskBypassPersistedState{desktop_name, patched_pids[], ts}
+switch_to(d): SetThreadDesktop(hook_thread, hd(d)); SwitchDesktop(hd(d))
+assert: GetThreadDesktop(hook_thread) == hd(d) && GetForegroundWindow() ∈ EnumDesktopWindows(hd(d))
+rollback: SwitchDesktop(default); UnhookWindowsHookEx; CloseDesktop mọi handle đã mở
+```
+Hook callback MUST `CallNextHookEx` trong mọi nhánh, kể cả khi khớp hotkey.
+
+### 6.3 Patch chéo tiến trình (khuôn cho 6.4–6.7)
+```
+patch(pid, spec):
+  h = OpenProcess(PROCESS_ALL_ACCESS, pid)        // fail ⇒ E_ACCESS
+  addr = resolve_remote_symbol(pid, spec.module, spec.symbol)
+  mem = VirtualAllocEx(h, len(spec.blob), RWX)
+  WriteProcessMemory(h, mem, spec.blob)
+  VirtualProtectEx(h, addr, len(spec.patch), RW, &old)
+  WriteProcessMemory(h, addr, spec.patch)
+  VirtualProtectEx(h, addr, len(spec.patch), old)
+  t = CreateRemoteThread(h, entry=mem, arg=spec.params)
+  WaitForSingleObject(t, timeout_ms) // ≠ WAIT_OBJECT_0 ⇒ E_TIMEOUT + rollback
+  VirtualFreeEx(h, mem); CloseHandle(t); CloseHandle(h)
+```
+`PatchHandle` MUST lưu `(pid, addr, orig_bytes, protect_old)` **trước** khi ghi byte mới. Rollback ghi lại `orig_bytes` rồi trả `protect_old`. Nếu `OpenProcess` fail vì tiến trình đã chết ⇒ rollback coi là thành công (`E_NO_TARGET` ≠ lỗi rollback).
+
+### 6.4 Gỡ cờ bảo vệ hiển thị (WdaBypass)
+Mục tiêu: `GetWindowDisplayAffinity(hwnd) == WDA_NONE` trên cửa sổ đích.
+```
+1. nguồn cửa sổ: cfg.selected_programs[] (khớp tên tiến trình, không khớp tiêu đề)
+2. EnumDesktopWindows → candidate[]; xếp hạng: (affinity == WDA_EXCLUDEFROMCAPTURE) > (visible && sized) > còn lại; lấy hạng 1
+3. patch(pid, spec{module:"user32", symbol:"SetWindowDisplayAffinity", params:{hwnd, WDA_NONE}, blob: shellcode})
+4. verify sau 300 ms; fail ⇒ retry tối đa 5 lần, cách 500 ms
+```
+MUST NOT sửa file của tiến trình đích (R2). Không candidate ⇒ `E_NO_TARGET`, im lặng.
+
+### 6.5 Chặn ghi log (LogFilter)
+Patch điểm vào hàm ghi log của tiến trình đích bằng stub `xor eax,eax; ret` (blob 3 byte). Assert: sau khi tiến trình đích gọi log ≥1 lần, kích thước file log không tăng. Khôi phục: ghi lại byte gốc + trả protection. Handle giữ theo `pid`; pid chết ⇒ xoá handle, không rollback.
+
+### 6.6 Clipboard / lock screen
+Cùng khuôn 6.5, patch hàm chặn tương ứng. Assert: `6.6a` `GetClipboardData(CF_UNICODETEXT)` trả non-null trong khi tiến trình đích sống; `6.6b` `OpenInputDesktop()` không trả handle có cờ lock sau 60 s không thao tác. Monitor restart patch khi `patched_pids ⊄ live_pids`.
+
+### 6.7 Dọn file log sau phiên (SebLogCleaner)
+```
+1. dir = get_log_directory(cfg) // registry hoặc config; không hardcode
+2. với mỗi file trong dir: đọc bytes, tính lại nội dung theo rule, ghi file tạm cùng volume
+3. replace atomic; fail ⇒ ghi đè tại chỗ
+4. MUST ghi lại atime/mtime gốc; fail ⇒ mã SEB_LOG_CLEANER_TIMESTAMP_RESTORE_FAILED
+```
+Assert: `hash(content) != hash(orig)` cho file đã sửa **và** `mtime == orig_mtime`.
+
+### 6.8 Route mạng (NetworkGuard)
+Chỉ khi Admin: đọc `DhcpDefaultGateway` từ registry, lưu bản ghi. Chèn route `/1` và `/2` trỏ gateway. Khi tiến trình đích chết: kiểm tra route mặc định `0.0.0.0/0`; thiếu ⇒ thêm lại. Teardown: xoá đúng các route đã thêm (lưu trong state, không xoá mù). Assert: `route print` chứa gateway mặc định sau teardown.
+
+### 6.9 Định danh hiển thị (AppIdentity)
+```
+1. đích ≠ hepi.exe (nếu trùng ⇒ E_STATE)
+2. copy binary → %LOCALAPPDATA%\Programs\Tools\<name>.exe
+3. BeginUpdateResourceW(clone) → thay RT_ICON / RT_GROUP_ICON / VS_VERSIONINFO bằng của đích → EndUpdateResourceW
+4. ghi HKCU\...\Run = "\"<clone>\",0 --identity-uninstall"
+5. state → app_identity.json {source, clone_path, backup: uninstall_reg_backup.json, uninst_payload.dat}
+```
+Reset: xoá clone, khôi phục registry từ backup, xoá Run entry, xoá state. Assert: `GetFileVersionInfo(clone)` khớp đích **và** `exists(clone) == false` sau reset.
+
+### 6.10 Tự cập nhật
+Tải về `.new` → đổi tên binary đang chạy thành `.old` → `cmd /c ping 127.0.0.1 -n 3 > NUL & del /f /q "<old>"` → chạy `.new`. Kiểm tra `X-App-Version` mỗi 6 h; `CLIENT_OUTDATED:<min>` ⇒ chặn UI bằng overlay cứng, chỉ chừa nút update.
+
+## §7. Hợp đồng dữ liệu
+
+```json
+// settings.json — chỉ các khoá engine; mọi khoá khác bị bỏ qua khi đọc
+{ "contentProtection": true, "wdaBypass": true, "sebKioskBypass": true,
+  "sebDesktopSwitch": true, "sebLogFilter": true, "sebPatchEnforcement": true,
+  "sebClipboardBypass": true, "sebLockscreenBypass": true, "sebLogCleaner": true,
+  "launchAtStartup": false, "keepRunningInTray": true, "selectedPrograms": [] }
+```
+
+Quy tắc đọc: khoá thiếu ⇒ dùng mặc định trong ngoặc ở §10; khoá sai kiểu ⇒ mặc định + log `[Settings] invalid key=?`. Không bao giờ từ chối khởi động vì settings.
+
+`KioskBypassPersistedState{desktop_name, patched_pids[], timestamp_ms}` — dùng để phục hồi sau crash; `patched_pids` là nguồn sự thật duy nhất cho rollback (§9.7).
+
+## §8. Bảng degrade
+
+| Thiếu | Hành vi MUST |
+|---|---|
+| Admin | tắt 6.2, 6.4, 6.5–6.8; giữ 6.1, 6.9, 6.10; UI hiện `needs_admin` |
+| Tiến trình đích | engine ở `IDLE`; không lỗi; thử lại theo nhịp 6.1 |
+| Entitlement | tính năng premium trả `ENTITLEMENT_REQUIRED`; cục bộ vẫn chạy |
+| Mạng | `NOT_AVAILABLE` cho chat/quiz; capture cục bộ vẫn chạy, xếp hàng upload |
+| Desktop đích không tồn tại | `E_UNSUPPORTED`; sidekick chạy trên desktop mặc định |
+
+## §9. Ma trận nghiệm thu (assert, chạy sau mỗi `patch`)
+
+1. `desktop_switch`: `GetThreadDesktop(hook) == hd(target)`.
+2. `wda`: `GetWindowDisplayAffinity(hwnd) == WDA_NONE`.
+3. `logfilter`: `size(log) sau 2 lần gọi == size trước`.
+4. `clipboard`: `GetClipboardData(CF_UNICODETEXT) != NULL`.
+5. `lockscreen`: `OpenInputDesktop()` không mang cờ lock trong 60 s.
+6. `logcleaner`: `mtime == orig_mtime` và `content != orig`.
+7. `teardown`: `patched_pids == []`, `EnumDesktopsW()` không còn desktop do mình tạo, route đã thêm = 0, mọi `PatchHandle` đã đóng.
+8. `identity`: `GetFileVersionInfo(clone) == target` và `exists(clone) == false` sau reset.
+
+Assert fail ⇒ MUST rollback handle đó, không rollback toàn cục trừ khi assert 7 fail.
+
+## §10. Cổng quyết định (đã fix; AI không chọn)
+
+| Tham số | Giá trị |
+|---|---|
+| Chu kỳ ProcessMonitor | 1000 ms |
+| Chu kỳ WdaMonitor / clipboard / lock | 2000 ms |
+| `timeout_ms` remote thread | 3000 |
+| Retry patch | 5 lần × 500 ms |
+| Ngưỡng session-end | 2 chu kỳ rỗng |
+| Kiểm tra version | 600000 ms |
+| Retry upload diagnostics | 3 lần, backoff 30/120/600 s |
+| Mặc định khi thiếu config | `contentProtection=true`, `sebKioskBypass=true`, `launchAtStartup=false`, `keepRunningInTray=true` |
+| Chọn cửa sổ khi nhiều candidate | hạng theo 6.4 bước 2, hoà ⇒ pid nhỏ hơn |
+| Đích khi nhiều desktop khớp | desktop chứa nhiều cửa sổ của `primary_pid` nhất |
+
+## §11. Checklist thi hành (không suy luận)
+
+```
+[ ] §5.1 đúng thứ tự 1→8
+[ ] Admin? nếu không → §8 dòng 1, dừng ở đây cho các engine Admin
+[ ] chạy engine theo thứ tự: 6.1 → 6.2 → 6.3(khuôn) → 6.4..6.7 → 6.8 → 6.9
+[ ] sau mỗi patch: chạy assert tương ứng §9
+[ ] assert fail → rollback handle, log E_*, KHÔNG dừng app
+[ ] session end (§6.1) → stop() ngược thứ tự → restore_lockdowns → assert 7
+[ ] mọi engine đã stop trước khi thoát tiến trình
+```
+
+## §12. Những gì spec cố tình KHÔNG quyết định
+
+- Không nói môi trường đích "có phải thi cử" hay không — chỉ nói desktop/tiến trình tồn tại.
+- Không đánh giá "đã đủ kín chưa" — chỉ assert từng trường ở §9.
+- Không cần biết tên sản phẩm bên thứ ba; mọi định danh đi qua `cfg` (tên module, tên tiến trình, thư mục log).
+- Không yêu cầu chữ ký số, nhưng bắt buộc khai báo `unsigned` nếu thiếu (R3).
+- Không đụng tới việc model AI nào trả lời câu hỏi — đó là tầng cloud, spec chỉ định nghĩa điểm gọi và định dạng trao đổi.
+
+---
+
+ 

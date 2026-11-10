@@ -1,0 +1,10 @@
+﻿python : 
+At line:1 char:1
++ python -m pip install --quiet pefile 2>&1 | Out-File -Encoding utf8 ' ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[notice] A new release of pip is available: 26.1.2 -> 26.3
+[notice] To update, run: C:\Users\HoangManh\AppData\Local\Python\pythoncore-3.14-64\python.exe -m pip install 
+--upgrade pip

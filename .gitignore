@@ -1,0 +1,17 @@
+/target
+**/target
+node_modules
+dist
+*.old
+crates/hepi-app/gen/
+
+# recon artifacts too large for git (kept locally)
+docs/raw/pe-full.txt
+docs/raw/bin/
+docs/raw/nsis/
+docs/raw/analysis/
+docs/raw/frontend/
+
+# sensitive runtime captures
+docs/raw/runtime/appdata/auth.json
+docs/raw/runtime/appdata/entitlement.json

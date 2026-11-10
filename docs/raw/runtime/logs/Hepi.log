@@ -1,0 +1,62 @@
+[2026-11-10][06:02:36][INFO][easy_assist_lib::commands::window] [Window] Protected 1 Tao Thread Event Target window(s) against external close/hide
+[2026-11-10][06:02:37][INFO][easy_assist_lib::modules::launcher::service] launcher_rebuild_requested trigger=settings generation=2
+[2026-11-10][06:02:37][INFO][easy_assist_lib] Launcher index service initialized
+[2026-11-10][06:02:37][INFO][easy_assist_lib] Process monitor starting in background thread
+[2026-11-10][06:02:37][INFO][easy_assist_lib::modules::seb_verifier] [SebVerifier] Background SEB visibility verifier started
+[2026-11-10][06:02:37][INFO][easy_assist_lib::commands::process_monitor] Detection method: Windows Toolhelp32 (WinAPI, SEB-safe)
+[2026-11-10][06:02:37][INFO][easy_assist_lib::modules::kiosk_guardian] [KioskGuardian] Registered for WER auto-restart
+[2026-11-10][06:02:37][INFO][easy_assist_lib] [GlobalShortcuts] Registering Rust-side global shortcuts
+[2026-11-10][06:02:37][INFO][easy_assist_lib] [GlobalShortcuts] Registered textCapture shortcut 'CommandOrControl+Shift+C'
+[2026-11-10][06:02:37][INFO][easy_assist_lib] [GlobalShortcuts] Registered hoverCapture shortcut 'F4'
+[2026-11-10][06:02:37][INFO][easy_assist_lib] [GlobalShortcuts] Registered triggerTyping shortcut 'CommandOrControl+Shift+V'
+[2026-11-10][06:02:37][INFO][easy_assist_lib] [GlobalShortcuts] Registered desktopToggle shortcut 'CommandOrControl+Shift+D'
+[2026-11-10][06:02:37][INFO][easy_assist_lib] [GlobalShortcuts] Registered emergencyExit shortcut 'CommandOrControl+Alt+Q'
+[2026-11-10][06:02:37][INFO][easy_assist_lib::modules::cross_desktop] [CrossDesktop] APP_EMERGENCY_EXIT = VK=0x51 ctrl=true shift=false alt=true
+[2026-11-10][06:02:37][INFO][easy_assist_lib] [GlobalShortcuts] Registered launcher shortcut 'CommandOrControl+Space'
+[2026-11-10][06:02:37][INFO][easy_assist_lib::modules::network_guard] [NetworkGuard] Cached default gateway at startup: 192.168.0.1
+[2026-11-10][06:02:37][INFO][webview:<anonymous>@http://tauri.localhost/_app/immutable/nodes/2.CRjYu3zr.js:1:44037] 🔥 Main window mounted and ready
+[2026-11-10][06:02:37][INFO][webview:ye.checkVersionMigration@http://tauri.localhost/_app/immutable/chunks/XOqDxkT6.js:1:3940] Checking version migration: current=0.20.8, lastSeen=0.20.8
+[2026-11-10][06:02:37][INFO][easy_assist_lib::modules::topmost_keeper] [topmost_keeper] Enabled set to true
+[2026-11-10][06:02:37][INFO][webview:F.initialize@http://tauri.localhost/_app/immutable/chunks/B8tDlEB2.js:1:6297] TypingService initialized
+[2026-11-10][06:02:37][INFO][webview:Object.l [as loadAndApply]@http://tauri.localhost/_app/immutable/nodes/2.CRjYu3zr.js:1:30585] Settings loaded with taskbar hiding deferred until services are initialized
+[2026-11-10][06:02:37][INFO][easy_assist_lib] Region selector pre-loaded in background
+[2026-11-10][06:02:37][INFO][webview:Jt.registerCaptureRegionShortcut@http://tauri.localhost/_app/immutable/chunks/DePQxbWL.js:3:16588] Capture region shortcut registered: CommandOrControl+E
+[2026-11-10][06:02:37][INFO][webview:qt@http://tauri.localhost/_app/immutable/chunks/DYD9U6mL.js:2:1321] [Version] Version check passed: 0.20.8 >= 0.20.8
+[2026-11-10][06:02:38][INFO][webview:Jt.registerKeyHoldShortcut@http://tauri.localhost/_app/immutable/chunks/DePQxbWL.js:3:17607] Key-hold capture shortcut registered: F3
+[2026-11-10][06:02:38][INFO][webview:Jt.startMonitoring@http://tauri.localhost/_app/immutable/chunks/DePQxbWL.js:3:23396] Starting shortcut monitoring
+[2026-11-10][06:02:38][INFO][webview:Jt.initSidekickConflictResolution@http://tauri.localhost/_app/immutable/chunks/DePQxbWL.js:3:6438] [ShortcutService] Listening for sidekick-active, sidekick-visibility-changed, and sidekick-click-through-changed events
+[2026-11-10][06:02:38][INFO][webview:Jt.performInitialize@http://tauri.localhost/_app/immutable/chunks/DePQxbWL.js:3:4353] Phím tắt đã được khởi tạo thành công
+[2026-11-10][06:02:38][INFO][webview:j.initialize@http://tauri.localhost/_app/immutable/chunks/CW4Hi0DP.js:1:911] TauriService initialized successfully
+[2026-11-10][06:02:38][INFO][webview:w.initialize@http://tauri.localhost/_app/immutable/chunks/YXdOBzpY.js:1:1275] KeyHoldCaptureService initialized (Rust-based)
+[2026-11-10][06:02:38][INFO][webview:w@http://tauri.localhost/_app/immutable/nodes/2.CRjYu3zr.js:1:35481] Program detection service initialized
+[2026-11-10][06:02:38][INFO][webview:w@http://tauri.localhost/_app/immutable/nodes/2.CRjYu3zr.js:1:35693] WDA bypass service initialized
+[2026-11-10][06:02:38][WARN][webview:w@http://tauri.localhost/_app/immutable/nodes/2.CRjYu3zr.js:1:38140] SEB lockscreen bypass enabled but entitlement is unavailable - skipping auto-start
+[2026-11-10][06:02:38][INFO][webview:Zt.initialize@http://tauri.localhost/_app/immutable/chunks/DePQxbWL.js:2:4766] GhostModeService: Initializing
+[2026-11-10][06:02:38][INFO][webview:w@http://tauri.localhost/_app/immutable/nodes/2.CRjYu3zr.js:1:38325] Ghost Mode service initialized
+[2026-11-10][06:02:38][INFO][webview:w@http://tauri.localhost/_app/immutable/nodes/2.CRjYu3zr.js:1:38451] Text grabber listener initialized
+[2026-11-10][06:02:38][INFO][easy_assist_lib::commands::text_grabber] Text Grabber started
+[2026-11-10][06:02:38][INFO][webview:Object.start@http://tauri.localhost/_app/immutable/chunks/BVKn8OIq.js:2:363] Text Grabber started
+[2026-11-10][06:02:38][INFO][webview:w@http://tauri.localhost/_app/immutable/nodes/2.CRjYu3zr.js:1:38531] Text grabber started automatically
+[2026-11-10][06:02:38][INFO][webview:w@http://tauri.localhost/_app/immutable/nodes/2.CRjYu3zr.js:1:38673] Question selection listener initialized
+[2026-11-10][06:02:38][INFO][webview:w@http://tauri.localhost/_app/immutable/nodes/2.CRjYu3zr.js:1:38829] Hover capture guidance listener initialized
+[2026-11-10][06:02:38][INFO][webview:w@http://tauri.localhost/_app/immutable/nodes/2.CRjYu3zr.js:1:38985] Navigate-to-tab listener initialized
+[2026-11-10][06:02:38][INFO][webview:ye.checkForUpdates@http://tauri.localhost/_app/immutable/chunks/XOqDxkT6.js:1:1883] Checking for updates...
+[2026-11-10][06:02:38][INFO][webview:<anonymous>@http://tauri.localhost/_app/immutable/nodes/2.CRjYu3zr.js:1:34210] Language, early access, authentication, and onboarding verified, continuing to app
+[2026-11-10][06:02:38][INFO][webview:ye.checkForUpdates@http://tauri.localhost/_app/immutable/chunks/XOqDxkT6.js:1:2160] No updates available
+[2026-11-10][06:02:38][INFO][webview:Object.o [as applyDeferredPrivacySettings]@http://tauri.localhost/_app/immutable/nodes/2.CRjYu3zr.js:1:30861] Deferred taskbar privacy setting applied after service initialization
+[2026-11-10][06:02:38][INFO][webview:F.cleanup@http://tauri.localhost/_app/immutable/chunks/B8tDlEB2.js:1:7570] TypingService cleaned up
+[2026-11-10][06:03:00][INFO][easy_assist_lib::modules::launcher::service] launcher_rebuild_finished trigger=settings generation=2 duration_ms=21149 scope_count=1 item_count=71830 skip_count=0
+[2026-11-10][06:03:12][INFO][webview:<anonymous>@http://tauri.localhost/_app/immutable/nodes/2.CRjYu3zr.js:1:40829] Window resize requested via eventBus
+[2026-11-10][06:03:12][INFO][webview:F.initialize@http://tauri.localhost/_app/immutable/chunks/B8tDlEB2.js:1:6297] TypingService initialized
+[2026-11-10][06:03:16][INFO][webview:F.cleanup@http://tauri.localhost/_app/immutable/chunks/B8tDlEB2.js:1:7570] TypingService cleaned up
+[2026-11-10][06:03:57][INFO][easy_assist_lib::commands::diagnostics] [Diagnostics] Native session marker marked clean exit
+[2026-11-10][06:03:57][INFO][easy_assist_lib::commands::kiosk_monitor] [KioskMonitor] Initiating clean application exit (source='exit_app_command', code=0)
+[2026-11-10][06:03:57][INFO][easy_assist_lib::modules::kiosk_guardian] [KioskGuardian] Unregistered from WER auto-restart
+[2026-11-10][06:03:57][INFO][easy_assist_lib::commands::diagnostics] [Diagnostics] Native session marker marked clean exit
+[2026-11-10][06:03:57][INFO][easy_assist_lib] Process monitor stopped due to app exit
+[2026-11-10][06:03:57][INFO][easy_assist_lib] WDA monitor stopped due to app exit
+[2026-11-10][06:03:57][INFO][easy_assist_lib] Kiosk monitor stopped due to app exit
+[2026-11-10][06:03:57][INFO][easy_assist_lib] Patch enforcement monitor stopped due to app exit
+[2026-11-10][06:03:57][INFO][easy_assist_lib] Keyboard hook uninstalled on app exit
+[2026-11-10][06:03:58][INFO][easy_assist_lib::commands::diagnostics] [Diagnostics] Native session marker marked clean exit
+[2026-11-10][06:03:58][INFO][easy_assist_lib::commands::diagnostics] [Diagnostics] Native session marker marked clean exit
