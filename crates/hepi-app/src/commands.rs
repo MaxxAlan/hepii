@@ -3,7 +3,7 @@
 use hepi_core::settings::Settings;
 use hepi_core::{
     app_identity, capture, desktop, entitlement, launcher, log, log_cleaner, network_guard,
-    process_monitor, settings, util, wda_bypass, E,
+    process_monitor, profiles, settings, util, wda_bypass, E,
 };
 use tauri::State;
 
@@ -198,8 +198,20 @@ pub fn disable_network_guard() {
 }
 
 #[tauri::command]
-pub fn apply_app_identity(source: String, name: String, version: String) -> Result<app_identity::IdentityState, String> {
-    app_identity::apply(&source, &name, &version).map_err(map)
+pub fn apply_app_identity(
+    source: String,
+    name: String,
+    version: String,
+) -> Result<app_identity::IdentityState, String> {
+    // Giữ nguyên hình dạng IPC: `name` chọn profile, `source` là tệp visual,
+    // `version` không còn dùng (đọc từ PE của nguồn) nhưng vẫn nhận để không
+    // phá frontend cũ.
+    let _ = version;
+    let profile = profiles::by_name(&name).unwrap_or_else(|| {
+        profiles::by_name(profiles::DEFAULT_PROFILE).expect("default profile")
+    });
+    let visual = if source.trim().is_empty() { None } else { Some(source.as_str()) };
+    app_identity::apply(profile, visual).map_err(map)
 }
 
 #[tauri::command]

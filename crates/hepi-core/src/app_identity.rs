@@ -10,6 +10,7 @@ use windows::Win32::System::Registry::{
     KEY_WRITE, REG_SZ,
 };
 
+use crate::profiles::Profile;
 use crate::util::to_wide;
 use crate::{log, pe_patch, E, Res};
 
@@ -69,30 +70,47 @@ pub fn signature_state(path: &str) -> String {
     "unsigned".into()
 }
 
-pub fn apply(source_exe: &str, display_name: &str, version: &str) -> Res<IdentityState> {
+/// P1 — nhận `&Profile` thay vì chuỗi rời. Logic clone giữ nguyên.
+/// `visual_source` là tệp lấy icon/version/string; `None` ⇒ giữ visual của chính app.
+pub fn apply(p: &Profile, visual_source: Option<&str>) -> Res<IdentityState> {
     let own = std::env::current_exe().map_err(|_| E::NoTarget)?;
-    if own.to_string_lossy().eq_ignore_ascii_case(source_exe) {
-        return Err(E::State);
-    }
     let dir = clone_dir().ok_or(E::Unsupported)?;
     fs::create_dir_all(&dir).map_err(|_| E::Access)?;
-    let clone = dir.join(format!("{}.exe", display_name));
+
+    let local = std::env::var("LOCALAPPDATA").map_err(|_| E::Unsupported)?;
+    let clone = p.clone_path(std::path::Path::new(&local));
+    if let Some(parent) = clone.parent() {
+        fs::create_dir_all(parent).map_err(|_| E::Access)?;
+    }
+    if clone.exists() {
+        let _ = fs::remove_file(&clone);
+    }
     fs::copy(&own, &clone).map_err(|_| E::Access)?;
 
-    if let Err(e) = pe_patch::copy_visuals(source_exe, &clone.to_string_lossy()) {
-        log::err("AppIdentity", e, "resource patch degraded");
+    let src = visual_source.map(|s| s.to_string()).unwrap_or_default();
+    if !src.is_empty() {
+        let c = clone.to_string_lossy().to_string();
+        if let Err(e) = pe_patch::copy_visuals(&src, &c) {
+            log::err("AppIdentity", e, "resource patch degraded");
+        }
+        if let Err(e) = pe_patch::copy_strings(&src, &c) {
+            log::err("AppIdentity", e, "string table degraded");
+        }
     }
-    run_key_write(display_name, &format!("\"{}\",0 --identity-uninstall", clone.display()))?;
+
+    run_key_write(p.run_value_name, &format!("\"{}\",0 --identity-uninstall", clone.display()))?;
 
     let st = IdentityState {
-        source: source_exe.to_string(),
+        source: src.clone(),
         clone_path: clone.to_string_lossy().to_string(),
-        version: version.to_string(),
-        signature: signature_state(source_exe),
+        version: "0.0.0".to_string(), // TODO(sig): đọc từ GetFileVersionInfoW của src
+        signature: signature_state(&src),
     };
-    if let Some(p) = state_path() {
-        let _ = fs::create_dir_all(p.parent().unwrap_or(&dir));
-        let _ = fs::write(&p, serde_json::to_vec_pretty(&st).unwrap_or_default());
+    if let Some(sp) = state_path() {
+        if let Some(parent) = sp.parent() {
+            let _ = fs::create_dir_all(parent);
+        }
+        let _ = fs::write(&sp, serde_json::to_vec_pretty(&st).unwrap_or_default());
     }
     log::kv("AppIdentity", "Identity applied", "clone", &st.clone_path);
     Ok(st)

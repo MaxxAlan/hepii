@@ -15,3 +15,8 @@ docs/raw/frontend/
 # sensitive runtime captures
 docs/raw/runtime/appdata/auth.json
 docs/raw/runtime/appdata/entitlement.json
+
+# secrets
+.env
+.env.local
+.env.*.local

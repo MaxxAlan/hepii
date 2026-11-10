@@ -11,6 +11,9 @@ pub struct Tuning {
     pub session_end_empty_cycles: u8,
     pub version_check_ms: u64,
     pub diag_backoff_s: [u64; 3],
+    /// Venice HTTP — connect và toàn bộ trao đổi.
+    pub http_connect_timeout_ms: u32,
+    pub http_timeout_ms: u32,
 }
 
 pub const TUNING: Tuning = Tuning {
@@ -23,6 +26,8 @@ pub const TUNING: Tuning = Tuning {
     session_end_empty_cycles: 2,
     version_check_ms: 600_000,
     diag_backoff_s: [30, 120, 600],
+    http_connect_timeout_ms: 10_000,
+    http_timeout_ms: 30_000,
 };
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
