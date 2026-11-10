@@ -1,0 +1,659 @@
+﻿hepi-strings.txt:269042: 01bea3a2  kzaob
+hepi-strings.txt:269669: 01c10080  routedelete0.0.0.0mask128.0.0.0[NetworkGuard] Hepi is not running as Administrator. Route defense requires elevation.src\modules\network_guard.rs
+hepi-strings.txt:269670: 01c10112  easy_assist_lib::modules::network_guardnetwork-defense-needs-adminQ[NetworkGuard] Default route 0.0.0.0/0 missing after proctor exit; restoring via
+hepi-strings.txt:269671: 01c101a8  add[NetworkGuard] Split route defense disabled and cleaned upprintnetshinterfaceipv4showconfigdefault gatewaygatewaySYSTEM\CurrentControlSet\Services\Tcpip\Parameters\InterfacesDhcpDefaultGatewayDefaultGatewayprogram filesLOCALAPPDATAProgramsHepi
+hepi-strings.txt:269831: 01c15492  [LogFilter] Applying
+hepi-strings.txt:269834: 01c154e2  easy_assist_lib::modules::log_filter::helpers&[LogFilter] Memory unprotected (old=0x
+hepi-strings.txt:269835: 01c15542  [LogFilter] Original bytes: [
+hepi-strings.txt:269836: 01c15563  [LogFilter] Patch applied, protection restored
+hepi-strings.txt:269852: 01c15b1b  <8launcher_activation_tracked_fallback_attempt error_code=
+hepi-strings.txt:270156: 01c1efa8  seb-keyboard-hook,[CrossDesktop] Failed to spawn hook thread:
+hepi-strings.txt:270157: 01c1efe8  easy_assist_lib::modules::cross_desktopG[CrossDesktop] hook replacement queued until current thread exits (TID=
+hepi-strings.txt:270235: 01c21d01  Clauncher_journal_fallback reason=identity_incomplete volume_serial=
+hepi-strings.txt:270238: 01c21dc8  Blauncher_journal_fallback reason=upsert_identity_unavailable path=
+hepi-strings.txt:270239: 01c21e28  Blauncher_journal_fallback reason=subtree_identity_incomplete path=
+hepi-strings.txt:270241: 01c21ea0  journal subtree replay reached crawl limit;launcher_journal_fallback reason=nested_scope_subtree path=
+hepi-strings.txt:270242: 01c21f20  Llauncher_journal_fallback reason=ambiguous_hard_link_identity volume_serial=
+hepi-strings.txt:270244: 01c21fa0  Mlauncher_journal_fallback reason=unresolved_link_count_unknown volume_serial=
+hepi-strings.txt:270246: 01c22020  Glauncher_journal_fallback reason=live_hard_link_identity volume_serial=
+hepi-strings.txt:270262: 01c22270  launcher_journal_fallback reason=checkpoint_unavailable
+hepi-strings.txt:270263: 01c222c0  5launcher_journal_fallback reason=replay_failed error=
+hepi-strings.txt:270279: 01c22775  CommandOrControl+Space([CrossDesktop] SetThreadDesktop failed:
+hepi-strings.txt:270280: 01c227d0  +[CrossDesktop] Hook thread on SEB desktop '
+hepi-strings.txt:270281: 01c22818  [CrossDesktop] WH_KEYBOARD_LL installed
+hepi-strings.txt:270283: 01c22898  +[CrossDesktop] GetMessageW returned error:
+hepi-strings.txt:270284: 01c228e0  [CrossDesktop] Hook thread exited
+hepi-strings.txt:270285: 01c22920  )[CrossDesktop] SetWindowsHookExW failed:
+hepi-strings.txt:270286: 01c22969  [CrossDesktop] OpenDesktopW('
+hepi-strings.txt:270288: 01c229b0  0[CrossDesktop] Requesting hook thread stop (TID=
+hepi-strings.txt:270289: 01c229e5  2[CrossDesktop] PostThreadMessageW(WM_QUIT) to TID=
+hepi-strings.txt:270291: 01c22a25  %[CrossDesktop] DESKTOP_TOGGLE = VK=0x
+hepi-strings.txt:270295: 01c22a6b  ([CrossDesktop] DESKTOP_SWITCH_ENABLED =
+hepi-strings.txt:270296: 01c22a96  )[CrossDesktop] APP_EMERGENCY_EXIT = VK=0x
+hepi-strings.txt:270512: 01c29f76  sidekick-active![KioskMonitor] sidekick-active =
+hepi-strings.txt:270514: 01c29fc7  easy_assist_lib::commands::kiosk_monitor[KioskMonitor] Desktop toggle: bypass not active, ignoring[KioskMonitor] Desktop toggle: allowSwitchDesktop disabled, ignoring[KioskMonitor] No SEB desktop cached, cannot switch
+hepi-strings.txt:270516: 01c2a0b2  tauri_commandDefaultK[KioskMonitor] Cross-desktop switch denied because entitlement is missing:
+hepi-strings.txt:270517: 01c2a114  desktop-switched)[KioskMonitor] Switch to Default failed:
+hepi-strings.txt:270518: 01c2a150  '[KioskMonitor] Emergency exit ignored:
+hepi-strings.txt:270520: 01c2a197  5[KioskMonitor] Emergency exit (Ctrl+Q) from desktop '
+hepi-strings.txt:270522: 01c2a1ef  3[KioskMonitor] Emergency switch to Default failed:
+hepi-strings.txt:270523: 01c2a225  [KioskMonitor] Emergency exit ignored: already on Default desktop
+hepi-strings.txt:270525: 01c2a285  =[KioskMonitor] Ignoring exit request from stale sidekick PID=
+hepi-strings.txt:270527: 01c2a2d3  :[KioskMonitor] Initiating clean application exit (source='
+hepi-strings.txt:270529: 01c2a31c  G[KioskMonitor] Clean exit: switching from Default back to SEB desktop '
+hepi-strings.txt:270531: 01c2a398  A[KioskMonitor] Clean exit: failed to switch back to SEB desktop '
+hepi-strings.txt:270532: 01c2a400  V[KioskMonitor] Application exit already in progress; ignoring duplicate trigger from '
+hepi-strings.txt:270533: 01c2a45b  [KioskMonitor] Confirmed SEB exit detected
+hepi-strings.txt:270535: 01c2a4c8  [KioskMonitor] Exhausted confirmed-exit attempts to switch back to Default desktopr[KioskMonitor] SwitchDesktop returned success after confirmed SEB exit, but input desktop is not Default (attempt
+hepi-strings.txt:270536: 01c2a594  R[KioskMonitor] Switched back to Default desktop after confirmed SEB exit (attempt
+hepi-strings.txt:270537: 01c2a5ee  Z[KioskMonitor] Failed to switch back to Default desktop after confirmed SEB exit (attempt
+hepi-strings.txt:270603: 01c2b41a  hepi-sidekick-inithepi-sidekick-settings0[KioskMonitor] Sidekick settings sync disabled:
+hepi-strings.txt:270604: 01c2b475  easy_assist_lib::commands::kiosk_monitor::sidekickhepi-sidekick-launcher.[KioskMonitor] Sidekick Launcher unavailable:
+hepi-strings.txt:270605: 01c2b4ee  hepi-sidekick-history-[KioskMonitor] Sidekick history unavailable:
+hepi-strings.txt:270607: 01c2b53d  --pipesettings.jsonhttps://api.hepi.helpHEPI_SIDEKICK_SERVER-[KioskMonitor] Sidekick launched on desktop '
+hepi-strings.txt:270609: 01c2b5d8  Sidekick session changed during launch'[KioskMonitor] Sidekick launch failed:
+hepi-strings.txt:270610: 01c2b629  [KioskMonitor] Sidekick PID=
+hepi-strings.txt:270615: 01c2b6bc  [KioskMonitor] Sidekick restore cooldown active (less than 60s since last attempt).src\commands\kiosk_monitor\sidekick\restore.rs
+hepi-strings.txt:270616: 01c2b758  easy_assist_lib::commands::kiosk_monitor::sidekick::restore[KioskMonitor] Max sidekick restore attempts (2) reached for this session.[KioskMonitor] Sidekick restore disabled (quarantine detected in current session).[KioskMonitor] Sidekick background restore already in progress, skipping.
+hepi-strings.txt:270742: 01c30ecf  LAUNCHER_OPEN_FAILED*launcher_activation_fallback_failed error=
+hepi-strings.txt:270758: 01c31269  <[KioskMonitor] Device fingerprint unavailable for sidekick:
+hepi-strings.txt:270795: 01c31f80  [NetworkGuard] Unable to determine default gateway for route defenseeasy_assist_lib::modules::network_guard8[NetworkGuard] Enabling split route defense via gateway
+hepi-strings.txt:270873: 01c331c3  #"; trying best fallback candidate:
+hepi-strings.txt:270874: 01c331e9  1[WdaMonitor] Fallback bypass applied to process="
+hepi-strings.txt:270878: 01c33246  1[WdaMonitor] Fallback bypass failed for process="
+hepi-strings.txt:270899: 01c33708  G[KioskMonitor] Fast recovery denied due to missing cached entitlement:
+hepi-strings.txt:270900: 01c33752  easy_assist_lib::commands::kiosk_monitor[KioskMonitor] No persisted bypass state
+hepi-strings.txt:270901: 01c337a6   normal startup6[KioskMonitor] Found persisted bypass state: desktop='
+hepi-strings.txt:270903: 01c337f7  [KioskMonitor] Fast recovery: all saved PIDs gone
+hepi-strings.txt:270904: 01c3382c   SEB restarted, clearing state<[KioskMonitor] Fast recovery: restoring bypass for desktop='
+hepi-strings.txt:270905: 01c338a9  [KioskMonitor] Fast recovery:
+hepi-strings.txt:270907: 01c33928  seb-kiosk-detectedseb-kiosk-bypassed7[KioskMonitor] Fast recovery: hook thread started for '
+hepi-strings.txt:270908: 01c339a0  [KioskMonitor] Fast recovery complete
+hepi-strings.txt:270909: 01c339e8  2[KioskMonitor] Fast recovery: patched new SEB PID=
+hepi-strings.txt:270910: 01c33a1d  '[KioskMonitor] Fast recovery: desktop '
+hepi-strings.txt:270913: 01c33a80  Z[KioskMonitor] Fast recovery: cannot list desktops; preserving persisted state for retry:
+hepi-strings.txt:270914: 01c33af8  [KioskMonitor] Fast recovery: no SEB processes
+hepi-strings.txt:270915: 01c33b2a   clearing stale states[KioskMonitor] Fast recovery: cannot enumerate SEB processes; preserving persisted state for the monitor to retry:
+hepi-strings.txt:270916: 01c33bd0  [KioskMonitor] Monitor loop started
+hepi-strings.txt:270917: 01c33c10  [KioskMonitor] Monitor loop exiting
+hepi-strings.txt:270918: 01c33c68  [KioskMonitor] Stopped
+hepi-strings.txt:270920: 01c33d10  [KioskMonitor] Start requested while already monitoring
+hepi-strings.txt:270921: 01c33d4b   keeping monitor active[KioskMonitor] Started.#
+hepi-strings.txt:270922: 01c33d90  E[KioskMonitor] Desktop toggle denied because entitlement is missing:
+hepi-strings.txt:270923: 01c33dd8  E[KioskMonitor] Ctrl+Shift+D on Default
+hepi-strings.txt:270925: 01c33e22  desktop-switched-[KioskMonitor] Switch to SEB desktop failed:
+hepi-strings.txt:270927: 01c33ec0  &[KioskMonitor] allow_switch_desktop =
+hepi-strings.txt:270928: 01c33ee9  4[KioskMonitor] Pre-seed: existing SEB-like desktop '
+hepi-strings.txt:270930: 01c33f3b  5[KioskMonitor] SEB first seen: pre-existing desktop '
+hepi-strings.txt:270932: 01c33f8e  c[KioskMonitor] Failed to enumerate desktops; preserving stale desktop blocklist and session state:
+hepi-strings.txt:270933: 01c33ff4  /[KioskMonitor] All patched PIDs gone (patched:
+hepi-strings.txt:270937: 01c34056  [KioskMonitor]
+hepi-strings.txt:270939: 01c340c4  [KioskMonitor]
+hepi-strings.txt:270942: 01c3410e  "[KioskMonitor] Incremental patch:
+hepi-strings.txt:270944: 01c34140  "[KioskMonitor] Incremental patch:
+hepi-strings.txt:270947: 01c3418d  [KioskMonitor] Complete SEB process enumeration is empty after an active/recent session
+hepi-strings.txt:270948: 01c341e8   resetting state[KioskMonitor] Automatic desktop restoration to Default did not confirm. Keeping emergency hook active for Ctrl+Q rescue."[KioskMonitor] SEB kiosk stable: '
+hepi-strings.txt:270949: 01c3429f  "[KioskMonitor] SEB kiosk active: '
+hepi-strings.txt:270951: 01c342d6  [KioskMonitor] SEB kiosk stable, waiting for patch enforcement before applying Layer 5 Methods 1+2/[KioskMonitor] Applying Layer 5 Methods 1+2 to
+hepi-strings.txt:270953: 01c3437e  ![KioskMonitor] Bypass applied to
+hepi-strings.txt:270955: 01c343b2  /[KioskMonitor] Cross-desktop hook started for '
+hepi-strings.txt:270956: 01c343e6  N[KioskMonitor] Failed to enumerate SEB processes; session state is preserved:
+hepi-strings.txt:271098: 01c36980  ;launcher_activation_fallback_attempt activation_error_code=
+hepi-strings.txt:271099: 01c369d8  7launcher_activation_application_no_fallback error_code=
+hepi-strings.txt:271122: 01c36e39  src\modules\text_grabber\clipboard_fallback.rs
+hepi-strings.txt:271123: 01c36e68  easy_assist_lib::modules::text_grabber::clipboard_fallback
+hepi-strings.txt:271131: 01c3702a  &Clipboard fallback captured NEW text:
+hepi-strings.txt:271159: 01c37920  2[KioskMonitor] Sidekick settings sync pipe ended:
+hepi-strings.txt:271161: 01c379a0  -[KioskMonitor] Sidekick Launcher pipe ended:
+hepi-strings.txt:271162: 01c379e8  ,[KioskMonitor] Sidekick history pipe ended:
+hepi-strings.txt:271163: 01c37a30  .[KioskMonitor] Failed to initialize sidekick:
+hepi-strings.txt:271166: 01c37b90  [KioskMonitor] Starting background download and restore of sidekick.exe...easy_assist_lib::commands::kiosk_monitor::sidekick::restore
+hepi-strings.txt:271167: 01c37c48  +[KioskMonitor] Failed to restore sidekick:
+hepi-strings.txt:271168: 01c37c76  #[KioskMonitor] Sidekick binary at '
+hepi-strings.txt:271170: 01c37cdc  F[KioskMonitor] Sidekick restored successfully. Spawning onto desktop '
+hepi-strings.txt:271173: 01c37d5a  *[KioskMonitor] Downloading sidekick from:
+hepi-strings.txt:271176: 01c37de1  1[KioskMonitor] Sidekick successfully written to '
+hepi-strings.txt:271178: 01c37e68  [KioskMonitor] Sidekick connected to pipetoggle_visibilitykey_hold_capturetoggle_quiz_answer_overlaydecrease_opacityincrease_opacity
+hepi-strings.txt:271179: 01c37f08  desktop_switch_eligiblestart_click_throughcontent_protectedreasoning_enabledhide_region_capture_visualssettings_sync_pipeselectable_models.[KioskMonitor] JWT sent to sidekick via pipe (
+hepi-strings.txt:271182: 01c38010  3[KioskMonitor] Sidekick click-through sync failed:
+hepi-strings.txt:271183: 01c38046  sidekick-click-through-changed0[KioskMonitor] Sidekick visibility sync failed:
+hepi-strings.txt:271185: 01c380b3  [KioskMonitor] Sidekick PID=
+hepi-strings.txt:271188: 01c38138  settings:changed<[KioskMonitor] Ignoring invalid sidekick v2 settings patch:
+hepi-strings.txt:271194: 01c44b88  SEB_VERIFY_PATCH_ENFORCEMENT_TIMEOUTSEB_VERIFY_CLICK_THROUGH_STUCKSEB_VERIFY_MAIN_WINDOW_MISSINGSEB_VERIFY_MAIN_WINDOW_HIDDENSEB_VERIFY_MAIN_WINDOW_INVALID_BOUNDSSEB_VERIFY_MAIN_WINDOW_OCCLUDED_BY_SEBSEB_VERIFY_KIOSK_BYPASS_TIMEOUTSEB_VERIFY_SIDEKICK_MISSING_OR_QUARANTINEDSEB_VERIFY_SIDEKICK_PROCESS_DEADSEB_VERIFY_SIDEKICK_PIPE_DISCONNECTEDSEB_VERIFY_SIDEKICK_WINDOW_MISSINGSEB_VERIFY_SIDEKICK_WINDOW_HIDDENSEB_VERIFY_SIDEKICK_WINDOW_INVALID_BOUNDSSEB_VERIFY_SIDEKICK_WINDOW_OCCLUDED_BY_SEBsidekick-active![KioskMonitor] sidekick-active =
+hepi-strings.txt:271337: 01c4e8e8  PROCESS_SNAPSHOT_FAILEDUsing sysinfo fallback (cross-platform)
+hepi-strings.txt:271542: 01c5a0ee  Block grabber: Failed to get monitor bounds, using fallback&Block grabber: Monitor bounds - left:
+hepi-strings.txt:271629: 01c5b4e0  :[KioskMonitor] Could not parse desktop_toggle accelerator
+hepi-strings.txt:271631: 01c5b53b  easy_assist_lib::commands::kiosk_monitor::cross_desktop_helpers:[KioskMonitor] Could not parse emergency_exit accelerator
+hepi-strings.txt:271633: 01c5b5d3  [KioskMonitor] Cross-desktop capture: no SEB desktop cached
+hepi-strings.txt:271634: 01c5b628  [KioskMonitor] Cross-desktop capture: text grabber disabled
+hepi-strings.txt:271635: 01c5b680  +[KioskMonitor] Cross-desktop capture: tab '
+hepi-strings.txt:271638: 01c5b6f8  cross-desktop-text-relay2[KioskMonitor] Failed to spawn text relay thread:
+hepi-strings.txt:271639: 01c5b745  [KioskMonitor] Cross-desktop hover: no SEB desktop cached
+hepi-strings.txt:271640: 01c5b798  [KioskMonitor] Cross-desktop hover: text grabber disabled
+hepi-strings.txt:271641: 01c5b7f0  )[KioskMonitor] Cross-desktop hover: tab '
+hepi-strings.txt:271643: 01c5b858  cross-desktop-hover-relay3[KioskMonitor] Failed to spawn hover relay thread:
+hepi-strings.txt:271729: 01c62833  Failed to lock pending cleanup stateDIAGNOSTICS_LOG_DIR_UNAVAILABLEDIAGNOSTICS_OPEN_LOG_DIR_FAILED/Failed to read fallback diagnostics directory:
+hepi-strings.txt:271785: 01c63da6   $[LockscreenBypass] Current bytes at
+hepi-strings.txt:271788: 01c63e31  [LockscreenBypass] Method body is JIT'd native
+hepi-strings.txt:271789: 01c63e63   using x86 patch (mov eax,0; ret)[LockscreenBypass] Method body is raw IL
+hepi-strings.txt:271791: 01c63ed0  [LockscreenBypass]
+hepi-strings.txt:271796: 01c63f64  [LockscreenBypass]
+hepi-strings.txt:271799: 01c63f97  CreateToolhelp32Snapshot failedsafeexambrowser.clientsubprocessRequestSessionLockShowLockScreen([LockscreenBypass] Found Client module '
+hepi-strings.txt:271801: 01c6402e  [LockscreenBypass] Client module not found by name
+hepi-strings.txt:271802: 01c64064   scanning all modules...2[LockscreenBypass] Found target string in module '
+hepi-strings.txt:271804: 01c640be  4[LockscreenBypass] Found fallback string in module '
+hepi-strings.txt:271807: 01c64139  5[LockscreenBypass] Starting prevention patch for PID=
+hepi-strings.txt:271808: 01c64171  A[LockscreenBypass] SeDebugPrivilege failed (may already be set):
+hepi-strings.txt:271809: 01c641b9  '[LockscreenBypass] Client module base:
+hepi-strings.txt:271810: 01c641e9  Coordinator[LockscreenBypass] Could not find Coordinator.RequestSessionLock via metadata[LockscreenBypass] Trying fallback: ClientResponsibility.ShowLockScreen...ClientResponsibilityCould not locate either RequestSessionLock or ShowLockScreen in Client assembly/[LockscreenBypass] Found ShowLockScreen at RVA
+hepi-strings.txt:271811: 01c64350  3[LockscreenBypass] Found RequestSessionLock at RVA
+hepi-strings.txt:271827: 01c64a08  exit_app_commandwindow size must be non-zeroLogRequest)[LogFilter] Also found Server.dll in PID
+hepi-strings.txt:271829: 01c64a85  easy_assist_lib::modules::log_filter::scanner [LogFilter] Found Server.dll in
+hepi-strings.txt:271831: 01c64ae6  $[LogFilter] Scanning Server.dll for
+hepi-strings.txt:271835: 01c64c10  Failed to read PE optional header[LogFilter] Strategy 1: .NET Metadata Parsing
+hepi-strings.txt:271836: 01c64c5f  [LogFilter]
+hepi-strings.txt:271838: 01c64ca9  [LogFilter] Found TryExecute (
+hepi-strings.txt:271840: 01c64d18  &[LogFilter] IL tiny header: code_size=
+hepi-strings.txt:271841: 01c64dd8  $[LogFilter] IL fat header: hdr_size=
+hepi-strings.txt:271843: 01c64e29  [LogFilter] IL code body at
+hepi-strings.txt:271845: 01c64e78  [LogFilter] IL body looks like ASCII metadata
+hepi-strings.txt:271847: 01c64ed0  %[LogFilter] Metadata parsing failed:
+hepi-strings.txt:271848: 01c64ef8  [LogFilter] Strategy 2: .text section scan[LogFilter] No .text section found
+hepi-strings.txt:271849: 01c64f60  [LogFilter] No suitable method found via .text scan
+hepi-strings.txt:271850: 01c64fb0  )[LogFilter] Found method prolog at .text+
+hepi-strings.txt:271854: 01c650e5  [LogFilter] Found '
+hepi-strings.txt:271860: 01c65409  [LogFilter] '
+hepi-strings.txt:271862: 01c65449  [LogFilter] Found '
+hepi-strings.txt:271864: 01c65498  [LogFilter] 'TryExecute' not found in #Strings
+hepi-strings.txt:271865: 01c654e0  4[LogFilter] Found 'TryExecute' in #Strings at index
+hepi-strings.txt:271867: 01c6556d  [LogFilter] TypeDef:
+hepi-strings.txt:271870: 01c655b9  [LogFilter] TypeDef row #
+hepi-strings.txt:271872: 01c65611  [LogFilter]
+hepi-strings.txt:271874: 01c65659  [LogFilter]
+hepi-strings.txt:271877: 01c65709  [LogFilter] Found
+hepi-strings.txt:271880: 01c65768  [LogFilter] Method RVA is 0 (abstract/extern?)
+hepi-strings.txt:271881: 01c657c8  '[LogFilter] TryExecute not found among
+hepi-strings.txt:271885: 01c658cf  '[LogFilter] VirtualQueryEx scan of PID
+hepi-strings.txt:271887: 01c65907  [LogFilter] Found '
+hepi-strings.txt:271891: 01c65952  5[LogFilter] Cannot find PE base
+hepi-strings.txt:271893: 01c65990   [LogFilter] Determined PE base:
+hepi-strings.txt:271894: 01c659d9  [LogFilter] Scanned
+hepi-strings.txt:271898: 01c65a19  LockScreenRequest?[LogFilter] Using cached RVA for LockScreenRequest.TryExecute:
+hepi-strings.txt:271899: 01c65a72  8[LogFilter] Using cached RVA for LogRequest.TryExecute:
+hepi-strings.txt:272053: 01c6bb64  [KioskMonitor] Stale desktop '
+hepi-strings.txt:272065: 01c6bd62  ` not found; fallback to
+hepi-strings.txt:272071: 01c6be0e  #` not found; fallback to index.html
+hepi-strings.txt:272074: 01c6be47  ` not found; fallback to
+hepi-strings.txt:272548: 01c7a1c8  shellselected fallback target
+hepi-strings.txt:272651: 01c7cac8  UPDATE launcher_entries SET use_count=use_count+1,last_used=?2 WHERE path_key=?1SELECT path,kind,launch_target,activation_kind,fallback_target,application_identity FROM launcher_entries WHERE path_key=?1SELECT value FROM launcher_metadata WHERE key='last_indexed_at'SELECT DISTINCT scope_id FROM launcher_entries WHERE scope_id != ?1@applicationsDELETE FROM launcher_entries WHERE scope_id=?1INSERT OR REPLACE INTO launcher_entries_staging
+hepi-strings.txt:272652: 01c7cc80              (generation,path_key,path,scope_id,name,normalized_name,kind,extension,size,modified_at,launch_target,activation_kind,fallback_target,application_identity,volume_serial,file_reference)
+hepi-strings.txt:272685: 01c7d9c2                      activation_kind TEXT NOT NULL, fallback_target TEXT, application_identity TEXT,
+hepi-strings.txt:272726: 01c7e408              activation_kind TEXT NOT NULL, fallback_target TEXT, application_identity TEXT,
+hepi-strings.txt:272895: 01c80d40           (path_key,path,scope_id,name,normalized_name,kind,extension,size,modified_at,launch_target,activation_kind,fallback_target,application_identity,volume_serial,file_reference,use_count,last_used)
+hepi-strings.txt:272897: 01c80e88                  staged.size,staged.modified_at,staged.launch_target,staged.activation_kind,staged.fallback_target,staged.application_identity,
+hepi-strings.txt:272912: 01c811e5               fallback_target=staged.fallback_target,
+hepi-strings.txt:272929: 01c8158b               OR active.fallback_target IS NOT staged.fallback_target
+hepi-strings.txt:272934: 01c816cc               (path_key,path,scope_id,name,normalized_name,kind,extension,size,modified_at,launch_target,activation_kind,fallback_target,application_identity,volume_serial,file_reference,use_count,last_used)
+hepi-strings.txt:272942: 01c819df                  activation_kind=excluded.activation_kind,fallback_target=excluded.fallback_target,
+hepi-strings.txt:273276: 01c96e14  easy_assist_lib::modules::kiosk_bypassdefault_desktop_ll_hook2[NetworkGuard] Cached default gateway at startup:
+hepi-strings.txt:273291: 01c97368  [KioskMonitor] Cross-desktop capture: no selectionsrc\commands\kiosk_monitor\cross_desktop_helpers.rs
+hepi-strings.txt:273293: 01c97428  cross_desktop_uiatext-captured-[KioskMonitor] Failed to emit text-captured:
+hepi-strings.txt:273294: 01c97476  ,[KioskMonitor] Cross-desktop text captured (
+hepi-strings.txt:273296: 01c974ad  -[KioskMonitor] Failed to write to clipboard:
+hepi-strings.txt:273297: 01c974dd  [KioskMonitor] Text written to clipboard
+hepi-strings.txt:273300: 01c97522  [KioskMonitor] Cross-desktop capture: cleaned text empty[KioskMonitor] Cross-desktop capture: empty text,[KioskMonitor] Cross-desktop capture error:
+hepi-strings.txt:273301: 01c975b9  [KioskMonitor] Cross-desktop hover: no element at cursor
+hepi-strings.txt:273302: 01c97610  cross_desktop_hover5[KioskMonitor] Failed to emit text-captured (hover):
+hepi-strings.txt:273303: 01c9765b  -[KioskMonitor] Cross-desktop hover captured (
+hepi-strings.txt:273305: 01c97693  8[KioskMonitor] Failed to write hover text to clipboard:
+hepi-strings.txt:273306: 01c976ce  [KioskMonitor] Cross-desktop hover: cleaned text empty[KioskMonitor] Cross-desktop hover: empty text*[KioskMonitor] Cross-desktop hover error:
+hepi-strings.txt:273319: 01c98340  LogRequest.[LogFilter] Failed to patch LogRequest in PID
+hepi-strings.txt:273321: 01c9839d  easy_assist_lib::modules::log_filterLockScreenRequest5[LogFilter] Failed to patch LockScreenRequest in PID
+hepi-strings.txt:273322: 01c9840f  [LogFilter] Could not locate
+hepi-strings.txt:273326: 01c9848d  [LogFilter] Found
+hepi-strings.txt:273328: 01c984d2  [LogFilter]
+hepi-strings.txt:273331: 01c9850c  [LogFilter] Starting LogRequest & LockScreenRequest patch...Failed to enable SeDebugPrivilege
+hepi-strings.txt:273332: 01c9856a  [LogFilter] Patching PID
+hepi-strings.txt:273334: 01c9859a  6[LogFilter] Patched LogRequest & LockScreenRequest in
+hepi-strings.txt:273347: 01c987f8  [WdaBypass] Enabling SeDebugPrivilege...easy_assist_lib::modules::wda_bypassFailed to enable SeDebugPrivilege
+hepi-strings.txt:273348: 01c98869   run as Administrator'[WdaBypass] Opening target process PID=
+hepi-strings.txt:273352: 01c9892a  SetWindowDisplayAffinity not found in user32.dll*[WdaBypass] SetWindowDisplayAffinity at 0x
+hepi-strings.txt:273354: 01c989c4  WriteProcessMemory (shellcode) failed[WdaBypass] Creating remote thread...
+hepi-strings.txt:273355: 01c98a28  CreateRemoteThread failed[WdaBypass] Remote thread timed out
+hepi-strings.txt:273356: 01c98a80  [WdaBypass] Remote thread returned 0
+hepi-strings.txt:273358: 01c98ad8  *[WdaBypass] Remote thread succeeded (exit=
+hepi-strings.txt:273378: 01c98d28  "[WdaBypass] Window search target="
+hepi-strings.txt:273381: 01c98d70  3[WdaBypass] Using protected candidates for target="
+hepi-strings.txt:273383: 01c98db0  2[WdaBypass] Using fallback candidates for target="
+hepi-strings.txt:273385: 01c98def  ,[WdaBypass] Protected window search target="
+hepi-strings.txt:273400: 01c98f86  &[KioskBypass] Method 2 failed for PID=
+hepi-strings.txt:273402: 01c98fcf  &[KioskBypass] Method 1 failed for PID=
+hepi-strings.txt:273411: 01c99145  Method 1: failed to patch SwitchDesktop4[KioskBypass] Method 1: SwitchDesktop hooked in PID=
+hepi-strings.txt:273421: 01c9933b  unhook_switch_desktop: local user32!SwitchDesktop is unexpectedly patchedMethod 1: failed to restore SwitchDesktop6[KioskBypass] Method 1: SwitchDesktop restored in PID=
+hepi-strings.txt:273423: 01c9942c  Method 2: failed to patch OpenInputDesktop7[KioskBypass] Method 2: OpenInputDesktop hooked in PID=
+hepi-strings.txt:273424: 01c99490  unhook_open_input_desktop: local user32!OpenInputDesktop is unexpectedly patchedMethod 2: failed to restore OpenInputDesktop9[KioskBypass] Method 2: OpenInputDesktop restored in PID=
+hepi-strings.txt:273440: 01c999f2  1[KioskGuardian] Failed to terminate guardian PID=
+hepi-strings.txt:273442: 01c99a48  easy_assist_lib::modules::kiosk_guardian%[KioskGuardian] Guardian process PID=
+hepi-strings.txt:273444: 01c99ab2  [KioskGuardian] Guardian PID=
+hepi-strings.txt:273446: 01c99aee  [KioskGuardian] Guardian PID=
+hepi-strings.txt:273448: 01c99b5f  [KioskGuardian] Guardian PID=
+hepi-strings.txt:273451: 01c99ba0  &[KioskGuardian] Previous guardian PID=
+hepi-strings.txt:273455: 01c99c13  .[KioskGuardian] Guardian process spawned: PID=
+hepi-strings.txt:273457: 01c99c52  T[KioskGuardian] Guardian ownership appeared during spawn; terminating duplicate PID=
+hepi-strings.txt:273458: 01c99ca9  2[KioskGuardian] Failed to spawn guardian process:
+hepi-strings.txt:273459: 01c99cde  %[KioskGuardian] Cannot get exe path:
+hepi-strings.txt:273460: 01c99d06  4[KioskGuardian] Cannot verify existing guardian PID=
+hepi-strings.txt:273462: 01c99d6e  [KioskGuardian] Watching PID=
+hepi-strings.txt:273464: 01c99d9f  [KioskGuardian] Unable to establish reliable parent monitoring
+hepi-strings.txt:273466: 01c99e06  [KioskGuardian] Parent PID=
+hepi-strings.txt:273469: 01c99e5b  [KioskGuardian] Parent PID=
+hepi-strings.txt:273472: 01c99ebd  '[KioskGuardian] Cannot open parent PID=
+hepi-strings.txt:273475: 01c99f2f  $[KioskGuardian] Invalid parent PID:
+hepi-strings.txt:273476: 01c99f58  [KioskGuardian] Usage: --kiosk-guardian <parent_pid> <desktop_name>
+hepi-strings.txt:273477: 01c99f9c  -[KioskGuardian] SetThreadDesktop failed for '
+hepi-strings.txt:273478: 01c99fcf  )[KioskGuardian] Associated with desktop '
+hepi-strings.txt:273479: 01c99fff  [KioskGuardian] OpenDesktopW('
+hepi-strings.txt:273481: 01c9a02e  [KioskGuardian] SwitchDesktop failed
+hepi-strings.txt:273483: 01c9a06f  [KioskGuardian] Switched to Default desktop
+hepi-strings.txt:273484: 01c9a09f  0[KioskGuardian] OpenDesktopW('Default') failed:
+hepi-strings.txt:273485: 01c9a0d4  ;[KioskGuardian] RegisterApplicationRestart failed (HRESULT=
+hepi-strings.txt:273487: 01c9a126  [KioskGuardian] Registered for WER auto-restart
+hepi-strings.txt:273490: 01c9a17b  >[KioskGuardian] UnregisterApplicationRestart returned HRESULT=
+hepi-strings.txt:273491: 01c9a1c0  [KioskGuardian] Unregistered from WER auto-restart2[WdaBypassSeb] Failed to enumerate input desktop '
+hepi-strings.txt:273502: 01c9a490  )[ClipboardBypass] Starting patch for PID=
+hepi-strings.txt:273503: 01c9a4bc  easy_assist_lib::modules::clipboard_bypass::layers[ClipboardBypass] SeDebugPrivilege enabled@[ClipboardBypass] SeDebugPrivilege failed (may already be set):
+hepi-strings.txt:273504: 01c9a55f  [ClipboardBypass] Layer A: EmptyClipboard patched
+hepi-strings.txt:273505: 01c9a594   clipboard clearing disabled"[ClipboardBypass] Layer A failed:
+hepi-strings.txt:273506: 01c9a5d9  [ClipboardBypass] Layer B: KeyboardHookCallback patched
+hepi-strings.txt:273507: 01c9a614   all keys pass through"[ClipboardBypass] Layer B failed:
+hepi-strings.txt:273508: 01c9a653  '[ClipboardBypass] Layer C: Neutralized
+hepi-strings.txt:273510: 01c9a693  F[ClipboardBypass] Layer C failed (Isolated mode may still intercept):
+hepi-strings.txt:273513: 01c9a727  [ClipboardBypass] Patched PID=
+hepi-strings.txt:273516: 01c9a776  Layer A (EmptyClipboard) failed?[ClipboardBypass] Early Layer A: EmptyClipboard patched in PID=
+hepi-strings.txt:273517: 01c9a7d7  Layer B (KeyboardHookCallback) failedE[ClipboardBypass] Early Layer B: KeyboardHookCallback patched in PID=
+hepi-strings.txt:273518: 01c9a844  EmptyClipboardresolve_api_address(EmptyClipboard) failed4[ClipboardBypass] Layer A: user32!EmptyClipboard at
+hepi-strings.txt:273519: 01c9a8b9   +[ClipboardBypass] Layer A: original bytes [
+hepi-strings.txt:273521: 01c9a934   bytes don't match[ClipboardBypass] Layer A: already patched
+hepi-strings.txt:273522: 01c9a974   skippingOnContextCreatedRenderProcessMessageHandler[ClipboardBypass] Browser assembly not found via enumeration
+hepi-strings.txt:273523: 01c9a9e8   trying memory scan...Could not find SafeExamBrowser.Browser assembly in any SEB process$[ClipboardBypass] Browser assembly '
+hepi-strings.txt:273527: 01c9ab71  [ClipboardBypass] Found '
+hepi-strings.txt:273529: 01c9abb8  BelongsToSafeExamBrowserKeyboardInterceptorKeyboardHookCallback\[ClipboardBypass] Monitoring module not found via enumeration
+hepi-strings.txt:273532: 01c9ac95   [ClipboardBypass] Found module '
+hepi-strings.txt:273534: 01c9accf  Could not locate KeyboardHookCallback in Monitoring.dll4[ClipboardBypass] Found KeyboardHookCallback at RVA
+hepi-strings.txt:273535: 01c9ad4f  "[ClipboardBypass] Current bytes: [
+hepi-strings.txt:273536: 01c9ad82  [ClipboardBypass] Method body is JIT'd native code
+hepi-strings.txt:273538: 01c9adf8  [ClipboardBypass] Method body is raw IL
+hepi-strings.txt:273540: 01c9ae60  Failed to patch KeyboardHookCallback[ClipboardBypass] KeyboardHookCallback patched
+hepi-strings.txt:273543: 01c9af22   bytes don't match[ClipboardBypass] KeyboardHookCallback already patched
+hepi-strings.txt:273546: 01c9afa2  .[ClipboardBypass] Found 'OnContextCreated' at
+hepi-strings.txt:273549: 01c9b018  [ClipboardBypass] Found RenderProcessMessageHandler.OnContextCreated
+hepi-strings.txt:273550: 01c9b0a8  5[ClipboardBypass] Skipped stale managed heap match @
+hepi-strings.txt:273553: 01c9b104  [ClipboardBypass] Patched
+hepi-strings.txt:273556: 01c9b171  [ClipboardBypass] Patched
+hepi-strings.txt:273558: 01c9b1c7  ,[ClipboardBypass] Rescanning GC heap region
+hepi-strings.txt:273561: 01c9b238  6[ClipboardBypass] Found 'BelongsToSafeExamBrowser' at
+hepi-strings.txt:273564: 01c9b2d0  O[ClipboardBypass] Verified KeyboardInterceptor.KeyboardHookCallback at PE base
+hepi-strings.txt:273565: 01c9b371  [ClipboardBypass] Scanning for
+hepi-strings.txt:273575: 01c9bac9  [ClipboardBypass] Found '
+hepi-strings.txt:273579: 01c9bb85  [ClipboardBypass] TypeDef:
+hepi-strings.txt:273582: 01c9bbd9  [ClipboardBypass] TypeDef row #
+hepi-strings.txt:273584: 01c9bc39  [ClipboardBypass]
+hepi-strings.txt:273586: 01c9bce9  [ClipboardBypass] Found
+hepi-strings.txt:273589: 01c9bd48  [ClipboardBypass] Method RVA is 0 (abstract/extern?)
+hepi-strings.txt:273590: 01c9bdb0  ,[ClipboardBypass] IL tiny header: code_size=
+hepi-strings.txt:273591: 01c9be70  -[ClipboardBypass] IL fat header: header_size=
+hepi-strings.txt:273593: 01c9bec8  "[ClipboardBypass] IL code body at
+hepi-strings.txt:273595: 01c9bf20  [ClipboardBypass] IL body looks like ASCII metadata
+hepi-strings.txt:273597: 01c9bf79  [ClipboardBypass]
+hepi-strings.txt:273601: 01c9c016  [ClipboardBypass] '
+hepi-strings.txt:274019: 01cad512   None of the fallback platforms `
+hepi-strings.txt:277725: 01d13b88  u24CloseNotifyUnexpectedMessageBadRecordMacDecryptionFailedRecordOverflowDecompressionFailureHandshakeFailureNoCertificateBadCertificateUnsupportedCertificateCertificateRevokedCertificateExpiredCertificateUnknownIllegalParameterUnknownCAAccessDeniedDecodeErrorDecryptErrorExportRestrictionProtocolVersionInsufficientSecurityInternalErrorInappropriateFallbackUserCanceledNoRenegotiationMissingExtensionUnsupportedExtensionCertificateUnobtainableUnrecognisedNameBadCertificateStatusResponseBadCertificateHashValueUnknownPSKIdentityCertificateRequiredNoApplicationProtocolEncryptedClientHelloRequired
+hepi-strings.txt:279530: 01d57e69  o&o)o*o/o0o3o6o;o<o-oOoQoRoSoWoYoZo]o^oaoboholo}o~o
+hepi-strings.txt:282530: 01dd73dd  O O O O!O!O"O"O#O#O$O$O%O%O%O&O&O'O'O(O(O)O)O)O*O*O+O+O,O,O-O-O-O.O.O/O/O0O0O1O1O1O2O2O3O3O4O4O4O5O5O6O6O7O7O7O8O8O9O9O:O:O;O;O;O<O<O=O=O>O>O>O?O?O@O@OAOAOAOBOBOCOCOCODODOEOEOFOFOFOGOGOHOHOIOIOIOJOJOKOKOKOLOLOMOMONONONOOOOOPOPOPOQOQOROROSOSOSOTOTOUOUOUOVOVOWOWOWOXOXOYOYOYOZOZO[O[O[O\O\O]O]O]O^O^O_O_O`O`O`OaOaObObObOcOcOcOdOdOeOeOeOfOfOgOgOgOhOhOiOiOiOjOjOkOkOkOlOlOmOmOmOnOnOoOoOoOpOpOpOqOqOrOrOrOsOsOtOtOtOuOuOuOvOvOwOwOwOxOxOyOyOyOzOzOzO{O{O|O|O|O}O}O}O~O~O
+hepi-strings.txt:283635: 01e4e08a              // so we need to fallback to the postMessage interface
+hepi-strings.txt:284002: 01e5aeb8  Received null IDataObjectC:\Users\runneradmin\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\wry-0.54.4\src\webview2\drag_drop.rs
+hepi-strings.txt:284079: 01e5eff4  Received null IDataObjectC:\Users\runneradmin\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\tao-0.34.8\src\platform_impl\windows\drop_handler.rs
+hepi-strings.txt:284536: 01e7d128  field identifierindex.htmlstruct PreventOverflowMarginstruct WindowConfigstruct variant InnerColor::RgbaObjectstruct WindowEffectsConfigstruct LogicalPosition
+hepi-strings.txt:284878: 01e8b06f  blicaobjetivoalicantebuscadorcantidadentradasaccionesarchivossuperiormayor
+sidekick-strings.txt:47481: 004f11ed  aobject
+sidekick-strings.txt:47507: 004f1704  aobject
+sidekick-strings.txt:47625: 004f3699  aobject
+sidekick-strings.txt:47635: 004f378c  aobject
+sidekick-strings.txt:48144: 00503806  aobject
+sidekick-strings.txt:48152: 005038f3  aobject
+sidekick-strings.txt:48200: 0050436b  aobject
+sidekick-strings.txt:48837: 00512f81  aobject
+sidekick-strings.txt:48870: 005146b7  aobject
+sidekick-strings.txt:87876: 008f8177  aobject
+sidekick-strings.txt:87913: 008f84f2  aobject
+sidekick-strings.txt:228430: 016f19a5  O O O O!O!O"O"O#O#O$O$O%O%O%O&O&O'O'O(O(O)O)O)O*O*O+O+O,O,O-O-O-O.O.O/O/O0O0O1O1O1O2O2O3O3O4O4O4O5O5O6O6O7O7O7O8O8O9O9O:O:O;O;O;O<O<O=O=O>O>O>O?O?O@O@OAOAOAOBOBOCOCOCODODOEOEOFOFOFOGOGOHOHOIOIOIOJOJOKOKOKOLOLOMOMONONONOOOOOPOPOPOQOQOROROSOSOSOTOTOUOUOUOVOVOWOWOWOXOXOYOYOYOZOZO[O[O[O\O\O]O]O]O^O^O_O_O`O`O`OaOaObObObOcOcOcOdOdOeOeOeOfOfOgOgOgOhOhOiOiOiOjOjOkOkOkOlOlOmOmOmOnOnOoOoOoOpOpOpOqOqOrOrOrOsOsOtOtOtOuOuOuOvOvOwOwOwOxOxOyOyOyOzOzOzO{O{O|O|O|O}O}O}O~O~O
+sidekick-strings.txt:228937: 017398f8  FontFallbacks/rustc/f5eca4fcfa908d1e038afd19c6e746f075859130/library\std\src\path.rs
+sidekick-strings.txt:228981: 0173bc30  VisibleClipHiddenScrollNormalNowrapTruncateTruncateStartTruncateMiddleLeftCenterRightTextStyleRefinementcolorfont_familyfont_featuresfont_fallbacksfont_sizeline_heightfont_weightfont_stylebackground_colorunderlinestrikethroughwhite_spacetext_overflowtext_alignline_clampUnderlineStylethicknesswavyStrikethroughStyle
+sidekick-strings.txt:229154: 01746e4d  ' or any of the fallbacks:
+sidekick-strings.txt:229404: 01756b40  7SyntaxHighlighter init failed, fallback to use `text`,
+sidekick-strings.txt:235810: 0178d64d  gpui_component::list::list::ListState<gpui_component::input::popovers::completion_menu::ContextMenuDelegate>gpui_component::list::list::ListState<gpui_component::input::popovers::code_action_menu::MenuDelegate>gpui::window::FocusHandlegpui_component::root::Rootgpui_component::slider::DragSlidergpui_component::slider::SliderStategpui_component::slider::DragThumbgpui_component::popover::PopoverStategpui_component::tooltip::TooltipOverlaygpui_component::tooltip::Tooltipgpui_component::progress::ProgressStategpui::elements::div::ScrollHandlegpui_component::native_menu::fallback::FallbackMenuOverlaygpui_component::menu::popup_menu::PopupMenugpui_component::text::state::TextViewStategpui_component::input::blink_cursor::BlinkCursorgpui_component::input::state::InputStategpui_component::input::search::SearchPanelgpui_component::scroll::scrollbar::ScrollbarStategpui_component::input::popovers::hover_popover::HoverPopovergpui_component::input::popovers::completion_menu::CompletionMenugpui_component::input::popovers::code_action_menu::CodeActionMenugpui_component::input::popovers::diagnostic_popover::DiagnosticPopoverbool
+sidekick-strings.txt:237440: 017c043b  FontFallbacksfailed to allocate
+sidekick-strings.txt:237680: 017cbbe0  Fontfamilyfeaturesfallbacksweightstyle
+sidekick-strings.txt:242814: 0198253e  CloseNotifyUnexpectedMessageBadRecordMacDecryptionFailedRecordOverflowDecompressionFailureHandshakeFailureNoCertificateBadCertificateUnsupportedCertificateCertificateRevokedCertificateExpiredCertificateUnknownIllegalParameterUnknownCAAccessDeniedDecodeErrorDecryptErrorExportRestrictionProtocolVersionInsufficientSecurityInternalErrorInappropriateFallbackUserCanceledNoRenegotiationMissingExtensionUnsupportedExtensionCertificateUnobtainableUnrecognisedNameBadCertificateStatusResponseBadCertificateHashValueUnknownPSKIdentityCertificateRequiredNoApplicationProtocolEncryptedClientHelloRequired
+sidekick-strings.txt:243267: 019aaeda  C:\Users\Truong\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\rustybuzz-0.20.1\src\hb\ot_shape_fallback.rs
+sidekick-strings.txt:243740: 019b95af  ?timeout_fallbackquiz_model_timeoz_extract_failedquiz_extract_fairacting_fallbackquiz_extract_exttract_extractingprogress_model_1quiz_progress_moprogress_model_2l_answer
+sidekick-strings.txt:245360: 01a13401  Fallback from
+sidekick-strings.txt:245491: 01a1aec2  '. Fallback to no stroke.
+sidekick-strings.txt:245495: 01a1af74  '. Fallback to black.
+_hepi_helper-strings.txt:269042: 01bea3a2  kzaob
+_hepi_helper-strings.txt:269669: 01c10080  routedelete0.0.0.0mask128.0.0.0[NetworkGuard] Hepi is not running as Administrator. Route defense requires elevation.src\modules\network_guard.rs
+_hepi_helper-strings.txt:269670: 01c10112  easy_assist_lib::modules::network_guardnetwork-defense-needs-adminQ[NetworkGuard] Default route 0.0.0.0/0 missing after proctor exit; restoring via
+_hepi_helper-strings.txt:269671: 01c101a8  add[NetworkGuard] Split route defense disabled and cleaned upprintnetshinterfaceipv4showconfigdefault gatewaygatewaySYSTEM\CurrentControlSet\Services\Tcpip\Parameters\InterfacesDhcpDefaultGatewayDefaultGatewayprogram filesLOCALAPPDATAProgramsHepi
+_hepi_helper-strings.txt:269831: 01c15492  [LogFilter] Applying
+_hepi_helper-strings.txt:269834: 01c154e2  easy_assist_lib::modules::log_filter::helpers&[LogFilter] Memory unprotected (old=0x
+_hepi_helper-strings.txt:269835: 01c15542  [LogFilter] Original bytes: [
+_hepi_helper-strings.txt:269836: 01c15563  [LogFilter] Patch applied, protection restored
+_hepi_helper-strings.txt:269852: 01c15b1b  <8launcher_activation_tracked_fallback_attempt error_code=
+_hepi_helper-strings.txt:270156: 01c1efa8  seb-keyboard-hook,[CrossDesktop] Failed to spawn hook thread:
+_hepi_helper-strings.txt:270157: 01c1efe8  easy_assist_lib::modules::cross_desktopG[CrossDesktop] hook replacement queued until current thread exits (TID=
+_hepi_helper-strings.txt:270235: 01c21d01  Clauncher_journal_fallback reason=identity_incomplete volume_serial=
+_hepi_helper-strings.txt:270238: 01c21dc8  Blauncher_journal_fallback reason=upsert_identity_unavailable path=
+_hepi_helper-strings.txt:270239: 01c21e28  Blauncher_journal_fallback reason=subtree_identity_incomplete path=
+_hepi_helper-strings.txt:270241: 01c21ea0  journal subtree replay reached crawl limit;launcher_journal_fallback reason=nested_scope_subtree path=
+_hepi_helper-strings.txt:270242: 01c21f20  Llauncher_journal_fallback reason=ambiguous_hard_link_identity volume_serial=
+_hepi_helper-strings.txt:270244: 01c21fa0  Mlauncher_journal_fallback reason=unresolved_link_count_unknown volume_serial=
+_hepi_helper-strings.txt:270246: 01c22020  Glauncher_journal_fallback reason=live_hard_link_identity volume_serial=
+_hepi_helper-strings.txt:270262: 01c22270  launcher_journal_fallback reason=checkpoint_unavailable
+_hepi_helper-strings.txt:270263: 01c222c0  5launcher_journal_fallback reason=replay_failed error=
+_hepi_helper-strings.txt:270279: 01c22775  CommandOrControl+Space([CrossDesktop] SetThreadDesktop failed:
+_hepi_helper-strings.txt:270280: 01c227d0  +[CrossDesktop] Hook thread on SEB desktop '
+_hepi_helper-strings.txt:270281: 01c22818  [CrossDesktop] WH_KEYBOARD_LL installed
+_hepi_helper-strings.txt:270283: 01c22898  +[CrossDesktop] GetMessageW returned error:
+_hepi_helper-strings.txt:270284: 01c228e0  [CrossDesktop] Hook thread exited
+_hepi_helper-strings.txt:270285: 01c22920  )[CrossDesktop] SetWindowsHookExW failed:
+_hepi_helper-strings.txt:270286: 01c22969  [CrossDesktop] OpenDesktopW('
+_hepi_helper-strings.txt:270288: 01c229b0  0[CrossDesktop] Requesting hook thread stop (TID=
+_hepi_helper-strings.txt:270289: 01c229e5  2[CrossDesktop] PostThreadMessageW(WM_QUIT) to TID=
+_hepi_helper-strings.txt:270291: 01c22a25  %[CrossDesktop] DESKTOP_TOGGLE = VK=0x
+_hepi_helper-strings.txt:270295: 01c22a6b  ([CrossDesktop] DESKTOP_SWITCH_ENABLED =
+_hepi_helper-strings.txt:270296: 01c22a96  )[CrossDesktop] APP_EMERGENCY_EXIT = VK=0x
+_hepi_helper-strings.txt:270512: 01c29f76  sidekick-active![KioskMonitor] sidekick-active =
+_hepi_helper-strings.txt:270514: 01c29fc7  easy_assist_lib::commands::kiosk_monitor[KioskMonitor] Desktop toggle: bypass not active, ignoring[KioskMonitor] Desktop toggle: allowSwitchDesktop disabled, ignoring[KioskMonitor] No SEB desktop cached, cannot switch
+_hepi_helper-strings.txt:270516: 01c2a0b2  tauri_commandDefaultK[KioskMonitor] Cross-desktop switch denied because entitlement is missing:
+_hepi_helper-strings.txt:270517: 01c2a114  desktop-switched)[KioskMonitor] Switch to Default failed:
+_hepi_helper-strings.txt:270518: 01c2a150  '[KioskMonitor] Emergency exit ignored:
+_hepi_helper-strings.txt:270520: 01c2a197  5[KioskMonitor] Emergency exit (Ctrl+Q) from desktop '
+_hepi_helper-strings.txt:270522: 01c2a1ef  3[KioskMonitor] Emergency switch to Default failed:
+_hepi_helper-strings.txt:270523: 01c2a225  [KioskMonitor] Emergency exit ignored: already on Default desktop
+_hepi_helper-strings.txt:270525: 01c2a285  =[KioskMonitor] Ignoring exit request from stale sidekick PID=
+_hepi_helper-strings.txt:270527: 01c2a2d3  :[KioskMonitor] Initiating clean application exit (source='
+_hepi_helper-strings.txt:270529: 01c2a31c  G[KioskMonitor] Clean exit: switching from Default back to SEB desktop '
+_hepi_helper-strings.txt:270531: 01c2a398  A[KioskMonitor] Clean exit: failed to switch back to SEB desktop '
+_hepi_helper-strings.txt:270532: 01c2a400  V[KioskMonitor] Application exit already in progress; ignoring duplicate trigger from '
+_hepi_helper-strings.txt:270533: 01c2a45b  [KioskMonitor] Confirmed SEB exit detected
+_hepi_helper-strings.txt:270535: 01c2a4c8  [KioskMonitor] Exhausted confirmed-exit attempts to switch back to Default desktopr[KioskMonitor] SwitchDesktop returned success after confirmed SEB exit, but input desktop is not Default (attempt
+_hepi_helper-strings.txt:270536: 01c2a594  R[KioskMonitor] Switched back to Default desktop after confirmed SEB exit (attempt
+_hepi_helper-strings.txt:270537: 01c2a5ee  Z[KioskMonitor] Failed to switch back to Default desktop after confirmed SEB exit (attempt
+_hepi_helper-strings.txt:270603: 01c2b41a  hepi-sidekick-inithepi-sidekick-settings0[KioskMonitor] Sidekick settings sync disabled:
+_hepi_helper-strings.txt:270604: 01c2b475  easy_assist_lib::commands::kiosk_monitor::sidekickhepi-sidekick-launcher.[KioskMonitor] Sidekick Launcher unavailable:
+_hepi_helper-strings.txt:270605: 01c2b4ee  hepi-sidekick-history-[KioskMonitor] Sidekick history unavailable:
+_hepi_helper-strings.txt:270607: 01c2b53d  --pipesettings.jsonhttps://api.hepi.helpHEPI_SIDEKICK_SERVER-[KioskMonitor] Sidekick launched on desktop '
+_hepi_helper-strings.txt:270609: 01c2b5d8  Sidekick session changed during launch'[KioskMonitor] Sidekick launch failed:
+_hepi_helper-strings.txt:270610: 01c2b629  [KioskMonitor] Sidekick PID=
+_hepi_helper-strings.txt:270615: 01c2b6bc  [KioskMonitor] Sidekick restore cooldown active (less than 60s since last attempt).src\commands\kiosk_monitor\sidekick\restore.rs
+_hepi_helper-strings.txt:270616: 01c2b758  easy_assist_lib::commands::kiosk_monitor::sidekick::restore[KioskMonitor] Max sidekick restore attempts (2) reached for this session.[KioskMonitor] Sidekick restore disabled (quarantine detected in current session).[KioskMonitor] Sidekick background restore already in progress, skipping.
+_hepi_helper-strings.txt:270742: 01c30ecf  LAUNCHER_OPEN_FAILED*launcher_activation_fallback_failed error=
+_hepi_helper-strings.txt:270758: 01c31269  <[KioskMonitor] Device fingerprint unavailable for sidekick:
+_hepi_helper-strings.txt:270795: 01c31f80  [NetworkGuard] Unable to determine default gateway for route defenseeasy_assist_lib::modules::network_guard8[NetworkGuard] Enabling split route defense via gateway
+_hepi_helper-strings.txt:270873: 01c331c3  #"; trying best fallback candidate:
+_hepi_helper-strings.txt:270874: 01c331e9  1[WdaMonitor] Fallback bypass applied to process="
+_hepi_helper-strings.txt:270878: 01c33246  1[WdaMonitor] Fallback bypass failed for process="
+_hepi_helper-strings.txt:270899: 01c33708  G[KioskMonitor] Fast recovery denied due to missing cached entitlement:
+_hepi_helper-strings.txt:270900: 01c33752  easy_assist_lib::commands::kiosk_monitor[KioskMonitor] No persisted bypass state
+_hepi_helper-strings.txt:270901: 01c337a6   normal startup6[KioskMonitor] Found persisted bypass state: desktop='
+_hepi_helper-strings.txt:270903: 01c337f7  [KioskMonitor] Fast recovery: all saved PIDs gone
+_hepi_helper-strings.txt:270904: 01c3382c   SEB restarted, clearing state<[KioskMonitor] Fast recovery: restoring bypass for desktop='
+_hepi_helper-strings.txt:270905: 01c338a9  [KioskMonitor] Fast recovery:
+_hepi_helper-strings.txt:270907: 01c33928  seb-kiosk-detectedseb-kiosk-bypassed7[KioskMonitor] Fast recovery: hook thread started for '
+_hepi_helper-strings.txt:270908: 01c339a0  [KioskMonitor] Fast recovery complete
+_hepi_helper-strings.txt:270909: 01c339e8  2[KioskMonitor] Fast recovery: patched new SEB PID=
+_hepi_helper-strings.txt:270910: 01c33a1d  '[KioskMonitor] Fast recovery: desktop '
+_hepi_helper-strings.txt:270913: 01c33a80  Z[KioskMonitor] Fast recovery: cannot list desktops; preserving persisted state for retry:
+_hepi_helper-strings.txt:270914: 01c33af8  [KioskMonitor] Fast recovery: no SEB processes
+_hepi_helper-strings.txt:270915: 01c33b2a   clearing stale states[KioskMonitor] Fast recovery: cannot enumerate SEB processes; preserving persisted state for the monitor to retry:
+_hepi_helper-strings.txt:270916: 01c33bd0  [KioskMonitor] Monitor loop started
+_hepi_helper-strings.txt:270917: 01c33c10  [KioskMonitor] Monitor loop exiting
+_hepi_helper-strings.txt:270918: 01c33c68  [KioskMonitor] Stopped
+_hepi_helper-strings.txt:270920: 01c33d10  [KioskMonitor] Start requested while already monitoring
+_hepi_helper-strings.txt:270921: 01c33d4b   keeping monitor active[KioskMonitor] Started.#
+_hepi_helper-strings.txt:270922: 01c33d90  E[KioskMonitor] Desktop toggle denied because entitlement is missing:
+_hepi_helper-strings.txt:270923: 01c33dd8  E[KioskMonitor] Ctrl+Shift+D on Default
+_hepi_helper-strings.txt:270925: 01c33e22  desktop-switched-[KioskMonitor] Switch to SEB desktop failed:
+_hepi_helper-strings.txt:270927: 01c33ec0  &[KioskMonitor] allow_switch_desktop =
+_hepi_helper-strings.txt:270928: 01c33ee9  4[KioskMonitor] Pre-seed: existing SEB-like desktop '
+_hepi_helper-strings.txt:270930: 01c33f3b  5[KioskMonitor] SEB first seen: pre-existing desktop '
+_hepi_helper-strings.txt:270932: 01c33f8e  c[KioskMonitor] Failed to enumerate desktops; preserving stale desktop blocklist and session state:
+_hepi_helper-strings.txt:270933: 01c33ff4  /[KioskMonitor] All patched PIDs gone (patched:
+_hepi_helper-strings.txt:270937: 01c34056  [KioskMonitor]
+_hepi_helper-strings.txt:270939: 01c340c4  [KioskMonitor]
+_hepi_helper-strings.txt:270942: 01c3410e  "[KioskMonitor] Incremental patch:
+_hepi_helper-strings.txt:270944: 01c34140  "[KioskMonitor] Incremental patch:
+_hepi_helper-strings.txt:270947: 01c3418d  [KioskMonitor] Complete SEB process enumeration is empty after an active/recent session
+_hepi_helper-strings.txt:270948: 01c341e8   resetting state[KioskMonitor] Automatic desktop restoration to Default did not confirm. Keeping emergency hook active for Ctrl+Q rescue."[KioskMonitor] SEB kiosk stable: '
+_hepi_helper-strings.txt:270949: 01c3429f  "[KioskMonitor] SEB kiosk active: '
+_hepi_helper-strings.txt:270951: 01c342d6  [KioskMonitor] SEB kiosk stable, waiting for patch enforcement before applying Layer 5 Methods 1+2/[KioskMonitor] Applying Layer 5 Methods 1+2 to
+_hepi_helper-strings.txt:270953: 01c3437e  ![KioskMonitor] Bypass applied to
+_hepi_helper-strings.txt:270955: 01c343b2  /[KioskMonitor] Cross-desktop hook started for '
+_hepi_helper-strings.txt:270956: 01c343e6  N[KioskMonitor] Failed to enumerate SEB processes; session state is preserved:
+_hepi_helper-strings.txt:271098: 01c36980  ;launcher_activation_fallback_attempt activation_error_code=
+_hepi_helper-strings.txt:271099: 01c369d8  7launcher_activation_application_no_fallback error_code=
+_hepi_helper-strings.txt:271122: 01c36e39  src\modules\text_grabber\clipboard_fallback.rs
+_hepi_helper-strings.txt:271123: 01c36e68  easy_assist_lib::modules::text_grabber::clipboard_fallback
+_hepi_helper-strings.txt:271131: 01c3702a  &Clipboard fallback captured NEW text:
+_hepi_helper-strings.txt:271159: 01c37920  2[KioskMonitor] Sidekick settings sync pipe ended:
+_hepi_helper-strings.txt:271161: 01c379a0  -[KioskMonitor] Sidekick Launcher pipe ended:
+_hepi_helper-strings.txt:271162: 01c379e8  ,[KioskMonitor] Sidekick history pipe ended:
+_hepi_helper-strings.txt:271163: 01c37a30  .[KioskMonitor] Failed to initialize sidekick:
+_hepi_helper-strings.txt:271166: 01c37b90  [KioskMonitor] Starting background download and restore of sidekick.exe...easy_assist_lib::commands::kiosk_monitor::sidekick::restore
+_hepi_helper-strings.txt:271167: 01c37c48  +[KioskMonitor] Failed to restore sidekick:
+_hepi_helper-strings.txt:271168: 01c37c76  #[KioskMonitor] Sidekick binary at '
+_hepi_helper-strings.txt:271170: 01c37cdc  F[KioskMonitor] Sidekick restored successfully. Spawning onto desktop '
+_hepi_helper-strings.txt:271173: 01c37d5a  *[KioskMonitor] Downloading sidekick from:
+_hepi_helper-strings.txt:271176: 01c37de1  1[KioskMonitor] Sidekick successfully written to '
+_hepi_helper-strings.txt:271178: 01c37e68  [KioskMonitor] Sidekick connected to pipetoggle_visibilitykey_hold_capturetoggle_quiz_answer_overlaydecrease_opacityincrease_opacity
+_hepi_helper-strings.txt:271179: 01c37f08  desktop_switch_eligiblestart_click_throughcontent_protectedreasoning_enabledhide_region_capture_visualssettings_sync_pipeselectable_models.[KioskMonitor] JWT sent to sidekick via pipe (
+_hepi_helper-strings.txt:271182: 01c38010  3[KioskMonitor] Sidekick click-through sync failed:
+_hepi_helper-strings.txt:271183: 01c38046  sidekick-click-through-changed0[KioskMonitor] Sidekick visibility sync failed:
+_hepi_helper-strings.txt:271185: 01c380b3  [KioskMonitor] Sidekick PID=
+_hepi_helper-strings.txt:271188: 01c38138  settings:changed<[KioskMonitor] Ignoring invalid sidekick v2 settings patch:
+_hepi_helper-strings.txt:271194: 01c44b88  SEB_VERIFY_PATCH_ENFORCEMENT_TIMEOUTSEB_VERIFY_CLICK_THROUGH_STUCKSEB_VERIFY_MAIN_WINDOW_MISSINGSEB_VERIFY_MAIN_WINDOW_HIDDENSEB_VERIFY_MAIN_WINDOW_INVALID_BOUNDSSEB_VERIFY_MAIN_WINDOW_OCCLUDED_BY_SEBSEB_VERIFY_KIOSK_BYPASS_TIMEOUTSEB_VERIFY_SIDEKICK_MISSING_OR_QUARANTINEDSEB_VERIFY_SIDEKICK_PROCESS_DEADSEB_VERIFY_SIDEKICK_PIPE_DISCONNECTEDSEB_VERIFY_SIDEKICK_WINDOW_MISSINGSEB_VERIFY_SIDEKICK_WINDOW_HIDDENSEB_VERIFY_SIDEKICK_WINDOW_INVALID_BOUNDSSEB_VERIFY_SIDEKICK_WINDOW_OCCLUDED_BY_SEBsidekick-active![KioskMonitor] sidekick-active =
+_hepi_helper-strings.txt:271337: 01c4e8e8  PROCESS_SNAPSHOT_FAILEDUsing sysinfo fallback (cross-platform)
+_hepi_helper-strings.txt:271542: 01c5a0ee  Block grabber: Failed to get monitor bounds, using fallback&Block grabber: Monitor bounds - left:
+_hepi_helper-strings.txt:271629: 01c5b4e0  :[KioskMonitor] Could not parse desktop_toggle accelerator
+_hepi_helper-strings.txt:271631: 01c5b53b  easy_assist_lib::commands::kiosk_monitor::cross_desktop_helpers:[KioskMonitor] Could not parse emergency_exit accelerator
+_hepi_helper-strings.txt:271633: 01c5b5d3  [KioskMonitor] Cross-desktop capture: no SEB desktop cached
+_hepi_helper-strings.txt:271634: 01c5b628  [KioskMonitor] Cross-desktop capture: text grabber disabled
+_hepi_helper-strings.txt:271635: 01c5b680  +[KioskMonitor] Cross-desktop capture: tab '
+_hepi_helper-strings.txt:271638: 01c5b6f8  cross-desktop-text-relay2[KioskMonitor] Failed to spawn text relay thread:
+_hepi_helper-strings.txt:271639: 01c5b745  [KioskMonitor] Cross-desktop hover: no SEB desktop cached
+_hepi_helper-strings.txt:271640: 01c5b798  [KioskMonitor] Cross-desktop hover: text grabber disabled
+_hepi_helper-strings.txt:271641: 01c5b7f0  )[KioskMonitor] Cross-desktop hover: tab '
+_hepi_helper-strings.txt:271643: 01c5b858  cross-desktop-hover-relay3[KioskMonitor] Failed to spawn hover relay thread:
+_hepi_helper-strings.txt:271729: 01c62833  Failed to lock pending cleanup stateDIAGNOSTICS_LOG_DIR_UNAVAILABLEDIAGNOSTICS_OPEN_LOG_DIR_FAILED/Failed to read fallback diagnostics directory:
+_hepi_helper-strings.txt:271785: 01c63da6   $[LockscreenBypass] Current bytes at
+_hepi_helper-strings.txt:271788: 01c63e31  [LockscreenBypass] Method body is JIT'd native
+_hepi_helper-strings.txt:271789: 01c63e63   using x86 patch (mov eax,0; ret)[LockscreenBypass] Method body is raw IL
+_hepi_helper-strings.txt:271791: 01c63ed0  [LockscreenBypass]
+_hepi_helper-strings.txt:271796: 01c63f64  [LockscreenBypass]
+_hepi_helper-strings.txt:271799: 01c63f97  CreateToolhelp32Snapshot failedsafeexambrowser.clientsubprocessRequestSessionLockShowLockScreen([LockscreenBypass] Found Client module '
+_hepi_helper-strings.txt:271801: 01c6402e  [LockscreenBypass] Client module not found by name
+_hepi_helper-strings.txt:271802: 01c64064   scanning all modules...2[LockscreenBypass] Found target string in module '
+_hepi_helper-strings.txt:271804: 01c640be  4[LockscreenBypass] Found fallback string in module '
+_hepi_helper-strings.txt:271807: 01c64139  5[LockscreenBypass] Starting prevention patch for PID=
+_hepi_helper-strings.txt:271808: 01c64171  A[LockscreenBypass] SeDebugPrivilege failed (may already be set):
+_hepi_helper-strings.txt:271809: 01c641b9  '[LockscreenBypass] Client module base:
+_hepi_helper-strings.txt:271810: 01c641e9  Coordinator[LockscreenBypass] Could not find Coordinator.RequestSessionLock via metadata[LockscreenBypass] Trying fallback: ClientResponsibility.ShowLockScreen...ClientResponsibilityCould not locate either RequestSessionLock or ShowLockScreen in Client assembly/[LockscreenBypass] Found ShowLockScreen at RVA
+_hepi_helper-strings.txt:271811: 01c64350  3[LockscreenBypass] Found RequestSessionLock at RVA
+_hepi_helper-strings.txt:271827: 01c64a08  exit_app_commandwindow size must be non-zeroLogRequest)[LogFilter] Also found Server.dll in PID
+_hepi_helper-strings.txt:271829: 01c64a85  easy_assist_lib::modules::log_filter::scanner [LogFilter] Found Server.dll in
+_hepi_helper-strings.txt:271831: 01c64ae6  $[LogFilter] Scanning Server.dll for
+_hepi_helper-strings.txt:271835: 01c64c10  Failed to read PE optional header[LogFilter] Strategy 1: .NET Metadata Parsing
+_hepi_helper-strings.txt:271836: 01c64c5f  [LogFilter]
+_hepi_helper-strings.txt:271838: 01c64ca9  [LogFilter] Found TryExecute (
+_hepi_helper-strings.txt:271840: 01c64d18  &[LogFilter] IL tiny header: code_size=
+_hepi_helper-strings.txt:271841: 01c64dd8  $[LogFilter] IL fat header: hdr_size=
+_hepi_helper-strings.txt:271843: 01c64e29  [LogFilter] IL code body at
+_hepi_helper-strings.txt:271845: 01c64e78  [LogFilter] IL body looks like ASCII metadata
+_hepi_helper-strings.txt:271847: 01c64ed0  %[LogFilter] Metadata parsing failed:
+_hepi_helper-strings.txt:271848: 01c64ef8  [LogFilter] Strategy 2: .text section scan[LogFilter] No .text section found
+_hepi_helper-strings.txt:271849: 01c64f60  [LogFilter] No suitable method found via .text scan
+_hepi_helper-strings.txt:271850: 01c64fb0  )[LogFilter] Found method prolog at .text+
+_hepi_helper-strings.txt:271854: 01c650e5  [LogFilter] Found '
+_hepi_helper-strings.txt:271860: 01c65409  [LogFilter] '
+_hepi_helper-strings.txt:271862: 01c65449  [LogFilter] Found '
+_hepi_helper-strings.txt:271864: 01c65498  [LogFilter] 'TryExecute' not found in #Strings
+_hepi_helper-strings.txt:271865: 01c654e0  4[LogFilter] Found 'TryExecute' in #Strings at index
+_hepi_helper-strings.txt:271867: 01c6556d  [LogFilter] TypeDef:
+_hepi_helper-strings.txt:271870: 01c655b9  [LogFilter] TypeDef row #
+_hepi_helper-strings.txt:271872: 01c65611  [LogFilter]
+_hepi_helper-strings.txt:271874: 01c65659  [LogFilter]
+_hepi_helper-strings.txt:271877: 01c65709  [LogFilter] Found
+_hepi_helper-strings.txt:271880: 01c65768  [LogFilter] Method RVA is 0 (abstract/extern?)
+_hepi_helper-strings.txt:271881: 01c657c8  '[LogFilter] TryExecute not found among
+_hepi_helper-strings.txt:271885: 01c658cf  '[LogFilter] VirtualQueryEx scan of PID
+_hepi_helper-strings.txt:271887: 01c65907  [LogFilter] Found '
+_hepi_helper-strings.txt:271891: 01c65952  5[LogFilter] Cannot find PE base
+_hepi_helper-strings.txt:271893: 01c65990   [LogFilter] Determined PE base:
+_hepi_helper-strings.txt:271894: 01c659d9  [LogFilter] Scanned
+_hepi_helper-strings.txt:271898: 01c65a19  LockScreenRequest?[LogFilter] Using cached RVA for LockScreenRequest.TryExecute:
+_hepi_helper-strings.txt:271899: 01c65a72  8[LogFilter] Using cached RVA for LogRequest.TryExecute:
+_hepi_helper-strings.txt:272053: 01c6bb64  [KioskMonitor] Stale desktop '
+_hepi_helper-strings.txt:272065: 01c6bd62  ` not found; fallback to
+_hepi_helper-strings.txt:272071: 01c6be0e  #` not found; fallback to index.html
+_hepi_helper-strings.txt:272074: 01c6be47  ` not found; fallback to
+_hepi_helper-strings.txt:272548: 01c7a1c8  shellselected fallback target
+_hepi_helper-strings.txt:272651: 01c7cac8  UPDATE launcher_entries SET use_count=use_count+1,last_used=?2 WHERE path_key=?1SELECT path,kind,launch_target,activation_kind,fallback_target,application_identity FROM launcher_entries WHERE path_key=?1SELECT value FROM launcher_metadata WHERE key='last_indexed_at'SELECT DISTINCT scope_id FROM launcher_entries WHERE scope_id != ?1@applicationsDELETE FROM launcher_entries WHERE scope_id=?1INSERT OR REPLACE INTO launcher_entries_staging
+_hepi_helper-strings.txt:272652: 01c7cc80              (generation,path_key,path,scope_id,name,normalized_name,kind,extension,size,modified_at,launch_target,activation_kind,fallback_target,application_identity,volume_serial,file_reference)
+_hepi_helper-strings.txt:272685: 01c7d9c2                      activation_kind TEXT NOT NULL, fallback_target TEXT, application_identity TEXT,
+_hepi_helper-strings.txt:272726: 01c7e408              activation_kind TEXT NOT NULL, fallback_target TEXT, application_identity TEXT,
+_hepi_helper-strings.txt:272895: 01c80d40           (path_key,path,scope_id,name,normalized_name,kind,extension,size,modified_at,launch_target,activation_kind,fallback_target,application_identity,volume_serial,file_reference,use_count,last_used)
+_hepi_helper-strings.txt:272897: 01c80e88                  staged.size,staged.modified_at,staged.launch_target,staged.activation_kind,staged.fallback_target,staged.application_identity,
+_hepi_helper-strings.txt:272912: 01c811e5               fallback_target=staged.fallback_target,
+_hepi_helper-strings.txt:272929: 01c8158b               OR active.fallback_target IS NOT staged.fallback_target
+_hepi_helper-strings.txt:272934: 01c816cc               (path_key,path,scope_id,name,normalized_name,kind,extension,size,modified_at,launch_target,activation_kind,fallback_target,application_identity,volume_serial,file_reference,use_count,last_used)
+_hepi_helper-strings.txt:272942: 01c819df                  activation_kind=excluded.activation_kind,fallback_target=excluded.fallback_target,
+_hepi_helper-strings.txt:273276: 01c96e14  easy_assist_lib::modules::kiosk_bypassdefault_desktop_ll_hook2[NetworkGuard] Cached default gateway at startup:
+_hepi_helper-strings.txt:273291: 01c97368  [KioskMonitor] Cross-desktop capture: no selectionsrc\commands\kiosk_monitor\cross_desktop_helpers.rs
+_hepi_helper-strings.txt:273293: 01c97428  cross_desktop_uiatext-captured-[KioskMonitor] Failed to emit text-captured:
+_hepi_helper-strings.txt:273294: 01c97476  ,[KioskMonitor] Cross-desktop text captured (
+_hepi_helper-strings.txt:273296: 01c974ad  -[KioskMonitor] Failed to write to clipboard:
+_hepi_helper-strings.txt:273297: 01c974dd  [KioskMonitor] Text written to clipboard
+_hepi_helper-strings.txt:273300: 01c97522  [KioskMonitor] Cross-desktop capture: cleaned text empty[KioskMonitor] Cross-desktop capture: empty text,[KioskMonitor] Cross-desktop capture error:
+_hepi_helper-strings.txt:273301: 01c975b9  [KioskMonitor] Cross-desktop hover: no element at cursor
+_hepi_helper-strings.txt:273302: 01c97610  cross_desktop_hover5[KioskMonitor] Failed to emit text-captured (hover):
+_hepi_helper-strings.txt:273303: 01c9765b  -[KioskMonitor] Cross-desktop hover captured (
+_hepi_helper-strings.txt:273305: 01c97693  8[KioskMonitor] Failed to write hover text to clipboard:
+_hepi_helper-strings.txt:273306: 01c976ce  [KioskMonitor] Cross-desktop hover: cleaned text empty[KioskMonitor] Cross-desktop hover: empty text*[KioskMonitor] Cross-desktop hover error:
+_hepi_helper-strings.txt:273319: 01c98340  LogRequest.[LogFilter] Failed to patch LogRequest in PID
+_hepi_helper-strings.txt:273321: 01c9839d  easy_assist_lib::modules::log_filterLockScreenRequest5[LogFilter] Failed to patch LockScreenRequest in PID
+_hepi_helper-strings.txt:273322: 01c9840f  [LogFilter] Could not locate
+_hepi_helper-strings.txt:273326: 01c9848d  [LogFilter] Found
+_hepi_helper-strings.txt:273328: 01c984d2  [LogFilter]
+_hepi_helper-strings.txt:273331: 01c9850c  [LogFilter] Starting LogRequest & LockScreenRequest patch...Failed to enable SeDebugPrivilege
+_hepi_helper-strings.txt:273332: 01c9856a  [LogFilter] Patching PID
+_hepi_helper-strings.txt:273334: 01c9859a  6[LogFilter] Patched LogRequest & LockScreenRequest in
+_hepi_helper-strings.txt:273347: 01c987f8  [WdaBypass] Enabling SeDebugPrivilege...easy_assist_lib::modules::wda_bypassFailed to enable SeDebugPrivilege
+_hepi_helper-strings.txt:273348: 01c98869   run as Administrator'[WdaBypass] Opening target process PID=
+_hepi_helper-strings.txt:273352: 01c9892a  SetWindowDisplayAffinity not found in user32.dll*[WdaBypass] SetWindowDisplayAffinity at 0x
+_hepi_helper-strings.txt:273354: 01c989c4  WriteProcessMemory (shellcode) failed[WdaBypass] Creating remote thread...
+_hepi_helper-strings.txt:273355: 01c98a28  CreateRemoteThread failed[WdaBypass] Remote thread timed out
+_hepi_helper-strings.txt:273356: 01c98a80  [WdaBypass] Remote thread returned 0
+_hepi_helper-strings.txt:273358: 01c98ad8  *[WdaBypass] Remote thread succeeded (exit=
+_hepi_helper-strings.txt:273378: 01c98d28  "[WdaBypass] Window search target="
+_hepi_helper-strings.txt:273381: 01c98d70  3[WdaBypass] Using protected candidates for target="
+_hepi_helper-strings.txt:273383: 01c98db0  2[WdaBypass] Using fallback candidates for target="
+_hepi_helper-strings.txt:273385: 01c98def  ,[WdaBypass] Protected window search target="
+_hepi_helper-strings.txt:273400: 01c98f86  &[KioskBypass] Method 2 failed for PID=
+_hepi_helper-strings.txt:273402: 01c98fcf  &[KioskBypass] Method 1 failed for PID=
+_hepi_helper-strings.txt:273411: 01c99145  Method 1: failed to patch SwitchDesktop4[KioskBypass] Method 1: SwitchDesktop hooked in PID=
+_hepi_helper-strings.txt:273421: 01c9933b  unhook_switch_desktop: local user32!SwitchDesktop is unexpectedly patchedMethod 1: failed to restore SwitchDesktop6[KioskBypass] Method 1: SwitchDesktop restored in PID=
+_hepi_helper-strings.txt:273423: 01c9942c  Method 2: failed to patch OpenInputDesktop7[KioskBypass] Method 2: OpenInputDesktop hooked in PID=
+_hepi_helper-strings.txt:273424: 01c99490  unhook_open_input_desktop: local user32!OpenInputDesktop is unexpectedly patchedMethod 2: failed to restore OpenInputDesktop9[KioskBypass] Method 2: OpenInputDesktop restored in PID=
+_hepi_helper-strings.txt:273440: 01c999f2  1[KioskGuardian] Failed to terminate guardian PID=
+_hepi_helper-strings.txt:273442: 01c99a48  easy_assist_lib::modules::kiosk_guardian%[KioskGuardian] Guardian process PID=
+_hepi_helper-strings.txt:273444: 01c99ab2  [KioskGuardian] Guardian PID=
+_hepi_helper-strings.txt:273446: 01c99aee  [KioskGuardian] Guardian PID=
+_hepi_helper-strings.txt:273448: 01c99b5f  [KioskGuardian] Guardian PID=
+_hepi_helper-strings.txt:273451: 01c99ba0  &[KioskGuardian] Previous guardian PID=
+_hepi_helper-strings.txt:273455: 01c99c13  .[KioskGuardian] Guardian process spawned: PID=
+_hepi_helper-strings.txt:273457: 01c99c52  T[KioskGuardian] Guardian ownership appeared during spawn; terminating duplicate PID=
+_hepi_helper-strings.txt:273458: 01c99ca9  2[KioskGuardian] Failed to spawn guardian process:
+_hepi_helper-strings.txt:273459: 01c99cde  %[KioskGuardian] Cannot get exe path:
+_hepi_helper-strings.txt:273460: 01c99d06  4[KioskGuardian] Cannot verify existing guardian PID=
+_hepi_helper-strings.txt:273462: 01c99d6e  [KioskGuardian] Watching PID=
+_hepi_helper-strings.txt:273464: 01c99d9f  [KioskGuardian] Unable to establish reliable parent monitoring
+_hepi_helper-strings.txt:273466: 01c99e06  [KioskGuardian] Parent PID=
+_hepi_helper-strings.txt:273469: 01c99e5b  [KioskGuardian] Parent PID=
+_hepi_helper-strings.txt:273472: 01c99ebd  '[KioskGuardian] Cannot open parent PID=
+_hepi_helper-strings.txt:273475: 01c99f2f  $[KioskGuardian] Invalid parent PID:
+_hepi_helper-strings.txt:273476: 01c99f58  [KioskGuardian] Usage: --kiosk-guardian <parent_pid> <desktop_name>
+_hepi_helper-strings.txt:273477: 01c99f9c  -[KioskGuardian] SetThreadDesktop failed for '
+_hepi_helper-strings.txt:273478: 01c99fcf  )[KioskGuardian] Associated with desktop '
+_hepi_helper-strings.txt:273479: 01c99fff  [KioskGuardian] OpenDesktopW('
+_hepi_helper-strings.txt:273481: 01c9a02e  [KioskGuardian] SwitchDesktop failed
+_hepi_helper-strings.txt:273483: 01c9a06f  [KioskGuardian] Switched to Default desktop
+_hepi_helper-strings.txt:273484: 01c9a09f  0[KioskGuardian] OpenDesktopW('Default') failed:
+_hepi_helper-strings.txt:273485: 01c9a0d4  ;[KioskGuardian] RegisterApplicationRestart failed (HRESULT=
+_hepi_helper-strings.txt:273487: 01c9a126  [KioskGuardian] Registered for WER auto-restart
+_hepi_helper-strings.txt:273490: 01c9a17b  >[KioskGuardian] UnregisterApplicationRestart returned HRESULT=
+_hepi_helper-strings.txt:273491: 01c9a1c0  [KioskGuardian] Unregistered from WER auto-restart2[WdaBypassSeb] Failed to enumerate input desktop '
+_hepi_helper-strings.txt:273502: 01c9a490  )[ClipboardBypass] Starting patch for PID=
+_hepi_helper-strings.txt:273503: 01c9a4bc  easy_assist_lib::modules::clipboard_bypass::layers[ClipboardBypass] SeDebugPrivilege enabled@[ClipboardBypass] SeDebugPrivilege failed (may already be set):
+_hepi_helper-strings.txt:273504: 01c9a55f  [ClipboardBypass] Layer A: EmptyClipboard patched
+_hepi_helper-strings.txt:273505: 01c9a594   clipboard clearing disabled"[ClipboardBypass] Layer A failed:
+_hepi_helper-strings.txt:273506: 01c9a5d9  [ClipboardBypass] Layer B: KeyboardHookCallback patched
+_hepi_helper-strings.txt:273507: 01c9a614   all keys pass through"[ClipboardBypass] Layer B failed:
+_hepi_helper-strings.txt:273508: 01c9a653  '[ClipboardBypass] Layer C: Neutralized
+_hepi_helper-strings.txt:273510: 01c9a693  F[ClipboardBypass] Layer C failed (Isolated mode may still intercept):
+_hepi_helper-strings.txt:273513: 01c9a727  [ClipboardBypass] Patched PID=
+_hepi_helper-strings.txt:273516: 01c9a776  Layer A (EmptyClipboard) failed?[ClipboardBypass] Early Layer A: EmptyClipboard patched in PID=
+_hepi_helper-strings.txt:273517: 01c9a7d7  Layer B (KeyboardHookCallback) failedE[ClipboardBypass] Early Layer B: KeyboardHookCallback patched in PID=
+_hepi_helper-strings.txt:273518: 01c9a844  EmptyClipboardresolve_api_address(EmptyClipboard) failed4[ClipboardBypass] Layer A: user32!EmptyClipboard at
+_hepi_helper-strings.txt:273519: 01c9a8b9   +[ClipboardBypass] Layer A: original bytes [
+_hepi_helper-strings.txt:273521: 01c9a934   bytes don't match[ClipboardBypass] Layer A: already patched
+_hepi_helper-strings.txt:273522: 01c9a974   skippingOnContextCreatedRenderProcessMessageHandler[ClipboardBypass] Browser assembly not found via enumeration
+_hepi_helper-strings.txt:273523: 01c9a9e8   trying memory scan...Could not find SafeExamBrowser.Browser assembly in any SEB process$[ClipboardBypass] Browser assembly '
+_hepi_helper-strings.txt:273527: 01c9ab71  [ClipboardBypass] Found '
+_hepi_helper-strings.txt:273529: 01c9abb8  BelongsToSafeExamBrowserKeyboardInterceptorKeyboardHookCallback\[ClipboardBypass] Monitoring module not found via enumeration
+_hepi_helper-strings.txt:273532: 01c9ac95   [ClipboardBypass] Found module '
+_hepi_helper-strings.txt:273534: 01c9accf  Could not locate KeyboardHookCallback in Monitoring.dll4[ClipboardBypass] Found KeyboardHookCallback at RVA
+_hepi_helper-strings.txt:273535: 01c9ad4f  "[ClipboardBypass] Current bytes: [
+_hepi_helper-strings.txt:273536: 01c9ad82  [ClipboardBypass] Method body is JIT'd native code
+_hepi_helper-strings.txt:273538: 01c9adf8  [ClipboardBypass] Method body is raw IL
+_hepi_helper-strings.txt:273540: 01c9ae60  Failed to patch KeyboardHookCallback[ClipboardBypass] KeyboardHookCallback patched
+_hepi_helper-strings.txt:273543: 01c9af22   bytes don't match[ClipboardBypass] KeyboardHookCallback already patched
+_hepi_helper-strings.txt:273546: 01c9afa2  .[ClipboardBypass] Found 'OnContextCreated' at
+_hepi_helper-strings.txt:273549: 01c9b018  [ClipboardBypass] Found RenderProcessMessageHandler.OnContextCreated
+_hepi_helper-strings.txt:273550: 01c9b0a8  5[ClipboardBypass] Skipped stale managed heap match @
+_hepi_helper-strings.txt:273553: 01c9b104  [ClipboardBypass] Patched
+_hepi_helper-strings.txt:273556: 01c9b171  [ClipboardBypass] Patched
+_hepi_helper-strings.txt:273558: 01c9b1c7  ,[ClipboardBypass] Rescanning GC heap region
+_hepi_helper-strings.txt:273561: 01c9b238  6[ClipboardBypass] Found 'BelongsToSafeExamBrowser' at
+_hepi_helper-strings.txt:273564: 01c9b2d0  O[ClipboardBypass] Verified KeyboardInterceptor.KeyboardHookCallback at PE base
+_hepi_helper-strings.txt:273565: 01c9b371  [ClipboardBypass] Scanning for
+_hepi_helper-strings.txt:273575: 01c9bac9  [ClipboardBypass] Found '
+_hepi_helper-strings.txt:273579: 01c9bb85  [ClipboardBypass] TypeDef:
+_hepi_helper-strings.txt:273582: 01c9bbd9  [ClipboardBypass] TypeDef row #
+_hepi_helper-strings.txt:273584: 01c9bc39  [ClipboardBypass]
+_hepi_helper-strings.txt:273586: 01c9bce9  [ClipboardBypass] Found
+_hepi_helper-strings.txt:273589: 01c9bd48  [ClipboardBypass] Method RVA is 0 (abstract/extern?)
+_hepi_helper-strings.txt:273590: 01c9bdb0  ,[ClipboardBypass] IL tiny header: code_size=
+_hepi_helper-strings.txt:273591: 01c9be70  -[ClipboardBypass] IL fat header: header_size=
+_hepi_helper-strings.txt:273593: 01c9bec8  "[ClipboardBypass] IL code body at
+_hepi_helper-strings.txt:273595: 01c9bf20  [ClipboardBypass] IL body looks like ASCII metadata
+_hepi_helper-strings.txt:273597: 01c9bf79  [ClipboardBypass]
+_hepi_helper-strings.txt:273601: 01c9c016  [ClipboardBypass] '
+_hepi_helper-strings.txt:274019: 01cad512   None of the fallback platforms `
+_hepi_helper-strings.txt:277725: 01d13b88  u24CloseNotifyUnexpectedMessageBadRecordMacDecryptionFailedRecordOverflowDecompressionFailureHandshakeFailureNoCertificateBadCertificateUnsupportedCertificateCertificateRevokedCertificateExpiredCertificateUnknownIllegalParameterUnknownCAAccessDeniedDecodeErrorDecryptErrorExportRestrictionProtocolVersionInsufficientSecurityInternalErrorInappropriateFallbackUserCanceledNoRenegotiationMissingExtensionUnsupportedExtensionCertificateUnobtainableUnrecognisedNameBadCertificateStatusResponseBadCertificateHashValueUnknownPSKIdentityCertificateRequiredNoApplicationProtocolEncryptedClientHelloRequired
+_hepi_helper-strings.txt:279530: 01d57e69  o&o)o*o/o0o3o6o;o<o-oOoQoRoSoWoYoZo]o^oaoboholo}o~o
+_hepi_helper-strings.txt:282530: 01dd73dd  O O O O!O!O"O"O#O#O$O$O%O%O%O&O&O'O'O(O(O)O)O)O*O*O+O+O,O,O-O-O-O.O.O/O/O0O0O1O1O1O2O2O3O3O4O4O4O5O5O6O6O7O7O7O8O8O9O9O:O:O;O;O;O<O<O=O=O>O>O>O?O?O@O@OAOAOAOBOBOCOCOCODODOEOEOFOFOFOGOGOHOHOIOIOIOJOJOKOKOKOLOLOMOMONONONOOOOOPOPOPOQOQOROROSOSOSOTOTOUOUOUOVOVOWOWOWOXOXOYOYOYOZOZO[O[O[O\O\O]O]O]O^O^O_O_O`O`O`OaOaObObObOcOcOcOdOdOeOeOeOfOfOgOgOgOhOhOiOiOiOjOjOkOkOkOlOlOmOmOmOnOnOoOoOoOpOpOpOqOqOrOrOrOsOsOtOtOtOuOuOuOvOvOwOwOwOxOxOyOyOyOzOzOzO{O{O|O|O|O}O}O}O~O~O
+_hepi_helper-strings.txt:283635: 01e4e08a              // so we need to fallback to the postMessage interface
+_hepi_helper-strings.txt:284002: 01e5aeb8  Received null IDataObjectC:\Users\runneradmin\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\wry-0.54.4\src\webview2\drag_drop.rs
+_hepi_helper-strings.txt:284079: 01e5eff4  Received null IDataObjectC:\Users\runneradmin\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\tao-0.34.8\src\platform_impl\windows\drop_handler.rs
+_hepi_helper-strings.txt:284536: 01e7d128  field identifierindex.htmlstruct PreventOverflowMarginstruct WindowConfigstruct variant InnerColor::RgbaObjectstruct WindowEffectsConfigstruct LogicalPosition
+_hepi_helper-strings.txt:284878: 01e8b06f  blicaobjetivoalicantebuscadorcantidadentradasaccionesarchivossuperiormayor
