@@ -57,10 +57,10 @@ pub fn log_size_stable(path: &str, before: u64) -> bool {
 /// §9.4 — clipboard has readable text data (not just empty but valid).
 pub fn clipboard_readable() -> bool {
     unsafe {
-        match GetClipboardData(CF_UNICODETEXT.0 as u32) {
-            Ok(h) if !h.is_null() => true,
-            _ => false,
-        }
+        matches!(
+            GetClipboardData(CF_UNICODETEXT.0 as u32),
+            Ok(h) if !h.0.is_null()
+        )
     }
 }
 

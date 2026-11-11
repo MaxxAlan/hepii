@@ -7,7 +7,7 @@ use tauri::Emitter;
 
 use crate::pipe;
 use crate::commands;
-use crate::AppState;;
+use crate::AppState;
 
 fn cli_flag(name: &str) -> bool {
     std::env::args().any(|a| a == name)

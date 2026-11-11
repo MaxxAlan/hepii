@@ -16,8 +16,9 @@ pub fn apply_for(pid: u32) -> Res<()> {
         match inject::remote_addr(pid, module, symbol) {
             Ok(addr) => {
                 match patch::apply(pid, addr, &STUB_RET0, "clipboard") {
-                    Ok(()) => {
+                    Ok(h) => {
                         log::kv("ClipboardBypass", "Patched", "symbol", symbol);
+                        log::kv("ClipboardBypass", "Applied 3-byte patch at", "addr", &format!("0x{:x}", h.addr));
                         return Ok(());
                     }
                     Err(e) => {

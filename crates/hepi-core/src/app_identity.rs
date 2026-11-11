@@ -68,46 +68,50 @@ pub fn signature_state(path: &str) -> String {
         return "unsigned".into();
     }
 
-    // Try to verify Authenticode signature using WinVerifyTrust
+    // Verify Authenticode signature using WinVerifyTrust.
+    // WTD_REVOKE_NONE: không gọi CRL/OCSP (offline-safe, không treo).
     #[allow(unsafe_code)]
     unsafe {
+        use windows::Win32::Foundation::{HWND, TRUST_E_NOSIGNATURE, TRUST_E_SUBJECT_NOT_TRUSTED};
         use windows::Win32::Security::WinTrust::{
-            WinVerifyTrust, WINTRUST_DATA, WINTRUST_FILE_INFO,
-            WTD_UI_NONE, WTD_REVOKE_WHOLECHAIN, WINTRUST_ACTION_GENERIC_VERIFY,
-            TRUST_E_NOSIGNATURE, TRUST_E_SUBJECT_NOT_TRUSTED,
+            WinVerifyTrustEx, WINTRUST_ACTION_GENERIC_VERIFY_V2, WINTRUST_DATA, WINTRUST_FILE_INFO,
+            WTD_CHOICE_FILE, WTD_REVOKE_NONE, WTD_STATEACTION_CLOSE, WTD_STATEACTION_VERIFY,
+            WTD_UI_NONE,
         };
-        use windows::core::PCWSTR;
 
         let w = to_wide(path);
         let mut file_info = WINTRUST_FILE_INFO {
             cbStruct: std::mem::size_of::<WINTRUST_FILE_INFO>() as u32,
             pcwszFilePath: PCWSTR(w.as_ptr()),
             hFile: Default::default(),
-            pguidSubject: std::ptr::null_mut(),
+            pgKnownSubject: std::ptr::null_mut(),
         };
 
+        let mut action = WINTRUST_ACTION_GENERIC_VERIFY_V2;
         let mut trust_data = WINTRUST_DATA {
             cbStruct: std::mem::size_of::<WINTRUST_DATA>() as u32,
-            pFile: &mut file_info,
             dwUIChoice: WTD_UI_NONE,
-            fdwRevocationChecks: WTD_REVOKE_WHOLECHAIN,
-            dwStateAction: 0,
-            hWVTStateData: Default::default(),
-            pwszURLReference: Default::default(),
-            dwUIContext: 0,
-            pSignatureSettings: std::ptr::null_mut(),
+            fdwRevocationChecks: WTD_REVOKE_NONE,
+            dwUnionChoice: WTD_CHOICE_FILE,
+            dwStateAction: WTD_STATEACTION_VERIFY,
+            ..Default::default()
         };
+        trust_data.Anonymous.pFile = std::ptr::from_mut(&mut file_info);
 
-        let result = WinVerifyTrust(Default::default(), &WINTRUST_ACTION_GENERIC_VERIFY, &mut trust_data);
+        let result = WinVerifyTrustEx(HWND::default(), &mut action, &mut trust_data);
+
+        // Đóng state cache do WinVerifyTrust giữ.
+        trust_data.dwStateAction = WTD_STATEACTION_CLOSE;
+        let _ = WinVerifyTrustEx(HWND::default(), &mut action, &mut trust_data);
 
         if result == 0 {
             "signed".into()
-        } else if result == TRUST_E_NOSIGNATURE {
+        } else if result == TRUST_E_NOSIGNATURE.0 {
             "unsigned".into()
-        } else if result == TRUST_E_SUBJECT_NOT_TRUSTED {
+        } else if result == TRUST_E_SUBJECT_NOT_TRUSTED.0 {
             "unsigned_untrusted".into()
         } else {
-            format!("error:{}", result.0)
+            format!("error:{:08x}", result as u32)
         }
     }
 }

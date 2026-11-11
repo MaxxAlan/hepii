@@ -10,11 +10,6 @@ use windows::Win32::UI::WindowsAndMessaging::{
 use crate::settings::TUNING;
 use crate::{inject, log, privs, process_monitor, E, Res};
 
-struct Rank {
-    best: Option<(HWND, i32)>,
-    targets: Vec<String>,
-}
-
 struct RankWithCache {
     best: Option<(HWND, i32)>,
     pid_cache: HashMap<u32, String>,
