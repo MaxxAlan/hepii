@@ -78,10 +78,11 @@ impl<E: Engine> Guarded<E> {
             }
         };
         let spent = t0.elapsed().as_millis() as u32;
+        // Soft timeout: only warn, don't fail. Hard timeout lives inside remote thread call (engine impl).
+        // This elapsed() check catches obvious hang-on-entry but doesn't prevent actual thread from running async.
         if spent > cfg.tuning.remote_thread_timeout_ms {
-            log::kv(self.label, "start over budget", "ms", &spent.to_string());
-            self.engine.stop(h);
-            return Err(crate::E::Timeout);
+            log::kv(self.label, "start near budget (soft check only)", "ms", &spent.to_string());
+            log::line(self.label, "Warning: engine.start() took longer than expected; verify must catch failures");
         }
         LIVE.fetch_add(1, Ordering::SeqCst);
         self.state = State::Running(h);

@@ -82,7 +82,14 @@ pub fn apply(pid: u32, addr: usize, new_bytes: &[u8], label: &str) -> Res<PatchH
         old_protect: old,
         label: label.to_string(),
     };
-    REGISTRY.lock().unwrap().push(handle.clone());
+    match REGISTRY.lock() {
+        Ok(mut reg) => reg.push(handle.clone()),
+        Err(poisoned) => {
+            log::err("Patch", E::State, "registry poisoned, recovering");
+            let mut reg = poisoned.into_inner();
+            reg.push(handle.clone());
+        }
+    }
     Ok(handle)
 }
 
@@ -117,17 +124,32 @@ pub fn rollback(h: &PatchHandle) -> Res<()> {
 }
 
 fn forget(pid: u32, addr: usize) {
-    REGISTRY.lock().unwrap().retain(|p| !(p.pid == pid && p.addr == addr));
+    match REGISTRY.lock() {
+        Ok(mut reg) => reg.retain(|p| !(p.pid == pid && p.addr == addr)),
+        Err(poisoned) => {
+            let mut reg = poisoned.into_inner();
+            reg.retain(|p| !(p.pid == pid && p.addr == addr));
+        }
+    }
 }
 
 /// §9.7 — số handle còn mở.
 pub fn open_count() -> usize {
-    REGISTRY.lock().unwrap().len()
+    match REGISTRY.lock() {
+        Ok(guard) => guard.len(),
+        Err(poisoned) => poisoned.into_inner().len(),
+    }
 }
 
 /// Rollback toàn bộ, thứ tự ngược.
 pub fn rollback_all() {
-    let list = { REGISTRY.lock().unwrap().clone() };
+    let list = match REGISTRY.lock() {
+        Ok(guard) => guard.clone(),
+        Err(poisoned) => {
+            log::err("Patch", E::State, "registry poisoned during rollback_all, recovering");
+            poisoned.into_inner().clone()
+        }
+    };
     for h in list.iter().rev() {
         let _ = rollback(h);
     }
@@ -135,7 +157,13 @@ pub fn rollback_all() {
 
 /// Bỏ handle của pid đã chết (không rollback).
 pub fn drop_dead(live: &[u32]) {
-    REGISTRY.lock().unwrap().retain(|p| live.contains(&p.pid));
+    match REGISTRY.lock() {
+        Ok(mut reg) => reg.retain(|p| live.contains(&p.pid)),
+        Err(poisoned) => {
+            let mut reg = poisoned.into_inner();
+            reg.retain(|p| live.contains(&p.pid));
+        }
+    }
 }
 
 pub fn hex(b: &[u8]) -> String {
@@ -147,7 +175,11 @@ pub const STUB_RET0: [u8; 3] = [0x31, 0xC0, 0xC3];
 
 /// Toàn bộ pid đang được patch.
 pub fn patched_pids() -> Vec<u32> {
-    let mut v: Vec<u32> = REGISTRY.lock().unwrap().iter().map(|p| p.pid).collect();
+    let guard = match REGISTRY.lock() {
+        Ok(g) => g,
+        Err(poisoned) => poisoned.into_inner(),
+    };
+    let mut v: Vec<u32> = guard.iter().map(|p| p.pid).collect();
     v.sort_unstable();
     v.dedup();
     v

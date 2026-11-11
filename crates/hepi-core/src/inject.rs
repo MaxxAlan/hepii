@@ -93,10 +93,16 @@ pub fn call_remote(pid: u32, fn_addr: usize, a: u64, b: u32) -> Res<()> {
     params.extend_from_slice(&b.to_le_bytes());
 
     unsafe {
+        // Align parameter block to 8-byte boundary (x64 ABI requirement)
+        const ALIGN: usize = 8;
+        let code_len = code.len();
+        let padding = (ALIGN - (code_len % ALIGN)) % ALIGN;
+        let total_alloc = code_len + padding + params.len() + 16;
+
         let mem = VirtualAllocEx(
             h,
             None,
-            code.len() + params.len() + 16,
+            total_alloc,
             MEM_COMMIT | MEM_RESERVE,
             PAGE_EXECUTE_READWRITE,
         );
@@ -106,12 +112,15 @@ pub fn call_remote(pid: u32, fn_addr: usize, a: u64, b: u32) -> Res<()> {
             return Err(E::Access);
         }
 
-        let pblock = (mem as usize + code.len() + 8) as *const u8;
+        let pblock = (mem as usize + code_len + padding) as *const u8;
+        debug_assert_eq!(pblock as usize % ALIGN, 0, "pblock not aligned to 8 bytes");
+
         let mut w = 0usize;
         WriteProcessMemory(h, mem, code.as_ptr() as *const _, code.len(), Some(&mut w)).map_err(|_| E::Access)?;
         WriteProcessMemory(h, pblock as *const _, params.as_ptr() as *const _, params.len(), Some(&mut w))
             .map_err(|_| E::Access)?;
 
+        log::kv("Inject", "Parameter block alignment", "offset", &format!("0x{:x} (aligned)", pblock as usize % 16));
         log::line("Inject", "Creating remote thread...");
         let start: unsafe extern "system" fn(*mut std::ffi::c_void) -> u32 = std::mem::transmute(mem);
         let t = CreateRemoteThread(h, None, 0, Some(start), Some(pblock as *const _), 0, None)

@@ -54,11 +54,13 @@ pub fn log_size_stable(path: &str, before: u64) -> bool {
     std::fs::metadata(path).map(|m| m.len() == before).unwrap_or(false)
 }
 
-/// §9.4
+/// §9.4 — clipboard has readable text data (not just empty but valid).
 pub fn clipboard_readable() -> bool {
     unsafe {
-        let h = GetClipboardData(CF_UNICODETEXT.0 as u32);
-        h.is_ok()
+        match GetClipboardData(CF_UNICODETEXT.0 as u32) {
+            Ok(h) if !h.is_null() => true,
+            _ => false,
+        }
     }
 }
 

@@ -1,5 +1,6 @@
 //! §6.4 — gỡ WDA_EXCLUDEFROMCAPTURE khỏi cửa sổ của tiến trình đích.
 
+use std::collections::HashMap;
 use windows::Win32::Foundation::{BOOL, HWND, LPARAM};
 use windows::Win32::UI::WindowsAndMessaging::{
     EnumWindows, GetWindowDisplayAffinity, IsWindowVisible, WDA_EXCLUDEFROMCAPTURE, WDA_NONE,
@@ -14,28 +15,35 @@ struct Rank {
     targets: Vec<String>,
 }
 
+struct RankWithCache {
+    best: Option<(HWND, i32)>,
+    pid_cache: HashMap<u32, String>,
+}
+
 /// Xếp hạng §6.4 bước 2: protected > visible&sized > còn lại; hoà ⇒ pid nhỏ hơn.
 pub fn pick_window(targets: &[String]) -> Res<HWND> {
     let hits = process_monitor::find_by_names(targets);
     if hits.is_empty() {
         return Err(E::NoTarget);
     }
-    let mut pids: Vec<u32> = hits.iter().map(|(p, _)| *p).collect();
-    pids.sort_unstable();
 
-    let mut r = Rank { best: None, targets: targets.to_vec() };
+    // Cache PID->name mapping from snapshot #1 to avoid recursive snapshot call inside EnumWindows callback
+    let pid_cache: HashMap<u32, String> = hits.into_iter().collect();
+
+    let mut r = RankWithCache { best: None, pid_cache };
     unsafe {
-        let _ = EnumWindows(Some(rank_cb), LPARAM(&mut r as *mut _ as isize));
+        let _ = EnumWindows(Some(rank_cb_cached), LPARAM(&mut r as *mut _ as isize));
     }
     log::kv("WdaBypass", "Window search produced candidate(s), best", "best", &format!("{:?}", r.best));
     r.best.map(|(h, _)| h).ok_or(E::NoTarget)
 }
 
-unsafe extern "system" fn rank_cb(hwnd: HWND, lparam: LPARAM) -> BOOL {
-    let r = &mut *(lparam.0 as *mut Rank);
+unsafe extern "system" fn rank_cb_cached(hwnd: HWND, lparam: LPARAM) -> BOOL {
+    let r = &mut *(lparam.0 as *mut RankWithCache);
     let mut pid = 0u32;
     windows::Win32::UI::WindowsAndMessaging::GetWindowThreadProcessId(hwnd, Some(&mut pid));
-    if !r.targets.iter().any(|t| process_monitor::pid_matches(pid, t)) {
+    // Lookup cached PID->name mapping instead of calling snapshot() (which would recurse)
+    if !r.pid_cache.contains_key(&pid) {
         return BOOL::from(true);
     }
     let mut aff = 0u32;

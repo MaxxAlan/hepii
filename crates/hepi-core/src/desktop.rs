@@ -35,7 +35,14 @@ fn access() -> u32 {
 
 unsafe extern "system" fn desktop_cb(name: PCWSTR, lparam: LPARAM) -> BOOL {
     let out = &mut *(lparam.0 as *mut Vec<String>);
-    out.push(from_wide(std::slice::from_raw_parts(name.0, 256)));
+    // Find null terminator instead of hard-coded 256 to prevent buffer overread
+    let mut len = 0usize;
+    while *name.0.add(len) != 0 {
+        len += 1;
+        if len > 512 { break; }  // Guard against infinite loop
+    }
+    let slice = std::slice::from_raw_parts(name.0, len);
+    out.push(from_wide(slice));
     BOOL::from(true)
 }
 

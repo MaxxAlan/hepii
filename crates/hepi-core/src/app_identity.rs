@@ -67,7 +67,49 @@ pub fn signature_state(path: &str) -> String {
     if path.is_empty() || !std::path::Path::new(path).exists() {
         return "unsigned".into();
     }
-    "unsigned".into()
+
+    // Try to verify Authenticode signature using WinVerifyTrust
+    #[allow(unsafe_code)]
+    unsafe {
+        use windows::Win32::Security::WinTrust::{
+            WinVerifyTrust, WINTRUST_DATA, WINTRUST_FILE_INFO,
+            WTD_UI_NONE, WTD_REVOKE_WHOLECHAIN, WINTRUST_ACTION_GENERIC_VERIFY,
+            TRUST_E_NOSIGNATURE, TRUST_E_SUBJECT_NOT_TRUSTED,
+        };
+        use windows::core::PCWSTR;
+
+        let w = to_wide(path);
+        let mut file_info = WINTRUST_FILE_INFO {
+            cbStruct: std::mem::size_of::<WINTRUST_FILE_INFO>() as u32,
+            pcwszFilePath: PCWSTR(w.as_ptr()),
+            hFile: Default::default(),
+            pguidSubject: std::ptr::null_mut(),
+        };
+
+        let mut trust_data = WINTRUST_DATA {
+            cbStruct: std::mem::size_of::<WINTRUST_DATA>() as u32,
+            pFile: &mut file_info,
+            dwUIChoice: WTD_UI_NONE,
+            fdwRevocationChecks: WTD_REVOKE_WHOLECHAIN,
+            dwStateAction: 0,
+            hWVTStateData: Default::default(),
+            pwszURLReference: Default::default(),
+            dwUIContext: 0,
+            pSignatureSettings: std::ptr::null_mut(),
+        };
+
+        let result = WinVerifyTrust(Default::default(), &WINTRUST_ACTION_GENERIC_VERIFY, &mut trust_data);
+
+        if result == 0 {
+            "signed".into()
+        } else if result == TRUST_E_NOSIGNATURE {
+            "unsigned".into()
+        } else if result == TRUST_E_SUBJECT_NOT_TRUSTED {
+            "unsigned_untrusted".into()
+        } else {
+            format!("error:{}", result.0)
+        }
+    }
 }
 
 /// P1 — nhận `&Profile` thay vì chuỗi rời. Logic clone giữ nguyên.
