@@ -17,19 +17,33 @@ pub fn default_dir() -> Option<PathBuf> {
     }
 }
 
-/// Rule §6.7 bước 2: bỏ các dòng chứa marker.
+/// Rule §6.7 bước 2: bỏ các dòng chứa marker, giữ nguyên line ending style.
 pub fn rewrite(content: &str) -> String {
+    // Detect original line ending (CRLF vs LF)
+    let uses_crlf = content.contains("\r\n");
+    let line_ending = if uses_crlf { "\r\n" } else { "\n" };
+
     content
         .lines()
         .filter(|l| !MARKERS.iter().any(|m| l.contains(m)))
-        .map(|l| format!("{}\r\n", l))
+        .map(|l| format!("{}{}", l, line_ending))  // Preserve original ending style
         .collect()
 }
 
 pub fn clean_dir(dir: &Path) -> Res<usize> {
     let entries = fs::read_dir(dir).map_err(|_| E::NoTarget)?;
     let mut changed = 0usize;
-    for entry in entries.flatten() {
+    let mut skipped = 0usize;
+
+    for entry_result in entries {
+        let entry = match entry_result {
+            Ok(e) => e,
+            Err(err) => {
+                log::kv("SebLogCleaner", "Skipped entry due to error", "error", &err.to_string());
+                skipped += 1;
+                continue;
+            }
+        };
         let path = entry.path();
         if !path.is_file() {
             continue;
@@ -58,5 +72,8 @@ pub fn clean_dir(dir: &Path) -> Res<usize> {
         changed += 1;
     }
     log::kv("SebLogCleaner", "Cleaned files", "count", &changed.to_string());
+    if skipped > 0 {
+        log::kv("SebLogCleaner", "Skipped entries", "count", &skipped.to_string());
+    }
     Ok(changed)
 }

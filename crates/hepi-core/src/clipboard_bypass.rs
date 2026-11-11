@@ -10,14 +10,31 @@ const SYMBOLS: [(&str, &str); 3] = [
 ];
 
 pub fn apply_for(pid: u32) -> Res<()> {
+    let mut last_error = E::NoTarget;
+
     for (module, symbol) in SYMBOLS {
-        if let Ok(addr) = inject::remote_addr(pid, module, symbol) {
-            patch::apply(pid, addr, &STUB_RET0, "clipboard")?;
-            log::line("ClipboardBypass", "Patched");
-            return Ok(());
+        match inject::remote_addr(pid, module, symbol) {
+            Ok(addr) => {
+                match patch::apply(pid, addr, &STUB_RET0, "clipboard") {
+                    Ok(()) => {
+                        log::kv("ClipboardBypass", "Patched", "symbol", symbol);
+                        return Ok(());
+                    }
+                    Err(e) => {
+                        log::kv("ClipboardBypass", "Patch failed for symbol", "symbol", symbol);
+                        last_error = e;
+                        // Try next symbol on failure
+                    }
+                }
+            }
+            Err(e) => {
+                log::kv("ClipboardBypass", "Symbol not found", "module", module);
+                last_error = e;
+                // Try next symbol
+            }
         }
     }
-    Err(E::NoTarget)
+    Err(last_error)
 }
 
 pub fn reconcile() {
