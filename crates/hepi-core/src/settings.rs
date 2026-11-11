@@ -63,10 +63,11 @@ impl Default for Settings {
             launch_at_startup: false,
             keep_running_in_tray: true,
             selected_programs: Vec::new(),
+            // SEB 3.x (CefSharp): không còn seb.exe/xul.exe.
             target_processes: vec![
-                "seb.exe".into(),
-                "xul.exe".into(),
-                "seb_xulrunner.exe".into(),
+                crate::seb3::CLIENT_EXE.into(),
+                crate::seb3::RUNTIME_EXE.into(),
+                crate::seb3::BROWSER_SUBPROCESS_EXE.into(),
             ],
         }
     }

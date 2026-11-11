@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Teddy Helper",
+  "version": "1.0",
+  "description": "Tải hàng loạt PinkTeddy",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Tải ảnh câu hỏi"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["jszip.min.js", "content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["jszip.min.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

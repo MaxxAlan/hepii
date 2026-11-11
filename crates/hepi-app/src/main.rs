@@ -5,6 +5,7 @@ mod commands;
 #[allow(dead_code)]
 mod pipe;
 mod runtime;
+mod window_guard;
 
 use std::sync::{Arc, Mutex};
 

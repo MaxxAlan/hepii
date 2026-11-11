@@ -90,11 +90,22 @@ pub fn boot() -> Res<()> {
             commands::trigger_emergency_exit,
             commands::restore_lockdowns,
             commands::run_self_check,
+            commands::seb_status,
+            commands::seb_apply_now,
+            commands::set_window_guard,
+            commands::quiz_ask,
+            commands::quiz_ai_status,
+            commands::quiz_open_chatgpt,
+            commands::quiz_close_chatgpt,
+            commands::quiz_chatgpt_login,
         ])
         .setup(move |app| {
             let handle = app.handle().clone();
             // 6. hotkeys
             desktop::install_hook().ok();
+            // 6b. tự vệ cửa sổ: SEB 3.x đóng cửa sổ của tiến trình lạ
+            let guard_handle = app.handle().clone();
+            crate::window_guard::install(&guard_handle);
             // 7. monitor — pass Arc for live config updates
             std::thread::spawn(move || monitor_loop(handle, settings_for_monitor, session));
             Ok(())
@@ -142,13 +153,16 @@ fn monitor_loop(app: tauri::AppHandle, cfg: Arc<Mutex<settings::Settings>>, _ses
                     }
                 }
                 if cfg_current.seb_log_filter {
-                    hepi_core::log_filter::reconcile();
+                    let _ = hepi_core::log_filter::apply_now();
                 }
                 if cfg_current.seb_clipboard_bypass {
-                    hepi_core::clipboard_bypass::reconcile();
+                    let _ = hepi_core::clipboard_bypass::apply_now();
                 }
                 if cfg_current.seb_lockscreen_bypass {
-                    hepi_core::lockscreen_bypass::reconcile();
+                    let _ = hepi_core::lockscreen_bypass::apply_now();
+                }
+                if cfg_current.seb_patch_enforcement {
+                    let _ = hepi_core::patch_enforcement::apply_now();
                 }
             }
         }

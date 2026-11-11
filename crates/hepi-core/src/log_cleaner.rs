@@ -5,7 +5,18 @@ use std::path::{Path, PathBuf};
 
 use crate::{log, E, Res};
 
-pub const MARKERS: [&str; 4] = ["CBT", "Screenshot", "Clipboard", "LockScreen"];
+/// Marker dòng log cần loại bỏ.
+///
+/// Đo trên log SEB **3.10.2** thật (`%LOCALAPPDATA%\SafeExamBrowser\Logs\*_Client.log`):
+/// `CBT`/`Screenshot`/`LockScreen` (marker của SEB 2.x) **không xuất hiện**;
+/// dòng ghi hành vi giám sát mang các marker dưới đây.
+pub const MARKERS: [&str; 5] = [
+    "ApplicationMonitor",
+    "WindowGuard",
+    "KeyboardInterceptor",
+    "Clipboard",
+    "LockScreen",
+];
 
 pub fn default_dir() -> Option<PathBuf> {
     let base = std::env::var("LOCALAPPDATA").ok()?;

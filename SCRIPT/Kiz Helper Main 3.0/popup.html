@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="styles/popup.css">
+</head>
+<body>
+  <div class="container">
+    <button id="loadLibrary">Bấm Đây Trước Nếu AE Tải "Text Nocap"</button>
+    <button id="getExamCode">Lấy Examcode</button>
+    <button id="getAnswer">Lấy Đáp Án</button>
+    <button id="downloadImages">Tải Ảnh Nocap</button>
+    <button id="downloadText">Tải Text Nocap</button>
+
+    <hr>
+
+    <div class="auto-delete-section">
+      <h3>Tự động xóa dữ liệu</h3>
+      <textarea id="codeList" placeholder="Nhập danh sách mã (mỗi mã một dòng)" rows="6"></textarea>
+      <div class="settings">
+        <label>
+          Thời gian chờ (giây):
+          <input type="number" id="delayTime" min="2" max="30" value="5">
+        </label>
+      </div>
+      <div class="button-group">
+        <button id="startAutoDelete">Bắt đầu xóa dữ liệu</button>
+        <button id="stopAutoDelete" disabled>Dừng</button>
+      </div>
+      <div id="statusBox" class="status-box">
+        <div id="statusMessage">Trạng thái: Chưa bắt đầu</div>
+        <div id="progressInfo" class="progress-info">Tiến độ: 0/0</div>
+      </div>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'924e3dc6795b53f2',t:'MTc0MjczNjE4NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

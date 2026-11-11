@@ -112,7 +112,7 @@ impl Client {
         let path = format!("{}{}", ep.path, suffix);
 
         unsafe {
-            let agent = to_wide("Hepi/0.20.8");
+            let agent = to_wide(concat!("Hepi/", env!("CARGO_PKG_VERSION")));
             let session = Handle(WinHttpOpen(
                 PCWSTR(agent.as_ptr()),
                 WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,

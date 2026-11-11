@@ -1,0 +1,32 @@
+(async function() {
+    // Function to delay execution for a certain amount of time
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    // Select all page buttons
+    const pageButtons = document.querySelectorAll('#NC_pag .page-link');
+    let result = '';
+
+    for (let i = 0; i < pageButtons.length; i++) {
+        const button = pageButtons[i];
+        button.click(); // Simulate click to go to the page
+        await delay(50); // Wait for the page to load, adjust the delay as needed
+
+        // Select the answer list in the current page
+        const answerList = document.querySelector('#NC_Answer');
+        if (answerList) {
+            // Select all active answers
+            const activeAnswers = answerList.querySelectorAll('.page-item.active .page-link');
+            if (activeAnswers.length > 0) {
+                // Concatenate all active answer texts (A, B, C, etc.)
+                const answers = Array.from(activeAnswers)
+                    .map(answer => answer.innerText.trim().toLowerCase())
+                    .join('');
+                
+                // Append the question number and answers to the result
+                result += `${i + 1}${answers} `;
+            }
+        }
+    }
+
+    console.log(result.trim());
+})();

@@ -1,0 +1,118 @@
+body {
+    width: 200px;
+    padding: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button {
+    padding: 8px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 10px 0;
+}
+
+.auto-delete-section h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    resize: none;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-family: Arial, sans-serif;
+}
+
+.settings {
+    margin: 5px 0;
+}
+
+.settings label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.settings input {
+    width: 50px;
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button-group {
+    display: flex;
+    gap: 5px;
+}
+
+.button-group button {
+    flex: 1;
+}
+
+#stopAutoDelete {
+    background-color: #ff4444;
+}
+
+#stopAutoDelete:hover {
+    background-color: #cc0000;
+}
+
+.status-box {
+    margin-top: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.status-box.success {
+    border-color: #4CAF50;
+    background-color: #e8f5e9;
+}
+
+.status-box.error {
+    border-color: #ff4444;
+    background-color: #ffebee;
+}
+
+.status-box.running {
+    border-color: #2196F3;
+    background-color: #e3f2fd;
+}
+
+#statusMessage {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#progressInfo {
+    font-size: 12px;
+    margin-top: 5px;
+}

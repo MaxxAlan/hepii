@@ -81,6 +81,34 @@ fn module_base(pid: u32, module: &str) -> Res<usize> {
     }
 }
 
+/// Base address của module trong tiến trình khác (dùng cho engine SEB 3.x).
+pub fn module_base_addr(pid: u32, module: &str) -> Res<u64> {
+    module_base(pid, module).map(|v| v as u64)
+}
+
+/// Toàn bộ module đang nạp trong tiến trình: (tên, base).
+pub fn list_modules(pid: u32) -> Vec<(String, u64)> {
+    let mut out = Vec::new();
+    unsafe {
+        let Ok(snap) = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, pid)
+        else {
+            return out;
+        };
+        let mut me = MODULEENTRY32W::default();
+        me.dwSize = std::mem::size_of::<MODULEENTRY32W>() as u32;
+        if Module32FirstW(snap, &mut me).is_ok() {
+            loop {
+                out.push((from_wide(&me.szModule), me.modBaseAddr as u64));
+                if Module32NextW(snap, &mut me).is_err() {
+                    break;
+                }
+            }
+        }
+        let _ = CloseHandle(snap);
+    }
+    out
+}
+
 /// Gọi hàm trong tiến trình đích với (u64, u32). Timeout cứng theo TUNING.
 pub fn call_remote(pid: u32, fn_addr: usize, a: u64, b: u32) -> Res<()> {
     log::kv("Inject", "Opening target process", "pid", &pid.to_string());

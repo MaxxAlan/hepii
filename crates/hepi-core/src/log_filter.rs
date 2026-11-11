@@ -1,55 +1,96 @@
-//! §6.5 — chặn hàm ghi log của tiến trình đích bằng stub trong RAM.
+//! §6.5 — chặn SEB gửi log (kiosk) ra ngoài.
+//!
+//! SEB 3.x gửi log qua managed method `LogRequest.TryExecute` và
+//! `LockScreenRequest.TryExecute` trong `SafeExamBrowser.Server.dll`.
+//! Patch cho chúng luôn trả `true` ⇒ coi như đã gửi, nhưng thực tế không
+//! truyền đi (khớp hành vi legacy v0.20.9: "always returns TRUE").
+//!
+//! Không sửa file trên đĩa (R2) — chỉ ghi vào bộ nhớ tiến trình đích.
 
-use crate::patch::{self, STUB_RET0};
-use crate::{inject, log, process_monitor, E, Res};
+use windows::Win32::Foundation::{CloseHandle, HANDLE};
+use windows::Win32::System::Threading::{OpenProcess, PROCESS_ALL_ACCESS};
 
-/// Tên symbol ghi log, thử lần lượt; dừng ở cái đầu tiên resolve được.
-const SYMBOLS: [(&str, &str); 4] = [
-    ("seb.exe", "WriteLogLine"),
-    ("xul.dll", "PR_LogPrint"),
-    ("seb.exe", "LogWrite"),
-    ("chrome.dll", "logging::LogMessage::LogMessage"),
-];
+use crate::il_patch;
+use crate::seb3::{self, Role};
+use crate::{log, privs, E, Res};
 
-pub fn apply_for(pid: u32) -> Res<()> {
-    let mut last_error = E::NoTarget;
-
-    for (module, symbol) in SYMBOLS {
-        match inject::remote_addr(pid, module, symbol) {
-            Ok(addr) => {
-                match patch::apply(pid, addr, &STUB_RET0, "logfilter") {
-                    Ok(h) => {
-                        log::kv("LogFilter", "Patched", "symbol", symbol);
-                        log::kv("LogFilter", "Applying 3-byte patch at", "addr", &format!("0x{:x}", h.addr));
-                        return Ok(());
-                    }
-                    Err(e) => {
-                        log::kv("LogFilter", "Patch failed for symbol", "symbol", symbol);
-                        last_error = e;
-                        // Try next symbol on failure
-                    }
-                }
-            }
-            Err(e) => {
-                log::kv("LogFilter", "Symbol not found", "module", module);
-                last_error = e;
-                // Try next symbol
-            }
-        }
-    }
-    Err(last_error)
+fn open(pid: u32) -> Res<HANDLE> {
+    unsafe { OpenProcess(PROCESS_ALL_ACCESS, false, pid).map_err(|_| E::Access) }
 }
 
-/// Giữ patch khớp với pid còn sống (§6.6 monitor pattern).
-pub fn reconcile() {
-    let live = process_monitor::live_pids();
-    patch::drop_dead(&live);
-    for pid in live {
-        if !patch::patched_pids().contains(&pid) {
-            let _ = apply_for(pid);
+/// Patch `type.method` trong `module` của tiến trình `pid` cho trả true.
+fn patch_true_in(
+    pid: u32,
+    module: &str,
+    type_name: &str,
+    method_name: &str,
+) -> Res<bool> {
+    let base = match crate::inject::module_base_addr(pid, module) {
+        Ok(b) => b,
+        Err(_) => return Ok(false),
+    };
+    let handle = open(pid)?;
+    let img = crate::dotnet::RemoteImage::new(handle, base);
+    let found = crate::dotnet::find_method(&img, type_name, method_name);
+    let m = match found {
+        Ok(m) => m,
+        Err(_) => {
+            unsafe {
+                let _ = CloseHandle(handle);
+            }
+            return Ok(false);
+        }
+    };
+    crate::dotnet::log_found(&m);
+    let r = il_patch::patch_return_true(handle, base, &m);
+    unsafe {
+        let _ = CloseHandle(handle);
+    }
+    r?;
+    log::kv(
+        "LogFilter",
+        "TryExecute patched -> always returns TRUE",
+        "type",
+        &m.type_name,
+    );
+    Ok(true)
+}
+
+/// Chặn gửi log. Trả true nếu patch được ít nhất một method.
+pub fn apply_for(pid: u32) -> Res<bool> {
+    let _ = privs::enable_se_debug();
+    let mut any = false;
+    if patch_true_in(
+        pid,
+        seb3::SERVER_DLL,
+        seb3::TYPE_LOG_REQUEST,
+        seb3::METHOD_TRY_EXECUTE,
+    )? {
+        any = true;
+    }
+    if patch_true_in(
+        pid,
+        seb3::SERVER_DLL,
+        seb3::TYPE_LOCKSCREEN_REQUEST,
+        seb3::METHOD_TRY_EXECUTE,
+    )? {
+        any = true;
+    }
+    Ok(any)
+}
+
+/// Áp cho mọi tiến trình SEB đang chạy (client + runtime + browser subprocess).
+pub fn apply_now() -> Res<bool> {
+    let _ = privs::enable_se_debug();
+    let mut any = false;
+    for (role, pid, _) in seb3::running() {
+        // Server.dll nạp trong client và runtime; browser subprocess không cần.
+        if role == Role::Browser {
+            continue;
+        }
+        if apply_for(pid)? {
+            any = true;
         }
     }
-    if process_monitor::live_pids().is_empty() {
-        log::line("LogFilter", "All patched PIDs gone - session reset");
-    }
+    Ok(any)
 }

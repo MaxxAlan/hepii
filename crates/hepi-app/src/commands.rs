@@ -5,7 +5,7 @@ use hepi_core::{
     app_identity, capture, desktop, entitlement, launcher, log, log_cleaner, network_guard,
     process_monitor, profiles, settings, util, wda_bypass, E,
 };
-use tauri::State;
+use tauri::{Manager, State};
 
 use crate::AppState;
 
@@ -169,7 +169,7 @@ macro_rules! monitor_cmd {
         #[tauri::command]
         pub fn $start() -> Result<(), String> {
             std::thread::spawn(|| loop {
-                $reconcile();
+                let _ = $reconcile();
                 std::thread::sleep(std::time::Duration::from_millis(settings::TUNING.verify_cycle_ms));
             });
             Ok(())
@@ -180,16 +180,16 @@ macro_rules! monitor_cmd {
     };
 }
 
-monitor_cmd!(start_log_filter_monitor, stop_log_filter_monitor, hepi_core::log_filter::reconcile);
+monitor_cmd!(start_log_filter_monitor, stop_log_filter_monitor, hepi_core::log_filter::apply_now);
 monitor_cmd!(
     start_clipboard_bypass_monitor,
     stop_clipboard_bypass_monitor,
-    hepi_core::clipboard_bypass::reconcile
+    hepi_core::clipboard_bypass::apply_now
 );
 monitor_cmd!(
     start_lockscreen_bypass_monitor,
     stop_lockscreen_bypass_monitor,
-    hepi_core::lockscreen_bypass::reconcile
+    hepi_core::lockscreen_bypass::apply_now
 );
 
 #[tauri::command]
@@ -309,4 +309,118 @@ pub fn run_self_check() -> serde_json::Value {
         "admin": util::is_admin(),
         "api": entitlement::base_url(),
     })
+}
+
+// ---- Quiz: AI + ChatGPT web ---------------------------------------------------
+
+/// Hỏi Gemini. Rỗng khi chưa có `GEMINI_API_KEY` trong `.env`.
+#[tauri::command]
+pub async fn quiz_ask(prompt: String, system: Option<String>) -> Result<String, String> {
+    let client = hepi_core::gemini::Client::from_env().map_err(map)?;
+    let sys = system.as_deref();
+    client.chat(sys, &prompt).map_err(map)
+}
+
+/// Trạng thái nguồn AI: khoá Gemini có trong `.env` không (không gọi mạng).
+#[tauri::command]
+pub fn quiz_ai_status() -> serde_json::Value {
+    serde_json::json!({
+        "geminiKey": hepi_core::gemini::Client::key_present(),
+        "geminiModel": hepi_core::gemini::DEFAULT_MODEL,
+    })
+}
+
+/// Mở ChatGPT web trong cửa sổ riêng (webview ngoài).
+#[tauri::command]
+pub fn quiz_open_chatgpt(app: tauri::AppHandle) -> Result<(), String> {
+    use tauri::config::WebviewUrl;
+    use tauri::{Manager, WebviewWindowBuilder};
+    let url = "https://chatgpt.com/"
+        .parse::<url::Url>()
+        .map_err(|_| "E_NO_TARGET".to_string())?;
+    let _ = app.get_webview_window("chatgpt");
+    WebviewWindowBuilder::new(&app, "chatgpt", WebviewUrl::External(url))
+        .title("ChatGPT")
+        .inner_size(1100.0, 800.0)
+        .build()
+        .map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+/// Đóng cửa sổ ChatGPT web nếu đang mở.
+#[tauri::command]
+pub fn quiz_close_chatgpt(app: tauri::AppHandle) -> bool {
+    match app.get_webview_window("chatgpt") {
+        Some(w) => w.close().is_ok(),
+        None => false,
+    }
+}
+
+/// Trạng thái đăng nhập ChatGPT web: đọc cookie phiên của webview.
+#[tauri::command]
+pub fn quiz_chatgpt_login(app: tauri::AppHandle) -> serde_json::Value {
+    // Cookie của ChatGPT nằm trong profile WebView2 của app.
+    // Đọc qua webview chính (cùng profile ⇒ cùng cookie store).
+    let Some(win) = app.get_webview_window("main") else {
+        return serde_json::json!({ "loggedIn": false, "reason": "no window" });
+    };
+    let Ok(url) = "https://chatgpt.com/".parse::<url::Url>() else {
+        return serde_json::json!({ "loggedIn": false });
+    };
+    match win.cookies_for_url(url) {
+        Ok(cookies) => {
+            // `__Secure-next-auth.session-token` là cookie phiên của ChatGPT web.
+            let logged = cookies.iter().any(|c| {
+                let n = c.name();
+                n.contains("session-token") || n == "__Secure-next-auth.session-token"
+            });
+            serde_json::json!({ "loggedIn": logged, "cookies": cookies.len() })
+        }
+        Err(e) => serde_json::json!({ "loggedIn": false, "reason": e.to_string() }),
+    }
+}
+
+// ---- SEB 3.x -----------------------------------------------------------------
+
+/// Trạng thái engine chống SEB: tiến trình SEB nào đang chạy, patch nào đã áp.
+#[tauri::command]
+pub fn seb_status() -> serde_json::Value {
+    let mut procs = serde_json::Map::new();
+    for (role, pid, name) in hepi_core::seb3::running() {
+        procs.insert(
+            format!("{role:?}").to_lowercase(),
+            serde_json::json!({ "pid": pid, "name": name }),
+        );
+    }
+    serde_json::json!({
+        "processes": procs,
+        "patchedPids": hepi_core::patch::patched_pids(),
+        "openPatches": hepi_core::patch::open_count(),
+        "admin": util::is_admin(),
+        "windowGuard": crate::window_guard::enabled(),
+        "logDir": hepi_core::log_cleaner::default_dir()
+            .map(|p| p.to_string_lossy().to_string()),
+    })
+}
+
+/// Áp toàn bộ engine chống SEB ngay lập tức (dùng khi SEB vừa bật).
+#[tauri::command]
+pub fn seb_apply_now() -> serde_json::Value {
+    let log_filter = hepi_core::log_filter::apply_now().unwrap_or(false);
+    let clipboard = hepi_core::clipboard_bypass::apply_now().unwrap_or(false);
+    let lockscreen = hepi_core::lockscreen_bypass::apply_now().unwrap_or(false);
+    let enforcement = hepi_core::patch_enforcement::apply_now().unwrap_or(false);
+    serde_json::json!({
+        "logFilter": log_filter,
+        "clipboard": clipboard,
+        "lockscreen": lockscreen,
+        "patchEnforcement": enforcement,
+    })
+}
+
+/// Bật/tắt lớp tự vệ cửa sổ (chặn SEB đóng app).
+#[tauri::command]
+pub fn set_window_guard(enabled: bool) -> bool {
+    crate::window_guard::set_enabled(enabled);
+    crate::window_guard::enabled()
 }

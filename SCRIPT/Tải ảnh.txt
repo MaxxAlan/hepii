@@ -1,0 +1,95 @@
+(async function () {
+    // Lấy nội dung của thẻ title và lọc mã sau "Kizspy - "
+    const title = document.title;
+    const code = title.split('Kizspy - ')[1]; // Lấy phần mã sau "Kizspy - "
+
+    // Tạo đối tượng JSZip để nén các ảnh đã tải
+    const zip = new JSZip();
+
+    // Hàm tải ảnh và thêm đáp án
+    async function downloadImageWithAnswer(url, answers, filename) {
+        try {
+            const response = await fetch(url);
+            const blob = await response.blob();
+            const imgBitmap = await createImageBitmap(blob);
+
+            // Tạo canvas với kích thước phù hợp
+            const canvas = document.createElement('canvas');
+            canvas.width = imgBitmap.width;
+            canvas.height = imgBitmap.height + 40 * answers.length + 50; // Thêm không gian cho đáp án
+
+            const ctx = canvas.getContext('2d');
+
+            // Đặt nền màu đen
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Vẽ ảnh lên canvas
+            ctx.drawImage(imgBitmap, 0, 0);
+
+            // Vẽ từng đáp án bên dưới ảnh, mỗi đáp án 1 dòng
+            ctx.fillStyle = '#FFFFFF'; // Màu chữ (trắng)
+            ctx.font = '18px Arial'; // Kích thước phông chữ
+            ctx.textAlign = 'left';
+
+            answers.forEach((line, index) => {
+                ctx.fillText(line.trim(), 10, imgBitmap.height + 30 + index * 40); // Mỗi dòng cách nhau 40px
+            });
+
+            // Chuyển canvas thành Blob (ảnh đã kết hợp)
+            const modifiedBlob = await new Promise(resolve => canvas.toBlob(resolve));
+
+            // Thêm file đã chỉnh sửa vào zip
+            zip.file(filename, modifiedBlob);
+        } catch (error) {
+            console.error(`Error processing image ${filename}:`, error);
+        }
+    }
+
+    // Tìm tất cả các button trên web
+    const buttons = document.querySelectorAll('.page-link.cn-go-to');
+
+    // Số lượng ảnh đã tải
+    let imageCount = 0;
+
+    for (let i = 0; i < buttons.length; i++) {
+        // Nhấn vào button để tải phần tương ứng
+        buttons[i].click();
+
+        // Đợi một khoảng thời gian để trang tải ảnh
+        await new Promise(resolve => setTimeout(resolve, 50)); // Đợi 0.5 giây
+
+        // Tìm các đáp án từ thẻ <p> bên trong #NC_text
+        const answerElements = document.querySelectorAll('#NC_text p');
+        const answers = Array.from(answerElements).map(el => el.textContent); // Lấy nội dung của từng đáp án
+
+        // Tìm ảnh trong phần đã tải
+        const img = document.querySelector('#NC_img');
+        if (img) {
+            const src = img.src;
+            const filename = `image_${i + 1}.jpg`;
+
+            // Đổi nền của web thành đen khi tải ảnh
+            img.parentElement.style.backgroundColor = "#000000"; // Đổi nền chứa ảnh thành đen
+
+            // Tải ảnh và thêm đáp án
+            await downloadImageWithAnswer(src, answers, filename);
+            imageCount++;
+        }
+    }
+
+    // Nén và lưu file ZIP với tên dựa trên mã sau "Kizspy - "
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(content);
+        a.download = `${code}.zip`; // Đặt tên file zip theo mã
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+    }).catch(function (err) {
+        console.error('Error creating ZIP file:', err);
+    });
+
+    console.log(`Đã tải ${imageCount} ảnh và lưu vào file ZIP có tên ${code}.zip.`);
+})();
