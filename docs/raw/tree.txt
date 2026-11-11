@@ -1,9 +1,3 @@
-Folder PATH listing for volume D
-Volume serial number is B762-CDC0
-D:\SOFTWARE\HEPI
-    hepi.exe
-    sidekick.exe
-    uninstall.exe
-    
-No subfolders exist 
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:f1d254fe79ed6145e85383d7655f85cfef7880e7121007dd77f54d206abe0444
+size 168

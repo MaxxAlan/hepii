@@ -1,9 +1,3 @@
-﻿
-FullName                         Length LastWriteTime         Attributes
---------                         ------ -------------         ----------
-D:\software\Hepi\hepi.exe      39854080 11/10/2026 4:42:36 AM    Archive
-D:\software\Hepi\sidekick.exe  68588032 11/10/2026 4:28:44 AM    Archive
-D:\software\Hepi\uninstall.exe    79295 11/10/2026 6:00:33 AM    Archive
-
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:1c3286152791361bfc0362d1bfc33a1381e1e9b416be5a42ea419b73bca3b662
+size 381
