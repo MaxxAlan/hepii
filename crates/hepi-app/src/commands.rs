@@ -42,12 +42,18 @@ pub fn restart_as_admin() -> Result<(), String> {
 
 #[tauri::command]
 pub fn get_settings(state: State<'_, AppState>) -> Settings {
-    state.settings.lock().unwrap().clone()
+    match state.settings.lock() {
+        Ok(guard) => guard.clone(),
+        Err(poisoned) => poisoned.into_inner().clone(),
+    }
 }
 
 #[tauri::command]
 pub fn apply_settings(state: State<'_, AppState>, patch: Settings) -> Result<(), String> {
-    *state.settings.lock().unwrap() = patch.clone();
+    match state.settings.lock() {
+        Ok(mut guard) => *guard = patch.clone(),
+        Err(poisoned) => *poisoned.into_inner() = patch.clone(),
+    }
     let path = crate::runtime::settings_path();
     if let Some(d) = path.parent() {
         let _ = std::fs::create_dir_all(d);
@@ -58,7 +64,10 @@ pub fn apply_settings(state: State<'_, AppState>, patch: Settings) -> Result<(),
 
 #[tauri::command]
 pub fn get_engine_status(state: State<'_, AppState>) -> serde_json::Value {
-    let cfg = state.settings.lock().unwrap().clone();
+    let cfg = match state.settings.lock() {
+        Ok(guard) => guard.clone(),
+        Err(poisoned) => poisoned.into_inner().clone(),
+    };
     serde_json::json!({
         "admin": util::is_admin(),
         "patchedPids": hepi_core::patch::patched_pids(),
@@ -72,7 +81,10 @@ pub fn get_engine_status(state: State<'_, AppState>) -> serde_json::Value {
 
 #[tauri::command]
 pub fn bypass_wda_now(state: State<'_, AppState>) -> Result<(), String> {
-    let cfg = state.settings.lock().unwrap().clone();
+    let cfg = match state.settings.lock() {
+        Ok(guard) => guard.clone(),
+        Err(poisoned) => poisoned.into_inner().clone(),
+    };
     wda_bypass::bypass_now(&cfg.selected_programs).map_err(map)
 }
 
@@ -81,9 +93,18 @@ pub fn start_wda_monitor(state: State<'_, AppState>) -> Result<(), String> {
     let mut m = state.monitor.lock().unwrap();
     *m = true;
     drop(m);
-    let cfg = state.settings.lock().unwrap().clone();
+    // Clone Arc to share with monitor thread; monitor will re-read settings on each iteration
+    let settings = std::sync::Arc::clone(&state.settings);
     std::thread::spawn(move || loop {
-        let _ = wda_bypass::bypass_now(&cfg.selected_programs);
+        match settings.lock() {
+            Ok(cfg) => {
+                let _ = wda_bypass::bypass_now(&cfg.selected_programs);
+            }
+            Err(poisoned) => {
+                let cfg = poisoned.into_inner();
+                let _ = wda_bypass::bypass_now(&cfg.selected_programs);
+            }
+        }
         std::thread::sleep(std::time::Duration::from_millis(settings::TUNING.verify_cycle_ms));
     });
     Ok(())
@@ -108,7 +129,10 @@ pub fn get_detected_programs() -> Vec<String> {
 
 #[tauri::command]
 pub fn set_selected_programs(state: State<'_, AppState>, names: Vec<String>) {
-    state.settings.lock().unwrap().selected_programs = names;
+    match state.settings.lock() {
+        Ok(mut guard) => guard.selected_programs = names,
+        Err(poisoned) => poisoned.into_inner().selected_programs = names,
+    }
 }
 
 #[tauri::command]

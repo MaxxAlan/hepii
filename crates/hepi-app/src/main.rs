@@ -6,10 +6,10 @@ mod commands;
 mod pipe;
 mod runtime;
 
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex};
 
 pub struct AppState {
-    pub settings: Mutex<hepi_core::settings::Settings>,
+    pub settings: Arc<Mutex<hepi_core::settings::Settings>>,  // Arc for shared mutable access across threads
     pub receipt: Mutex<Option<hepi_core::entitlement::Receipt>>,
     pub monitor: Mutex<bool>,
 }

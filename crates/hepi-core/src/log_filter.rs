@@ -12,14 +12,32 @@ const SYMBOLS: [(&str, &str); 4] = [
 ];
 
 pub fn apply_for(pid: u32) -> Res<()> {
+    let mut last_error = E::NoTarget;
+
     for (module, symbol) in SYMBOLS {
-        if let Ok(addr) = inject::remote_addr(pid, module, symbol) {
-            let h = patch::apply(pid, addr, &STUB_RET0, "logfilter")?;
-            log::kv("LogFilter", "Applying 3-byte patch at", "addr", &format!("0x{:x}", h.addr));
-            return Ok(());
+        match inject::remote_addr(pid, module, symbol) {
+            Ok(addr) => {
+                match patch::apply(pid, addr, &STUB_RET0, "logfilter") {
+                    Ok(h) => {
+                        log::kv("LogFilter", "Patched", "symbol", symbol);
+                        log::kv("LogFilter", "Applying 3-byte patch at", "addr", &format!("0x{:x}", h.addr));
+                        return Ok(());
+                    }
+                    Err(e) => {
+                        log::kv("LogFilter", "Patch failed for symbol", "symbol", symbol);
+                        last_error = e;
+                        // Try next symbol on failure
+                    }
+                }
+            }
+            Err(e) => {
+                log::kv("LogFilter", "Symbol not found", "module", module);
+                last_error = e;
+                // Try next symbol
+            }
         }
     }
-    Err(E::NoTarget)
+    Err(last_error)
 }
 
 /// Giữ patch khớp với pid còn sống (§6.6 monitor pattern).
