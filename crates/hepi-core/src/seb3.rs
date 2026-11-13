@@ -47,6 +47,22 @@ pub const SYMBOL_EMPTY_CLIPBOARD: &str = "EmptyClipboard";
 pub const KERNEL32_DLL: &str = "kernel32.dll";
 pub const SYMBOL_TERMINATE_PROCESS: &str = "TerminateProcess";
 
+/// Assembly chứa `ApplicationMonitor` (quyết định đóng cửa sổ lạ).
+pub const MONITORING_APPS_DLL: &str = "SafeExamBrowser.Monitoring.dll";
+
+/// `SafeExamBrowser.Monitoring.Applications.ApplicationMonitor`
+///
+/// SEB gọi hàm này để biết cửa sổ có thuộc tiến trình của SEB không. Nếu
+/// trả `false` cho mọi cửa sổ thì SEB coi cửa sổ ta là "không thuộc whitelist"
+/// và **đóng** nó. Log SEB thật:
+/// `Window '' (197992, Overlay) belongs to not whitelisted process 'hepi.exe'!`
+/// → `Sent close message` → `Successfully closed window`.
+///
+/// ⇒ Patch hàm này trả `true` ⇒ SEB không đóng cửa sổ của ta.
+pub const TYPE_APPLICATION_MONITOR: &str =
+    "SafeExamBrowser.Monitoring.Applications.ApplicationMonitor";
+pub const METHOD_BELONGS_TO_SEB: &str = "BelongsToSafeExamBrowser";
+
 /// Module native chứa `ShowWindow` — SEB gọi `ShowWindow(hwnd, SW_HIDE)` để ẩn
 /// cửa sổ của ta. Patch để `SW_HIDE` bị bỏ qua (khớp legacy v0.20.9:
 /// "ShowWindow filter installed — blocks SW_HIDE").

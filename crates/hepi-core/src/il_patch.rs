@@ -15,6 +15,9 @@ use crate::{log, E, Res};
 /// `mov eax, 0; ret` — trả về false cho hàm native đã JIT.
 pub const NATIVE_FALSE: [u8; 6] = [0xB8, 0x00, 0x00, 0x00, 0x00, 0xC3];
 
+/// `mov eax, 1; ret` — trả về true cho hàm native đã JIT.
+pub const NATIVE_TRUE: [u8; 6] = [0xB8, 0x01, 0x00, 0x00, 0x00, 0xC3];
+
 /// IL: `ldc.i4.0; ret` — trả về false cho method IL thuần.
 pub const IL_FALSE: [u8; 2] = [0x16, 0x2A];
 
@@ -97,16 +100,38 @@ pub fn patch_return_false(
     Ok(())
 }
 
-/// Patch managed method để trả về `true` (IL thuần).
+/// Patch managed method để trả về `true`.
+///
+/// Giống `patch_return_false`: xử lý cả IL thuần lẫn native đã JIT.
 pub fn patch_return_true(handle: HANDLE, base: u64, m: &ManagedMethod) -> Res<()> {
-    let code_abs = base + m.il_rva as u64;
-    dotnet::write_abs(handle, code_abs, &IL_TRUE)?;
-    log::kv(
-        "IlPatch",
-        "Patched to return true (IL)",
-        "method",
-        &format!("{}.{}", m.type_name, m.method_name),
-    );
+    let mut head = vec![0u8; 16];
+    dotnet::read_abs(handle, base + m.il_rva as u64, &mut head)?;
+
+    // `ldc.i4.1` = 0x17, `ret` = 0x2A, `mov eax,1` = 0xB8 0x01 …
+    let native = head[0] == 0xB8 && head[1] == 0x01;
+    if native {
+        log::kv(
+            "IlPatch",
+            "Native (JIT) body detected",
+            "addr",
+            &format!("0x{:x}", base + m.il_rva as u64),
+        );
+        dotnet::write_abs(handle, base + m.il_rva as u64, &NATIVE_TRUE)?;
+        log::kv(
+            "IlPatch",
+            "Patched to return true (native)",
+            "method",
+            &format!("{}.{}", m.type_name, m.method_name),
+        );
+    } else {
+        dotnet::write_abs(handle, base + m.il_rva as u64, &IL_TRUE)?;
+        log::kv(
+            "IlPatch",
+            "Patched to return true (IL)",
+            "method",
+            &format!("{}.{}", m.type_name, m.method_name),
+        );
+    }
     Ok(())
 }
 

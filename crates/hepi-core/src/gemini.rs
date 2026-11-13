@@ -97,6 +97,14 @@ impl Client {
         if let Some(s) = system.filter(|s| !s.trim().is_empty()) {
             parts.insert(0, json!({ "text": s }));
         }
+        self.chat_parts(system, parts)
+    }
+
+    /// `POST` với `parts` tuỳ biến (dùng cho vision: `inline_data`).
+    pub fn chat_parts(&self, system: Option<&str>, mut parts: Vec<serde_json::Value>) -> Res<String> {
+        if let Some(s) = system.filter(|s| !s.trim().is_empty()) {
+            parts.insert(0, json!({ "text": s }));
+        }
         let body = json!({
             "contents": [{ "role": "user", "parts": parts }],
             "generationConfig": { "temperature": 0.2 },
@@ -107,6 +115,15 @@ impl Client {
         let suffix = format!("/models/{}:generateContent", self.model);
         let raw = self.post(&path, &suffix, &body, secure, &host, port)?;
         extract_text(&raw)
+    }
+
+    /// Gửi ảnh (PNG base64) kèm câu hỏi — Gemini vision.
+    pub fn chat_image(&self, system: Option<&str>, user: &str, png_b64: &str) -> Res<String> {
+        let parts = vec![
+            json!({ "text": user }),
+            json!({ "inline_data": { "mime_type": "image/png", "data": png_b64 } }),
+        ];
+        self.chat_parts(system, parts)
     }
 
     fn post(

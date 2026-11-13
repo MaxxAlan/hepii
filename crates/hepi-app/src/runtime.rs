@@ -21,8 +21,24 @@ pub fn boot() -> Res<()> {
     }
     log::line("ArchiveGuard", "pre-tauri archive check");
 
-    // 2. single instance
-    if pipe::already_running() {
+    // 1b. Companion: gắn luồng chính vào desktop SEB TRƯỚC khi Tauri dựng cửa sổ.
+    //     (SetThreadDesktop chỉ hợp lệ khi luồng chưa tạo cửa sổ nào.)
+    let companion = crate::companion::is_companion();
+    if companion {
+        match crate::companion::desktop_arg() {
+            Some(d) => {
+                if let Err(e) = desktop::attach_thread_to(&d) {
+                    log::err("Companion", e, "cannot attach to desktop");
+                }
+            }
+            None => {
+                log::line("Companion", "no --desktop given, staying on current desktop");
+            }
+        }
+    }
+
+    // 2. single instance (companion được miễn: nó là tiến trình phụ của host)
+    if !companion && pipe::already_running() {
         log::line("SingleInstance", "duplicate launch routed to existing instance");
         return Ok(());
     }
@@ -51,6 +67,7 @@ pub fn boot() -> Res<()> {
             tauri_plugin_autostart::MacosLauncher::LaunchAgent,
             None,
         ))
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .manage(app_state)
         .invoke_handler(tauri::generate_handler![
             commands::check_admin_status,
@@ -98,6 +115,13 @@ pub fn boot() -> Res<()> {
             commands::quiz_open_chatgpt,
             commands::quiz_close_chatgpt,
             commands::quiz_chatgpt_login,
+            commands::check_update,
+            commands::install_update,
+            commands::capture_screen,
+            commands::capture_rect,
+            commands::capture_preview,
+            commands::quiz_ask_image,
+            commands::screen_size,
         ])
         .setup(move |app| {
             let handle = app.handle().clone();
@@ -124,6 +148,9 @@ pub fn settings_path() -> std::path::PathBuf {
 
 fn monitor_loop(app: tauri::AppHandle, cfg: Arc<Mutex<settings::Settings>>, _session: Option<hepi_core::diagnostics::SessionMarker>) {
     let mut ended = false;
+    // Desktop SEB đang dùng + pid companion đã spawn (0 = chưa spawn).
+    let mut companion_desktop = String::new();
+    let mut companion_pid = 0u32;
     loop {
         std::thread::sleep(std::time::Duration::from_millis(
             process_monitor::cycle_ms() as u64,
@@ -143,26 +170,53 @@ fn monitor_loop(app: tauri::AppHandle, cfg: Arc<Mutex<settings::Settings>>, _ses
         let session_end = process_monitor::tick(&cfg_current.target_processes);
         if session_end && !ended {
             ended = true;
+            companion_pid = 0;
+            companion_desktop.clear();
             on_session_end(&app, &cfg_current);
         } else if !session_end {
             ended = false;
             if let Some(s) = process_monitor::current() {
+                // --- Companion UI trên desktop SEB ---
+                // SEB 3 tạo desktop riêng rồi switch sang ⇒ cửa sổ trên
+                // 'Default' không hiển thị. Spawn UI phụ trên desktop SEB.
+                // Companion KHÔNG spawn tiếp (tránh vòng lặp).
+                if !crate::companion::is_companion() {
+                    let seb_desktop = desktop::seb_desktop_of(&s.pids);
+                    if let Some(d) = seb_desktop.as_deref() {
+                        if d != companion_desktop {
+                            if companion_pid != 0 {
+                                let _ = std::process::Command::new("taskkill")
+                                    .args(["/F", "/PID", &companion_pid.to_string()])
+                                    .stdout(std::process::Stdio::null())
+                                    .stderr(std::process::Stdio::null())
+                                    .spawn();
+                            }
+                            companion_desktop = d.to_string();
+                            companion_pid = crate::companion::spawn_companion(d).unwrap_or(0);
+                        }
+                    }
+                }
+
                 if cfg_current.seb_desktop_switch {
                     if let Ok(d) = desktop::desktop_of_pid(s.primary_pid) {
                         let _ = desktop::switch_to(&d);
                     }
                 }
-                if cfg_current.seb_log_filter {
-                    let _ = hepi_core::log_filter::apply_now();
-                }
-                if cfg_current.seb_clipboard_bypass {
-                    let _ = hepi_core::clipboard_bypass::apply_now();
-                }
-                if cfg_current.seb_lockscreen_bypass {
-                    let _ = hepi_core::lockscreen_bypass::apply_now();
-                }
-                if cfg_current.seb_patch_enforcement {
-                    let _ = hepi_core::patch_enforcement::apply_now();
+                // Companion chỉ mang UI: KHÔNG patch, KHÔNG đổi desktop
+                // (host đã làm) — tránh hai tiến trình tranh engine.
+                if !crate::companion::is_companion() {
+                    if cfg_current.seb_log_filter {
+                        let _ = hepi_core::log_filter::apply_now();
+                    }
+                    if cfg_current.seb_clipboard_bypass {
+                        let _ = hepi_core::clipboard_bypass::apply_now();
+                    }
+                    if cfg_current.seb_lockscreen_bypass {
+                        let _ = hepi_core::lockscreen_bypass::apply_now();
+                    }
+                    if cfg_current.seb_patch_enforcement {
+                        let _ = hepi_core::patch_enforcement::apply_now();
+                    }
                 }
             }
         }

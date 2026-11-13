@@ -2,9 +2,11 @@
 #![windows_subsystem = "windows"]
 
 mod commands;
+mod companion;
 #[allow(dead_code)]
 mod pipe;
 mod runtime;
+mod selftest;
 mod window_guard;
 
 use std::sync::{Arc, Mutex};
@@ -16,6 +18,10 @@ pub struct AppState {
 }
 
 fn main() {
+    // `--selftest`: chạy headless, in JSON, thoát (không mở cửa sổ).
+    if selftest::maybe_run_cli() {
+        return;
+    }
     if let Err(e) = runtime::boot() {
         eprintln!("[Boot] {} fatal", e.code());
         std::process::exit(1);

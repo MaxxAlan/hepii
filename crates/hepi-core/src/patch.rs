@@ -27,6 +27,10 @@ fn open(pid: u32) -> Res<windows::Win32::Foundation::HANDLE> {
 }
 
 /// Ghi byte mới, lưu byte gốc. Handle được đăng ký để teardown (§9.7).
+///
+/// **Idempotent**: nếu byte đích đã bằng `new_bytes` thì coi như đã patch —
+/// không ghi lại (tránh `orig` bị ghi đè bằng byte đã patch ⇒ rollback hỏng).
+/// Nhờ vậy nhiều tiến trình (host + UI phụ) cùng patch một method vẫn an toàn.
 pub fn apply(pid: u32, addr: usize, new_bytes: &[u8], label: &str) -> Res<PatchHandle> {
     let h = open(pid)?;
     let mut orig = vec![0u8; new_bytes.len()];
@@ -44,6 +48,24 @@ pub fn apply(pid: u32, addr: usize, new_bytes: &[u8], label: &str) -> Res<PatchH
             let _ = CloseHandle(h);
             E::Access
         })?;
+
+        if orig == new_bytes {
+            // Đã patch rồi (bởi tiến trình khác hoặc lần trước) ⇒ không ghi lại.
+            log::kv(
+                "Patch",
+                "Already patched, skipping write",
+                "addr",
+                &format!("0x{:x}", addr),
+            );
+            let _ = CloseHandle(h);
+            return Ok(PatchHandle {
+                pid,
+                addr,
+                orig: new_bytes.to_vec(),
+                old_protect: old,
+                label: label.to_string(),
+            });
+        }
 
         VirtualProtectEx(h, addr as *const _, new_bytes.len(), PAGE_EXECUTE_READWRITE, &mut old)
             .map_err(|_| {

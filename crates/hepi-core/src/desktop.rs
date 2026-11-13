@@ -3,12 +3,14 @@
 use std::sync::Mutex;
 
 use windows::core::PCWSTR;
-use windows::Win32::Foundation::{BOOL, LPARAM, LRESULT, WPARAM};
+use windows::Win32::Foundation::{BOOL, HANDLE, LPARAM, LRESULT, WPARAM};
 use windows::Win32::System::StationsAndDesktops::{
-    CloseDesktop, EnumDesktopWindows, EnumDesktopsW, GetProcessWindowStation, OpenDesktopW,
-    SetThreadDesktop, SwitchDesktop, DESKTOP_CONTROL_FLAGS, DESKTOP_ENUMERATE, DESKTOP_READOBJECTS,
-    DESKTOP_SWITCHDESKTOP, DESKTOP_WRITEOBJECTS,
+    CloseDesktop, EnumDesktopWindows, EnumDesktopsW, GetProcessWindowStation, GetThreadDesktop,
+    GetUserObjectInformationW, OpenDesktopW, SetThreadDesktop, SwitchDesktop,
+    DESKTOP_CONTROL_FLAGS, DESKTOP_ENUMERATE, DESKTOP_READOBJECTS, DESKTOP_SWITCHDESKTOP,
+    DESKTOP_WRITEOBJECTS, UOI_NAME,
 };
+use windows::Win32::System::Threading::GetCurrentThreadId;
 use windows::Win32::UI::Input::KeyboardAndMouse::{VK_CONTROL, VK_SHIFT, VK_V};
 use windows::Win32::UI::WindowsAndMessaging::{
     CallNextHookEx, EnumWindows, GetForegroundWindow, GetWindowThreadProcessId, IsWindowVisible,
@@ -190,6 +192,68 @@ pub fn switch_to(desktop: &str) -> Res<()> {
     STATE.lock().unwrap().desktop = desktop.to_string();
     log::kv("Kiosk", "Switched desktop", "name", desktop);
     Ok(())
+}
+
+/// Gắn **luồng hiện tại** vào desktop mà KHÔNG switch desktop nhập.
+///
+/// Cửa sổ thuộc desktop của luồng đã tạo nó ⇒ muốn cửa sổ hiện được trên
+/// desktop SEB thì phải `SetThreadDesktop` *trước khi* tạo cửa sổ; không
+/// được `SwitchDesktop` (sẽ giành màn hình).
+///
+/// Phải gọi trước khi luồng tạo bất kỳ cửa sổ/hook nào (Windows chặn nếu đã có).
+pub fn attach_thread_to(desktop: &str) -> Res<()> {
+    let w = crate::util::to_wide(desktop);
+    unsafe {
+        let hd = OpenDesktopW(PCWSTR(w.as_ptr()), DESKTOP_CONTROL_FLAGS(0), false, access())
+            .map_err(|_| E::NoTarget)?;
+        SetThreadDesktop(hd).map_err(|_| E::Access)?;
+    }
+    log::kv("Desktop", "Thread attached to desktop", "name", desktop);
+    Ok(())
+}
+
+/// Desktop khác 'Default' mà tiến trình SEB đang chiếu (desktop cách ly của SEB).
+///
+/// SEB 3 tạo desktop riêng (`CreateNewDesktop`) rồi switch sang. Cửa sổ của ta
+/// tạo trên 'Default' ⇒ không hiển thị ⇒ "app biến mất".
+pub fn seb_desktop_of(pids: &[u32]) -> Option<String> {
+    for pid in pids {
+        if let Ok(name) = desktop_of_pid(*pid) {
+            if !name.eq_ignore_ascii_case("Default") && !name.is_empty() {
+                return Some(name);
+            }
+        }
+    }
+    None
+}
+
+/// Tên desktop hiện tại của luồng hiện tại.
+pub fn current_thread_desktop() -> Option<String> {
+    unsafe {
+        let hd = GetThreadDesktop(GetCurrentThreadId()).ok()?;
+        let handle = HANDLE(hd.0);
+        let mut need = 0u32;
+        let _ = GetUserObjectInformationW(handle, UOI_NAME, None, 0, Some(&mut need));
+        if need == 0 {
+            let _ = CloseDesktop(hd);
+            return None;
+        }
+        let mut buf = vec![0u16; (need / 2) as usize + 2];
+        let ok = GetUserObjectInformationW(
+            handle,
+            UOI_NAME,
+            Some(buf.as_mut_ptr() as *mut _),
+            need,
+            Some(&mut need),
+        )
+        .is_ok();
+        let _ = CloseDesktop(hd);
+        if !ok {
+            return None;
+        }
+        let end = buf.iter().position(|&c| c == 0).unwrap_or(buf.len());
+        Some(crate::util::from_wide(&buf[..end]))
+    }
 }
 
 pub fn switch_to_default() -> Res<()> {

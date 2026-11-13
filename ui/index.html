@@ -9,69 +9,161 @@
 <body>
   <div class="titlebar" data-tauri-drag-region>
     <span class="brand">Hepi</span>
-    <span class="version" id="version">v0.20.8</span>
+    <span class="version" id="version">v0.0.1</span>
     <span class="spacer"></span>
+    <span class="pill" id="admin-pill">đang kiểm tra…</span>
     <button class="ghost" id="btn-min" title="Thu nhỏ">&#8211;</button>
     <button class="ghost" id="btn-close" title="Đóng">&#10005;</button>
   </div>
 
   <main>
-    <header class="hero">
-      <div>
-        <h1>Bảng điều khiển</h1>
-        <p class="muted">Engine layer chạy theo khuôn start / verify / patch / rollback / stop.</p>
+    <!-- ============ PANEL 1: QUIZ ============ -->
+    <section class="panel" id="panel-quiz">
+      <header class="panel-head">
+        <h1><span class="num">1</span> Quiz</h1>
+        <span class="panel-sub">Gemini API + ChatGPT web</span>
+      </header>
+
+      <div class="block">
+        <div class="block-head">
+          <h2>Gemini API</h2>
+          <span class="badge" id="gemini-badge">?</span>
+        </div>
+        <label class="field">
+          <span>Câu hỏi</span>
+          <textarea id="quiz-prompt" rows="4" placeholder="Ví dụ: Đề thi có 40 câu, hỏi giúp các đáp án đúng..."></textarea>
+        </label>
+        <label class="field">
+          <span>System (tuỳ chọn)</span>
+          <textarea id="quiz-system" rows="2" placeholder="Bạn là trợ lý giải bài thi..."></textarea>
+        </label>
+        <div class="row wrap">
+          <button class="primary" id="btn-ask">Hỏi Gemini</button>
+          <button class="ghost" id="btn-capture">Chụp màn hình</button>
+          <button class="ghost" id="btn-clear-quiz">Xoá hội thoại</button>
+        </div>
+        <div class="shot" id="shot-box" hidden>
+          <img id="shot-img" alt="Ảnh đã chụp" />
+          <div class="shot-meta" id="shot-meta"></div>
+        </div>
+        <div class="chat" id="quiz-chat">
+          <p class="muted empty">Chưa có câu hỏi nào.</p>
+        </div>
       </div>
-      <div class="pill" id="admin-pill">đang kiểm tra…</div>
-    </header>
 
-    <section class="grid">
-      <article class="card">
-        <h2>Trạng thái</h2>
-        <dl class="kv">
-          <dt>Admin</dt><dd id="st-admin">?</dd>
-          <dt>PID đang patch</dt><dd id="st-pids">—</dd>
-          <dt>Handle mở</dt><dd id="st-open">—</dd>
-          <dt>Route đã thêm</dt><dd id="st-routes">—</dd>
-        </dl>
-        <button class="primary" id="btn-refresh">Làm mới</button>
-        <button class="ghost" id="btn-selfcheck">Self check</button>
-        <pre class="out" id="selfcheck"></pre>
-      </article>
-
-      <article class="card">
-        <h2>Cấu hình</h2>
-        <div class="toggles" id="toggles"></div>
+      <div class="block">
+        <div class="block-head">
+          <h2>ChatGPT web</h2>
+          <span class="badge" id="chatgpt-badge">?</span>
+        </div>
         <div class="row">
-          <button class="primary" id="btn-save">Lưu</button>
-          <button class="ghost" id="btn-scan">Quét tiến trình</button>
+          <button class="primary" id="btn-open-chatgpt">Mở ChatGPT</button>
+          <button class="ghost" id="btn-close-chatgpt">Đóng</button>
+          <button class="ghost" id="btn-refresh-chatgpt">Kiểm tra đăng nhập</button>
         </div>
-        <div class="chips" id="programs"></div>
-      </article>
+        <p class="muted small" id="chatgpt-note">
+          Cửa sổ ChatGPT mở trong app. Đăng nhập một lần, phiên được giữ.
+        </p>
+      </div>
+    </section>
 
-      <article class="card">
-        <h2>Desktop &amp; hook</h2>
-        <div class="row wrap">
-          <button class="ghost" data-cmd="switch_to_seb_desktop">Vào desktop đích</button>
-          <button class="ghost" data-cmd="switch_to_default_desktop">Về Default</button>
-          <button class="ghost" data-cmd="start_kiosk_monitor">Bật kiosk</button>
-          <button class="ghost" data-cmd="stop_kiosk_monitor">Tắt kiosk</button>
-        </div>
-      </article>
+    <!-- ============ PANEL 2: PRIVATE ============ -->
+    <section class="panel" id="panel-private">
+      <header class="panel-head">
+        <h1><span class="num">2</span> Private</h1>
+        <span class="panel-sub">Chống SEB, dọn log, đổi màn hình</span>
+      </header>
 
-      <article class="card">
-        <h2>Năng lực</h2>
-        <div class="row wrap">
-          <button class="ghost" data-cmd="bypass_wda_now">WDA một lượt</button>
-          <button class="ghost" data-cmd="enable_network_guard">Bật route guard</button>
-          <button class="ghost" data-cmd="disable_network_guard">Tắt route guard</button>
-          <button class="ghost" data-cmd="scan_and_clean_seb_logs">Dọn log</button>
-          <button class="ghost" data-cmd="trigger_emergency_exit">Thoát khẩn</button>
+      <div class="block">
+        <div class="block-head">
+          <h2>Chống SEB</h2>
         </div>
-        <pre class="out" id="action-out"></pre>
-      </article>
+        <div class="toggles" id="toggles"></div>
+      </div>
+
+      <div class="block">
+        <div class="block-head">
+          <h2>Thao tác nhanh</h2>
+        </div>
+        <div class="row wrap">
+          <button class="primary" id="btn-apply-now">Áp dụng ngay</button>
+          <button class="ghost" id="btn-clean-logs">Dọn log SEB</button>
+          <button class="ghost" id="btn-seb-desktop">Vào desktop đích</button>
+          <button class="ghost" id="btn-default-desktop">Về Default</button>
+          <button class="ghost" id="btn-emergency">Thoát khẩn</button>
+        </div>
+        <pre class="out" id="private-out"></pre>
+      </div>
+    </section>
+
+    <!-- ============ PANEL 3: STATUS ============ -->
+    <section class="panel" id="panel-status">
+      <header class="panel-head">
+        <h1><span class="num">3</span> Status</h1>
+        <span class="panel-sub">AI, SEB, engine</span>
+      </header>
+
+      <div class="block">
+        <div class="block-head">
+          <h2>AI</h2>
+        </div>
+        <dl class="kv">
+          <dt>Gemini API</dt><dd id="st-gemini">—</dd>
+          <dt>Model</dt><dd id="st-model">—</dd>
+          <dt>ChatGPT web</dt><dd id="st-chatgpt">—</dd>
+        </dl>
+      </div>
+
+      <div class="block">
+        <div class="block-head">
+          <h2>SEB</h2>
+          <button class="ghost tiny" id="btn-refresh-status">Làm mới</button>
+        </div>
+        <dl class="kv">
+          <dt>Client</dt><dd id="st-seb-client">—</dd>
+          <dt>Runtime</dt><dd id="st-seb-runtime">—</dd>
+          <dt>Browser</dt><dd id="st-seb-browser">—</dd>
+          <dt>PID đã patch</dt><dd id="st-patched">—</dd>
+          <dt>Handle mở</dt><dd id="st-open">—</dd>
+          <dt>Bảo vệ cửa sổ</dt><dd id="st-guard">—</dd>
+          <dt>Log dir</dt><dd id="st-logdir" class="wrapv">—</dd>
+        </dl>
+      </div>
+
+      <div class="block">
+        <div class="block-head">
+          <h2>Engine</h2>
+        </div>
+        <dl class="kv">
+          <dt>Admin</dt><dd id="st-admin">—</dd>
+          <dt>Tiến trình sống</dt><dd id="st-live">—</dd>
+          <dt>Route</dt><dd id="st-routes">—</dd>
+        </dl>
+        <pre class="out" id="status-out"></pre>
+      </div>
+
+      <div class="block">
+        <div class="block-head">
+          <h2>Cập nhật</h2>
+        </div>
+        <dl class="kv">
+          <dt>Phiên bản</dt><dd id="st-ver">—</dd>
+          <dt>Có bản mới</dt><dd id="st-update">—</dd>
+        </dl>
+        <div class="row wrap">
+          <button class="ghost" id="btn-check-update">Kiểm tra cập nhật</button>
+          <button class="primary" id="btn-install-update">Cài bản mới</button>
+        </div>
+      </div>
     </section>
   </main>
 
   <script src="app.js"></script>
 </body>
 </html>
+
+<!-- Overlay chọn vùng chụp: kéo chuột để chọn, thả để chụp -->
+<div class="picker" id="picker" hidden>
+  <div class="picker-hint">Kéo để chọn vùng · Esc để huỷ</div>
+  <div class="picker-rect" id="picker-rect"></div>
+</div>

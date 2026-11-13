@@ -18,6 +18,50 @@ fn open(pid: u32) -> Res<HANDLE> {
     unsafe { OpenProcess(PROCESS_ALL_ACCESS, false, pid).map_err(|_| E::Access) }
 }
 
+/// Patch `ApplicationMonitor.BelongsToSafeExamBrowser` → luôn trả `true`.
+///
+/// Đây là hàm SEB dùng để quyết định "cửa sổ này có thuộc tiến trình SEB
+/// không". Trả `true` cho mọi cửa sổ ⇒ SEB **không** gửi `WM_CLOSE` và
+/// **không** ẩn cửa sổ của ta.
+///
+/// Xác minh trên SEB 3.10.2 thật:
+/// `SafeExamBrowser.Monitoring.dll` → type
+/// `SafeExamBrowser.Monitoring.Applications.ApplicationMonitor` (37 method),
+/// method `BelongsToSafeExamBrowser` rva=0x4e04, il_rva=0x4e10, size=114.
+fn patch_belongs_to_seb(pid: u32) -> Res<bool> {
+    let base = match crate::inject::module_base_addr(pid, seb3::MONITORING_APPS_DLL) {
+        Ok(b) => b,
+        Err(_) => return Ok(false),
+    };
+    let handle = open(pid)?;
+    let img = crate::dotnet::RemoteImage::new(handle, base);
+    let found = crate::dotnet::find_method(
+        &img,
+        seb3::TYPE_APPLICATION_MONITOR,
+        seb3::METHOD_BELONGS_TO_SEB,
+    );
+    let m = match found {
+        Ok(m) => m,
+        Err(_) => {
+            unsafe {
+                let _ = CloseHandle(handle);
+            }
+            return Ok(false);
+        }
+    };
+    crate::dotnet::log_found(&m);
+    let r = crate::il_patch::patch_return_true(handle, base, &m);
+    unsafe {
+        let _ = CloseHandle(handle);
+    }
+    r?;
+    log::line(
+        "PatchEnf",
+        "BelongsToSafeExamBrowser patched -> SEB will not close foreign windows",
+    );
+    Ok(true)
+}
+
 /// Patch `kernel32!TerminateProcess` trong tiến trình SEB.
 pub fn apply_for(pid: u32) -> Res<bool> {
     let Ok(addr) = crate::inject::remote_addr(
@@ -47,7 +91,7 @@ pub fn apply_for(pid: u32) -> Res<bool> {
     Ok(true)
 }
 
-/// Chặn SEB giết tiến trình, trên mọi tiến trình SEB đang chạy.
+/// Chặn SEB giết tiến trình + đóng cửa sổ ta, trên mọi tiến trình SEB.
 pub fn apply_now() -> Res<bool> {
     let _ = privs::enable_se_debug();
     let mut any = false;
@@ -57,6 +101,9 @@ pub fn apply_now() -> Res<bool> {
             continue;
         }
         if apply_for(pid)? {
+            any = true;
+        }
+        if patch_belongs_to_seb(pid)? {
             any = true;
         }
     }

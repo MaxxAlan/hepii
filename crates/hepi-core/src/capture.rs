@@ -5,8 +5,16 @@ use windows::Win32::Graphics::Gdi::{
     BitBlt, CreateCompatibleBitmap, CreateCompatibleDC, DeleteDC, DeleteObject, GetDC, GetDIBits,
     ReleaseDC, SelectObject, BITMAPINFO, BITMAPINFOHEADER, BI_RGB, DIB_RGB_COLORS, SRCCOPY,
 };
+use windows::Win32::UI::WindowsAndMessaging::{GetSystemMetrics, SM_CXSCREEN, SM_CYSCREEN};
 
 use crate::{E, Res};
+
+/// Kích thước màn hình chính (pixel vật lý).
+pub fn screen_size() -> (i32, i32) {
+    unsafe {
+        (GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN))
+    }
+}
 
 pub fn grab(x: i32, y: i32, w: i32, h: i32) -> Res<Vec<u8>> {
     unsafe {

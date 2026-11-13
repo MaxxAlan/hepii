@@ -81,7 +81,46 @@ impl Settings {
             .unwrap_or_default();
         if s.target_processes.is_empty() {
             s.target_processes = Settings::default().target_processes;
+        } else if s.target_processes.iter().any(|n| is_legacy_seb_name(n)) {
+            // Cấu hình cũ (SEB 2.x) còn tên `seb.exe`/`xul.exe` ⇒ vô dụng với
+            // SEB 3.x. Giữ danh sách riêng của người dùng không thể giữ được
+            // ⇒ thay bằng danh sách SEB 3.x.
+            s.target_processes = Settings::default().target_processes;
         }
         s
+    }
+}
+
+/// Tên tiến trình của SEB **2.x** — không tồn tại trong SEB 3.x.
+fn is_legacy_seb_name(name: &str) -> bool {
+    matches!(
+        name.to_ascii_lowercase().as_str(),
+        "seb.exe" | "xul.exe" | "seb_xulrunner.exe" | "seb_x64.exe" | "seb.exe.exe"
+    )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn migrates_legacy_target_processes() {
+        let raw = r#"{"targetProcesses":["seb.exe","xul.exe"],"keepRunningInTray":false}"#;
+        let s = Settings::load_or_default(Some(raw));
+        assert_eq!(s.target_processes, Settings::default().target_processes);
+        assert!(!s.keep_running_in_tray);
+    }
+
+    #[test]
+    fn keeps_seb3_target_processes() {
+        let raw = r#"{"targetProcesses":["SafeExamBrowser.Client.exe"]}"#;
+        let s = Settings::load_or_default(Some(raw));
+        assert_eq!(s.target_processes, vec!["SafeExamBrowser.Client.exe".to_string()]);
+    }
+
+    #[test]
+    fn empty_falls_back_to_default() {
+        let s = Settings::load_or_default(Some(r#"{"targetProcesses":[]}"#));
+        assert_eq!(s.target_processes, Settings::default().target_processes);
     }
 }

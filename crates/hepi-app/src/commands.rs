@@ -333,8 +333,7 @@ pub fn quiz_ai_status() -> serde_json::Value {
 /// Mở ChatGPT web trong cửa sổ riêng (webview ngoài).
 #[tauri::command]
 pub fn quiz_open_chatgpt(app: tauri::AppHandle) -> Result<(), String> {
-    use tauri::config::WebviewUrl;
-    use tauri::{Manager, WebviewWindowBuilder};
+    use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
     let url = "https://chatgpt.com/"
         .parse::<url::Url>()
         .map_err(|_| "E_NO_TARGET".to_string())?;
@@ -354,6 +353,51 @@ pub fn quiz_close_chatgpt(app: tauri::AppHandle) -> bool {
         Some(w) => w.close().is_ok(),
         None => false,
     }
+}
+
+/// Chụp vùng màn hình → trả base64 PNG (dùng cho nút "Chụp màn hình").
+#[tauri::command]
+pub fn capture_screen() -> Result<String, String> {
+    let (w, h) = hepi_core::capture::screen_size();
+    let png = hepi_core::capture::grab(0, 0, w, h).map_err(map)?;
+    Ok(base64(&png))
+}
+
+/// Chụp vùng màn hình theo tọa độ (0,0,w,h) → base64 PNG.
+#[tauri::command]
+pub fn capture_rect(x: i32, y: i32, w: i32, h: i32) -> Result<String, String> {
+    let png = hepi_core::capture::grab(x, y, w, h).map_err(map)?;
+    Ok(base64(&png))
+}
+
+/// Hỏi Gemini kèm ảnh chụp màn hình (vision).
+#[tauri::command]
+pub async fn quiz_ask_image(
+    prompt: String,
+    image_b64: String,
+    system: Option<String>,
+) -> Result<String, String> {
+    let client = hepi_core::gemini::Client::from_env().map_err(map)?;
+    client
+        .chat_image(system.as_deref(), &prompt, &image_b64)
+        .map_err(map)
+}
+
+/// Kích thước màn hình hiện tại (dùng cho vùng chụp).
+#[tauri::command]
+pub fn screen_size() -> serde_json::Value {
+    let (w, h) = hepi_core::capture::screen_size();
+    serde_json::json!({ "width": w, "height": h })
+}
+
+/// Chụp vùng đang chọn (do người dùng kéo trên overlay) → trả về ảnh để xem trước.
+#[tauri::command]
+pub fn capture_preview(x: i32, y: i32, w: i32, h: i32) -> Result<String, String> {
+    if w <= 0 || h <= 0 {
+        return Err("E_STATE".to_string());
+    }
+    let png = hepi_core::capture::grab(x, y, w, h).map_err(map)?;
+    Ok(base64(&png))
 }
 
 /// Trạng thái đăng nhập ChatGPT web: đọc cookie phiên của webview.
@@ -378,6 +422,45 @@ pub fn quiz_chatgpt_login(app: tauri::AppHandle) -> serde_json::Value {
         }
         Err(e) => serde_json::json!({ "loggedIn": false, "reason": e.to_string() }),
     }
+}
+
+// ---- Updater ------------------------------------------------------------------
+
+/// Kiểm tra có bản cập nhật nào không (self-host: GitHub Releases của repo này).
+///
+/// Kết quả: `{ available, version, currentVersion, notes, url }`.
+#[tauri::command]
+pub async fn check_update(app: tauri::AppHandle) -> Result<serde_json::Value, String> {
+    use tauri_plugin_updater::UpdaterExt;
+
+    let updater = app.updater().map_err(|e| e.to_string())?;
+    let update = updater.check().await.map_err(|e| e.to_string())?;
+    Ok(match update {
+        Some(u) => serde_json::json!({
+            "available": true,
+            "version": u.version,
+            "currentVersion": u.current_version,
+            "notes": u.body,
+            "date": u.date.map(|d| d.to_string()),
+        }),
+        None => serde_json::json!({ "available": false }),
+    })
+}
+
+/// Tải + cài bản cập nhật. App tự thoát sau khi installer chạy.
+#[tauri::command]
+pub async fn install_update(app: tauri::AppHandle) -> Result<(), String> {
+    use tauri_plugin_updater::UpdaterExt;
+
+    let updater = app.updater().map_err(|e| e.to_string())?;
+    let update = updater.check().await.map_err(|e| e.to_string())?;
+    let Some(update) = update else {
+        return Err("E_NO_TARGET".to_string());
+    };
+    update
+        .download_and_install(|_, _| {}, || {})
+        .await
+        .map_err(|e| e.to_string())
 }
 
 // ---- SEB 3.x -----------------------------------------------------------------
